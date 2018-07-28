@@ -1,0 +1,146 @@
+"use strict";
+
+const Ci = Components.interfaces;
+const Cc = Components.classes;
+const Cu = Components.utils;
+
+var EXPORTED_SYMBOLS = ["io"];
+
+Cu.import("resource://gre/modules/osfile.jsm");
+Cu.import("resource://gre/modules/Services.jsm");
+Cu.import("resource://gre/modules/FileUtils.jsm");
+
+
+const scriptError = Cc["@mozilla.org/scripterror;1"];
+
+const ADDON_NAME = "easyblock";
+
+// db path in profile
+const ADDON_PATH = FileUtils.getDir("ProfD", [ADDON_NAME], true);	
+
+
+var io =
+{
+	log: function(msg)
+	{
+		Services.console.logStringMessage("[" + ADDON_NAME + "] " + msg);
+	},
+
+	warn: function(msg)
+	{
+		let warn;
+
+		warn = scriptError.createInstance(Ci.nsIScriptError);
+		warn.init("[" + ADDON_NAME + "] warning: " + msg, null, null, 0, 0, warn.warningFlag, null);
+		Services.console.logMessage(warn);
+	},
+
+	error: function(msg)
+	{
+		let err;
+
+		err = scriptError.createInstance(Ci.nsIScriptError);
+		err.init("[" + ADDON_NAME + "] error: " + msg, null, null, 0, 0, err.errorFlag, null);
+		Services.console.logMessage(err);
+	},
+
+	stat: function(fn, callback)
+	{
+		let path;
+
+		path = OS.Path.join(ADDON_PATH.path, fn);
+
+		OS.File.stat(path).then(callback, (res) =>
+		{
+			io.warn('file not found: ' + fn + ' ' + res);
+		});
+	},
+
+	load: function(path, callback)
+	{
+		if (!path || !callback)
+			return;
+
+		if (path.startsWith("chrome://"))
+		{
+			netutil.loadHttp(path, "arraybuffer", callback);
+			return;
+		}
+
+		this.loadFile(path, (data) =>
+		{
+			callback(data.buffer);
+		});
+	},
+
+	loadText: function(path, callback)
+	{
+		if (!path || !callback)
+			return;
+
+		if (path.startsWith("chrome://"))
+		{
+			netutil.loadHttp(path, "text", callback);
+			return;
+		}
+
+		this.loadFile(path, (data) =>
+		{
+			let dec;
+
+			dec = new TextDecoder();
+
+			try
+			{
+				callback(dec.decode(data));
+			}
+			catch (e)
+			{
+				io.error('fail to read ' + path + ' file: ' + e);
+			}
+		});
+	},
+
+	loadFile: function(fn, callback)
+	{
+		let path;
+
+		if (!fn || !callback)
+			return;
+
+		path = OS.Path.join(ADDON_PATH.path, fn);
+
+		try
+		{
+			this.stat(fn, (stat) =>
+			{
+				this.onLoad(path, stat, callback);
+			});
+		}
+		catch(e)
+		{
+			io.error('fail to load ' + fn + ' file: ' + e);
+		}
+	},
+
+	onLoad: function(path, stat, callback)
+	{
+		if (stat.isDir)
+			return;
+
+		try
+		{
+			OS.File.read(path).then((data) =>
+			{
+				if (!data || !data.byteLength)
+					return;
+
+				callback(data);
+			});
+		}
+		catch(e)
+		{
+			io.error('fail to read ' + path + ' file: ' + e);
+		}
+	}
+};

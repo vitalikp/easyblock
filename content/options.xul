@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+
+<window class="dialog"
+		xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+		orient="vertical"
+		autostretch="always"
+		onload="init();"
+		title="Easy Block options">
+
+	<script type="application/javascript" src="chrome://easyblock/content/options.js"/>
+
+	<vbox id="bl">
+		<label value="Blacklist:"/>
+	</vbox>
+
+</window>
