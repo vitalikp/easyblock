@@ -3,7 +3,7 @@
 	<Description about="urn:mozilla:install-manifest">
 		<em:id>easyblock@vitalikp</em:id>
 		<em:type>2</em:type>
-		<em:name>Easy block</em:name>
+		<em:name>EasyBlock</em:name>
 		<em:version>0.1-dev</em:version>
 		<em:creator>vitalikp</em:creator>
 
