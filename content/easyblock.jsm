@@ -44,10 +44,8 @@ var EasyBlock =
 		return this.db.hasUrl(url);
 	},
 
-	block: function(subject, type, url)
+	block: function(subject)
 	{
-		io.log("blocking site '" + url.hostname + "' " + type);
-
 		subject.loadFlags = Ci.nsICachingChannel.LOAD_ONLY_FROM_CACHE;
 		subject.cancel(Cr.NS_BINDING_ABORTED);
 	},
@@ -89,7 +87,7 @@ var EasyBlock =
 				return;
 
 			let type = '?';
-			let url;
+			let url, site;
 
 			if (topic == OBS_RESP)
 				type = subject.contentType;
@@ -100,8 +98,11 @@ var EasyBlock =
 			if (!url)
 				return;
 
-			if (EasyBlock.check(url))
-				EasyBlock.block(subject, type, url);
+			site = bldb.find(url);
+			if (!site)
+				return;
+
+			site.block(EasyBlock.block, subject);
 		}
 	}
 };

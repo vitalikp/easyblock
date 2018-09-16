@@ -33,6 +33,16 @@ var blsite =
 			return false;
 
 		return this.host.test(url.hostname) || this.host.test('www.'+url.hostname);
+	},
+
+	block: function(cb, data)
+	{
+		if (!cb || !data)
+			return;
+
+		io.log("Blocking site '" + this.name + "'");
+
+		cb(data);
 	}
 };
 
