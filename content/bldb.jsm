@@ -103,19 +103,27 @@ var bldb =
 		return url;
 	},
 
-	hasUrl: function(url)
+	find: function(url)
 	{
 		let site;
 		let i = 0;
+
+		if (!url)
+			return null;
 
 		while (i < this.data.length)
 		{
 			site = this.data[i++];
 			if (site.check(url))
-				return true;
+				return site;
 		}
 
-		return false;
+		return null;
+	},
+
+	hasUrl: function(url)
+	{
+		return !this.find(url);
 	},
 
 	print: function(doc, elem)
