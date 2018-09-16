@@ -57,6 +57,9 @@ var bldb =
 		if (!pattern || pattern.startsWith('!'))
 			return;
 
+		if (this.data.findIndex((s) => pattern == s.name) >= 0)
+			return;
+
 		site = blsite.create(pattern);
 		this.data.push(site);
 //		io.log('add url "' + pattern + '" to blacklist');
