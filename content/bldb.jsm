@@ -67,21 +67,21 @@ var bldb =
 		this.data = [];
 	},
 
-	add: function(pattern)
+	add: function(site)
 	{
-		let site;
-
-		if (this.data.findIndex((s) => pattern == s.name) >= 0)
+		if (!site || !site.name)
 			return;
 
-		site = blsite.create(pattern);
+		if (this.data.findIndex((s) => site.name == s.name) >= 0)
+			return;
+
 		this.data.push(site);
-//		io.log('add url "' + pattern + '" to blacklist');
+//		io.log('add url "' + site.name + '" to blacklist');
 	},
 
 	load: function(fn)
 	{
-		let db;
+		let db, site;
 
 		io.log("load blacklist sites from '" + fn + "' file");
 
@@ -103,7 +103,8 @@ var bldb =
 				if (line[0] == '#' || line[0] == '!')
 					return;
 
-				db.add(line);
+				site = blsite.create(line);
+				db.add(site);
 			});
 		});
 	},
