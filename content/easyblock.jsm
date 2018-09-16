@@ -39,11 +39,6 @@ var EasyBlock =
 		this.db.close();
 	},
 
-	check: function(url)
-	{
-		return this.db.hasUrl(url);
-	},
-
 	block: function(subject)
 	{
 		subject.loadFlags = Ci.nsICachingChannel.LOAD_ONLY_FROM_CACHE;
