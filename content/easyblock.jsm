@@ -46,7 +46,7 @@ var EasyBlock =
 
 	block: function(subject, type, url)
 	{
-		io.log("blocking site '" + url + "' " + type);
+		io.log("blocking site '" + url.hostname + "' " + type);
 
 		subject.loadFlags = Ci.nsICachingChannel.LOAD_ONLY_FROM_CACHE;
 		subject.cancel(Cr.NS_BINDING_ABORTED);
@@ -97,6 +97,8 @@ var EasyBlock =
 			subject.QueryInterface(Ci.nsIHttpChannel);
 
 			url = bldb.parse(subject.URI.spec);
+			if (!url)
+				return;
 
 			if (EasyBlock.check(url))
 				EasyBlock.block(subject, type, url);

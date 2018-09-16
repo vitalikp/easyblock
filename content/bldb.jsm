@@ -5,7 +5,9 @@ const Cu = Components.utils;
 
 var EXPORTED_SYMBOLS = ["bldb"];
 
-//import
+// import
+Cu.importGlobalProperties(["URL"]);
+
 Cu.import("chrome://easyblock/content/io.jsm");
 
 
@@ -27,7 +29,10 @@ var blsite =
 
 	check: function(url)
 	{
-		return this.host.test(url) || this.host.test('www.'+url);
+		if (!url)
+			return false;
+
+		return this.host.test(url.hostname) || this.host.test('www.'+url.hostname);
 	}
 };
 
@@ -87,10 +92,15 @@ var bldb =
 
 	parse: function(uri)
 	{
-		if (!uri)
-			return;
+		let url;
 
-		return uri.replace(/^(http(s)?:\/\/)?(www\.)?/,'');
+		if (!uri)
+			return null;
+
+		url = new URL(uri);
+		url.hostname = url.hostname.replace(/^(www\.)?/,'');
+
+		return url;
 	},
 
 	hasUrl: function(url)
