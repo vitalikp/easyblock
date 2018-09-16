@@ -71,9 +71,6 @@ var bldb =
 	{
 		let site;
 
-		if (!pattern || pattern.startsWith('!'))
-			return;
-
 		if (this.data.findIndex((s) => pattern == s.name) >= 0)
 			return;
 
@@ -98,7 +95,16 @@ var bldb =
 				return;
 
 			arr = data.split(/\r\n|\n/);
-			arr.forEach((line) => { db.add(line); });
+			arr.forEach((line) =>
+			{
+				if (!line)
+					return;
+
+				if (line[0] == '#' || line[0] == '!')
+					return;
+
+				db.add(line);
+			});
 		});
 	},
 
