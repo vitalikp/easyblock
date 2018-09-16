@@ -35,6 +35,8 @@ var EasyBlock =
 	shutdown: function()
 	{
 		EasyBlock.observer.unreg(os);
+
+		this.db.close();
 	},
 
 	check: function(url)

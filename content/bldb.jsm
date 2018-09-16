@@ -45,6 +45,11 @@ var bldb =
 		return db;
 	},
 
+	close: function()
+	{
+		this.data = [];
+	},
+
 	add: function(pattern)
 	{
 		let site;
