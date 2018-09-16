@@ -15,6 +15,7 @@ var blsite =
 {
 	name: '',
 	host: '',
+	cnt: 0,
 
 	create: function(host)
 	{
@@ -40,6 +41,7 @@ var blsite =
 		if (!cb || !data)
 			return;
 
+		this.cnt++;
 		io.log("Blocking site '" + this.name + "'");
 
 		cb(data);
@@ -138,7 +140,7 @@ var bldb =
 
 	print: function(doc, elem)
 	{
-		let label, site;
+		let label, site, value;
 		let i = 0;
 
 		if (!doc || !elem)
@@ -149,7 +151,9 @@ var bldb =
 			site = this.data[i++];
 
 			label = doc.createElement("label");
-			label.setAttribute("value", site.name);
+			value = '[' + site.cnt + '] ';
+			value += site.name;
+			label.setAttribute("value", value);
 			elem.appendChild(label);
 		}
 	}
