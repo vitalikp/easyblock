@@ -15,6 +15,7 @@ var blsite =
 {
 	name: '',
 	host: '',
+	query: [],
 	cnt: 0,
 
 	create: function(host)
@@ -24,16 +25,48 @@ var blsite =
 		site = Object.create(this);
 		site.name = host;
 		site.host = new RegExp('^' + host, "i");
+		site.query = [];
 
 		return site;
 	},
 
+	addQuery: function(line)
+	{
+		if (!line)
+			return;
+
+		line = line.trim();
+		line = line.replace('*', '.*');
+		if (line[0] != '/')
+			line = '.*' + line;
+		else
+			line += '.*';
+
+		this.query.push(new RegExp('^' + line));
+	},
+
 	check: function(url)
 	{
+		let res, i;
+
 		if (!url)
 			return false;
 
-		return this.host.test(url.hostname) || this.host.test('www.'+url.hostname);
+		res = this.host.test(url.hostname) || this.host.test('www.'+url.hostname);
+		if (!res)
+			return false;
+
+		if (this.query.length == 0)
+			return true;
+
+		i = 0;
+		while (i < this.query.length)
+		{
+			if (this.query[i++].test(url.pathname))
+				return true;
+		}
+
+		return false;
 	},
 
 	block: function(cb, data)
@@ -103,6 +136,12 @@ var bldb =
 				if (line[0] == '#' || line[0] == '!')
 					return;
 
+				if (site && (line[0] == '\t' || line[0] == ' ' && line[1] == ' '))
+				{
+					site.addQuery(line);
+					return;
+				}
+
 				site = blsite.create(line);
 				db.add(site);
 			});
@@ -160,6 +199,7 @@ var bldb =
 			label = doc.createElement("label");
 			value = '[' + site.cnt + '] ';
 			value += site.name;
+			value += ' (' + site.query.length + ')';
 			label.setAttribute("value", value);
 			elem.appendChild(label);
 		}
