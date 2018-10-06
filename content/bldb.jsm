@@ -78,6 +78,17 @@ var blsite =
 		io.log("Blocking site '" + this.name + "'");
 
 		cb(data);
+	},
+
+	toString: function()
+	{
+		let res;
+
+		res = '[' + this.cnt + '] ';
+		res += this.name;
+		res += ' (' + this.query.length + ')';
+
+		return res;
 	}
 };
 
@@ -186,7 +197,7 @@ var bldb =
 
 	print: function(doc, elem)
 	{
-		let label, site, value;
+		let label, site;
 		let i = 0;
 
 		if (!doc || !elem)
@@ -197,10 +208,7 @@ var bldb =
 			site = this.data[i++];
 
 			label = doc.createElement("label");
-			value = '[' + site.cnt + '] ';
-			value += site.name;
-			value += ' (' + site.query.length + ')';
-			label.setAttribute("value", value);
+			label.setAttribute("value", site);
 			elem.appendChild(label);
 		}
 	}
