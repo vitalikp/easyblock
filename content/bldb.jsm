@@ -11,6 +11,9 @@ Cu.importGlobalProperties(["URL"]);
 Cu.import("chrome://easyblock/content/io.jsm");
 
 
+const COMM_PATTERN = "^# (title): ([a-zA-Z0-9]*)$";
+
+
 var blsite =
 {
 	name: '',
@@ -92,8 +95,72 @@ var blsite =
 	}
 };
 
+var blgroup =
+{
+	name: '',
+	data: [],
+	cnt: 0,
+
+	create: function(name)
+	{
+		var group;
+
+		group = Object.create(this);
+		group.name = name;
+		group.data = [];
+		group.cnt = 0;
+
+		return group;
+	},
+
+	addSite: function(site)
+	{
+		if (!site)
+			return;
+
+		this.data.push(site);
+	},
+
+	check: function(url)
+	{
+		let res, i;
+
+		i = 0;
+		while (i < this.data.length)
+		{
+			if (this.data[i++].check(url))
+				return true;
+		}
+
+		return false;
+	},
+
+	block: function(cb, data)
+	{
+		if (!cb || !data)
+			return;
+
+		this.cnt++;
+		io.log("Blocking site group '" + this.name + "'");
+
+		cb(data);
+	},
+
+	toString: function()
+	{
+		let res;
+
+		res = '[' + this.cnt + '] ';
+		res += this.name;
+		res += ' (' + this.data.length + ')';
+
+		return res;
+	}
+};
+
 var bldb =
 {
+	commRegEx: '',
 	data: [],
 
 	create: function(fn)
@@ -101,6 +168,7 @@ var bldb =
 		var db;
 
 		db = Object.create(bldb);
+		db.commRegEx = new RegExp(COMM_PATTERN);
 		db.load(fn);
 
 		return db;
@@ -133,7 +201,7 @@ var bldb =
 
 		io.loadText(fn, (data) =>
 		{
-			let arr;
+			let arr, res, group;
 
 			if (!data)
 				return;
@@ -142,10 +210,26 @@ var bldb =
 			arr.forEach((line) =>
 			{
 				if (!line)
+				{
+					group = null;
 					return;
+				}
 
 				if (line[0] == '#' || line[0] == '!')
+				{
+					res = db.commRegEx.exec(line);
+					if (!res)
+						return;
+
+					switch (res[1])
+					{
+						case 'title':
+							group = blgroup.create(res[2]);
+							db.add(group);
+							break;
+					}
 					return;
+				}
 
 				if (site && (line[0] == '\t' || line[0] == ' ' && line[1] == ' '))
 				{
@@ -154,6 +238,11 @@ var bldb =
 				}
 
 				site = blsite.create(line);
+				if (group)
+				{
+					group.addSite(site);
+					return;
+				}
 				db.add(site);
 			});
 		});
