@@ -22,6 +22,7 @@ const OBS_RESP = "http-on-examine-response";
 var EasyBlock =
 {
 	db: {},
+	disabled: false,
 
 	startup: function(addonData)
 	{
@@ -78,6 +79,9 @@ var EasyBlock =
 
 		observe: function(subject, topic, data)
 		{
+			if (EasyBlock.disabled)
+				return;
+
 			if (topic != OBS_REQ && topic != OBS_RESP)
 				return;
 
