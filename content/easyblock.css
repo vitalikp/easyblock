@@ -1,0 +1,27 @@
+
+toolbarbutton.easyblock > image
+{
+	list-style-image: url("chrome://easyblock/content/ui-16.png");
+}
+
+[iconsize="small"] toolbarbutton.easyblock > image
+{
+	-moz-image-region: rect(0px 16px 16px 0px);
+}
+
+[iconsize="small"] toolbarbutton.easyblock[ebstate="disabled"] > image
+{
+	-moz-image-region: rect(16px 16px 32px 0px);
+}
+
+toolbarpaletteitem[place="palette"] toolbarbutton.easyblock
+{
+	-moz-box-orient: horizontal !important;
+}
+
+toolbarpaletteitem[place="palette"] toolbarbutton.easyblock > image
+{
+	list-style-image: url("chrome://easyblock/content/easyblock.png");
+	-moz-image-region: rect(0px 64px 64px 0px);
+	margin: 4px 0px !important;
+}
