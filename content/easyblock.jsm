@@ -31,6 +31,7 @@ var EasyBlock =
 
 		this.db = bldb.create('blacklist.txt');
 
+		ui.loadCss("easyblock");
 		io.log("easyblock " + addonData.version + " started!");
 	},
 
@@ -39,6 +40,8 @@ var EasyBlock =
 		EasyBlock.observer.unreg(os);
 
 		this.db.close();
+
+		ui.unloadCss("easyblock");
 	},
 
 	enable: function(cb)
