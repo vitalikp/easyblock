@@ -8,6 +8,8 @@ const Cr = Components.results;
 const EXPORTED_SYMBOLS = ["EasyBlock"];
 
 // import
+Cu.import("resource://gre/modules/Services.jsm");
+
 Cu.import("chrome://easyblock/content/io.jsm");
 Cu.import("chrome://easyblock/content/ui.jsm");
 Cu.import("chrome://easyblock/content/bldb.jsm");
@@ -27,9 +29,16 @@ var EasyBlock =
 
 	startup: function(addonData)
 	{
+		var windows;
+
 		EasyBlock.observer.reg(os);
 
 		this.db = bldb.create('blacklist.txt');
+
+		windows = Services.wm.getEnumerator("navigator:browser");
+
+		while (windows.hasMoreElements())
+			this.loadWindow(windows.getNext().QueryInterface(Ci.nsIDOMWindow));
 
 		ui.loadCss("easyblock");
 		io.log("easyblock " + addonData.version + " started!");
@@ -42,6 +51,15 @@ var EasyBlock =
 		this.db.close();
 
 		ui.unloadCss("easyblock");
+	},
+
+	loadWindow: function(window)
+	{
+		if (!window)
+			return;
+
+		ui.init(window.document, EasyBlock);
+		window.addEventListener("aftercustomization", ui.customize, false);
 	},
 
 	enable: function(cb)
