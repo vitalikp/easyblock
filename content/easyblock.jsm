@@ -40,6 +40,16 @@ var EasyBlock =
 		this.db.close();
 	},
 
+	enable: function(cb)
+	{
+		if (!this.disabled || !cb)
+			return;
+
+		this.disabled = false;
+		cb(this.disabled);
+		io.log("Enable 'EasyBlock' addon...");
+	},
+
 	block: function(subject)
 	{
 		subject.loadFlags = Ci.nsICachingChannel.LOAD_ONLY_FROM_CACHE;
