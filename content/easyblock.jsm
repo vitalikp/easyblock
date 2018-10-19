@@ -9,6 +9,7 @@ const EXPORTED_SYMBOLS = ["EasyBlock"];
 
 // import
 Cu.import("chrome://easyblock/content/io.jsm");
+Cu.import("chrome://easyblock/content/ui.jsm");
 Cu.import("chrome://easyblock/content/bldb.jsm");
 
 
