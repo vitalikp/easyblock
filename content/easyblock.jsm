@@ -50,6 +50,16 @@ var EasyBlock =
 		io.log("Enable 'EasyBlock' addon...");
 	},
 
+	disable: function(cb)
+	{
+		if (this.disabled || !cb)
+			return;
+
+		this.disabled = true;
+		cb(this.disabled);
+		io.log("Disable 'EasyBlock' addon...");
+	},
+
 	block: function(subject)
 	{
 		subject.loadFlags = Ci.nsICachingChannel.LOAD_ONLY_FROM_CACHE;
