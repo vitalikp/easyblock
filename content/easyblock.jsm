@@ -39,6 +39,7 @@ var EasyBlock =
 
 		while (windows.hasMoreElements())
 			this.loadWindow(windows.getNext().QueryInterface(Ci.nsIDOMWindow));
+		Services.ww.registerNotification(this.watchWindow);
 
 		ui.loadCss("easyblock");
 		io.log("easyblock " + addonData.version + " started!");
@@ -50,6 +51,8 @@ var EasyBlock =
 
 		this.db.close();
 
+		Services.ww.unregisterNotification(this.watchWindow);
+
 		ui.unloadCss("easyblock");
 	},
 
@@ -60,6 +63,21 @@ var EasyBlock =
 
 		ui.init(window, EasyBlock);
 		window.addEventListener("aftercustomization", ui.customize, false);
+	},
+
+	watchWindow: function(window, topic)
+	{
+		let listener;
+
+		if (topic != "domwindowopened")
+			return;
+
+		listener = (event) =>
+		{
+			window.removeEventListener("load", listener, false);
+			ui.init(window, EasyBlock);
+		};
+		window.addEventListener("load", listener, false);
 	},
 
 	enable: function(cb)
