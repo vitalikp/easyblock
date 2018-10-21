@@ -157,7 +157,7 @@ var EasyBlock =
 			if (!url)
 				return;
 
-			site = bldb.find(url);
+			site = bldb.find(url, type);
 			if (!site)
 				return;
 

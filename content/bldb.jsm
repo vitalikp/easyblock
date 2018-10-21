@@ -19,6 +19,7 @@ var blsite =
 	name: '',
 	host: '',
 	query: [],
+	type: [],
 	cnt: 0,
 
 	create: function(host)
@@ -29,6 +30,7 @@ var blsite =
 		site.name = host;
 		site.host = new RegExp('^' + host, "i");
 		site.query = [];
+		site.type = [];
 
 		return site;
 	},
@@ -48,7 +50,18 @@ var blsite =
 		this.query.push(new RegExp('^' + line));
 	},
 
-	check: function(url)
+	addType: function(line)
+	{
+		if (!line)
+			return;
+
+		line = line.trim();
+		line = line.replace('*', '.*');
+
+		this.type.push(new RegExp(line));
+	},
+
+	check: function(url, type)
 	{
 		let res, i;
 
@@ -59,8 +72,18 @@ var blsite =
 		if (!res)
 			return false;
 
+		if (type && type[0] != '?' && this.type.length > 0)
+		{
+			i = 0;
+			while (i < this.type.length)
+			{
+				if (this.type[i++].test(type))
+					return true;
+			}
+		}
+
 		if (this.query.length == 0)
-			return true;
+			return this.type.length == 0;
 
 		i = 0;
 		while (i < this.query.length)
@@ -121,14 +144,14 @@ var blgroup =
 		this.data.push(site);
 	},
 
-	check: function(url)
+	check: function(url, type)
 	{
 		let res, i;
 
 		i = 0;
 		while (i < this.data.length)
 		{
-			if (this.data[i++].check(url))
+			if (this.data[i++].check(url, type))
 				return true;
 		}
 
@@ -193,7 +216,7 @@ var bldb =
 
 	load: function(fn)
 	{
-		let db, site;
+		let db, site, index;
 
 		io.log("load blacklist sites from '" + fn + "' file");
 
@@ -233,7 +256,11 @@ var bldb =
 
 				if (site && (line[0] == '\t' || line[0] == ' ' && line[1] == ' '))
 				{
-					site.addQuery(line);
+					index = line.indexOf('type:');
+					if (index > 0)
+						site.addType(line.substr(index+5));
+					else
+						site.addQuery(line);
 					return;
 				}
 
@@ -261,18 +288,18 @@ var bldb =
 		return url;
 	},
 
-	find: function(url)
+	find: function(url, type)
 	{
 		let site;
 		let i = 0;
 
-		if (!url)
+		if (!url && !type)
 			return null;
 
 		while (i < this.data.length)
 		{
 			site = this.data[i++];
-			if (site.check(url))
+			if (site.check(url, type))
 				return site;
 		}
 
