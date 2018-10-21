@@ -139,6 +139,13 @@ var EasyBlock =
 			if (topic != OBS_REQ && topic != OBS_RESP)
 				return;
 
+			switch (topic)
+			{
+				case OBS_REQ:
+					bldb.blockReq(subject);
+					return;
+			}
+
 			let type = '?';
 			let url, site;
 

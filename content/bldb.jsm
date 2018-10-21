@@ -315,6 +315,26 @@ var bldb =
 		return !this.find(url);
 	},
 
+	blockReq: function(subject)
+	{
+		let url, site;
+
+		if (!subject)
+			return;
+
+		subject.QueryInterface(Ci.nsIHttpChannel);
+
+		url = this.parse(subject.URI.spec);
+		if (!url)
+			return;
+
+		site = this.find(url);
+		if (!site)
+			return;
+
+		site.block(subject);
+	},
+
 	print: function(doc, elem)
 	{
 		let label, site;
