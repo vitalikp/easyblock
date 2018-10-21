@@ -100,12 +100,6 @@ var EasyBlock =
 		io.log("Disable 'EasyBlock' addon...");
 	},
 
-	block: function(subject)
-	{
-		subject.loadFlags = Ci.nsICachingChannel.LOAD_ONLY_FROM_CACHE;
-		subject.cancel(Cr.NS_BINDING_ABORTED);
-	},
-
 	print: function(doc, elem)
 	{
 		this.db.print(doc, elem);
@@ -161,7 +155,7 @@ var EasyBlock =
 			if (!site)
 				return;
 
-			site.block(EasyBlock.block, subject);
+			site.block(subject);
 		}
 	}
 };

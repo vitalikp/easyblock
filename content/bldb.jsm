@@ -1,6 +1,8 @@
 "use strict";
 
+const Ci = Components.interfaces;
 const Cu = Components.utils;
+const Cr = Components.results;
 
 
 var EXPORTED_SYMBOLS = ["bldb"];
@@ -95,15 +97,16 @@ var blsite =
 		return false;
 	},
 
-	block: function(cb, data)
+	block: function(subject)
 	{
-		if (!cb || !data)
+		if (!subject)
 			return;
 
 		this.cnt++;
 		io.log("Blocking site '" + this.name + "'");
 
-		cb(data);
+		subject.loadFlags = Ci.nsICachingChannel.LOAD_ONLY_FROM_CACHE;
+		subject.cancel(Cr.NS_BINDING_ABORTED);
 	},
 
 	toString: function()
@@ -158,15 +161,16 @@ var blgroup =
 		return false;
 	},
 
-	block: function(cb, data)
+	block: function(subject)
 	{
-		if (!cb || !data)
+		if (!subject)
 			return;
 
 		this.cnt++;
 		io.log("Blocking site group '" + this.name + "'");
 
-		cb(data);
+		subject.loadFlags = Ci.nsICachingChannel.LOAD_ONLY_FROM_CACHE;
+		subject.cancel(Cr.NS_BINDING_ABORTED);
 	},
 
 	toString: function()
