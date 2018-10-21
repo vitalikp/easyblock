@@ -74,7 +74,7 @@ var blsite =
 		if (!res)
 			return false;
 
-		if (type && type[0] != '?' && this.type.length > 0)
+		if (type && this.type.length > 0)
 		{
 			i = 0;
 			while (i < this.type.length)
@@ -329,6 +329,29 @@ var bldb =
 			return;
 
 		site = this.find(url);
+		if (!site)
+			return;
+
+		site.block(subject);
+	},
+
+	blockResp: function(subject)
+	{
+		let url, site;
+		let type;
+
+		if (!subject)
+			return;
+
+		type = subject.contentType;
+
+		subject.QueryInterface(Ci.nsIHttpChannel);
+
+		url = this.parse(subject.URI.spec);
+		if (!url)
+			return;
+
+		site = this.find(url, type);
 		if (!site)
 			return;
 

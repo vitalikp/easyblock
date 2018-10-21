@@ -136,33 +136,16 @@ var EasyBlock =
 			if (EasyBlock.disabled)
 				return;
 
-			if (topic != OBS_REQ && topic != OBS_RESP)
-				return;
-
 			switch (topic)
 			{
 				case OBS_REQ:
 					bldb.blockReq(subject);
 					return;
+
+				case OBS_RESP:
+					bldb.blockResp(subject);
+					return;
 			}
-
-			let type = '?';
-			let url, site;
-
-			if (topic == OBS_RESP)
-				type = subject.contentType;
-
-			subject.QueryInterface(Ci.nsIHttpChannel);
-
-			url = bldb.parse(subject.URI.spec);
-			if (!url)
-				return;
-
-			site = bldb.find(url, type);
-			if (!site)
-				return;
-
-			site.block(subject);
 		}
 	}
 };
