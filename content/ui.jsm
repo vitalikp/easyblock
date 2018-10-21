@@ -66,12 +66,12 @@ var ui =
 	nextItemId: null,
 	wins: [],
 
-	init: function(doc, addon)
+	init: function(win, addon)
 	{
-		if (!doc)
+		if (!win && !win.document)
 			return;
 
-		ui.initToolbar(doc, addon);
+		ui.initToolbar(win.document, addon);
 	},
 
 	createBtn: function(doc, addon)

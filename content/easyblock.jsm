@@ -58,7 +58,7 @@ var EasyBlock =
 		if (!window)
 			return;
 
-		ui.init(window.document, EasyBlock);
+		ui.init(window, EasyBlock);
 		window.addEventListener("aftercustomization", ui.customize, false);
 	},
 
