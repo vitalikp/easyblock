@@ -16,7 +16,7 @@
 		<em:bootstrap>true</em:bootstrap>
 		<em:multiprocessCompatible>true</em:multiprocessCompatible>
 		<em:unpack>false</em:unpack>
-		<em:updateURL>https://vitalikp.github.io/firefox/addons/easyblock/update.rdf</em:updateURL>
+		<em:updateURL>https://www.vitalikp.name/firefox/addons/easyblock/update.rdf</em:updateURL>
 
 		<em:strictCompatibility>false</em:strictCompatibility>
 
