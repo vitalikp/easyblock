@@ -218,7 +218,7 @@ var bldb =
 //		io.log('add url "' + site.name + '" to blacklist');
 	},
 
-	load: function(fn)
+	load: function(fn, onLoad)
 	{
 		let db, site, index;
 
@@ -276,6 +276,9 @@ var bldb =
 				}
 				db.add(site);
 			});
+
+			if (onLoad)
+				onLoad();
 		});
 	},
 
