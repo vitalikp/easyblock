@@ -1,4 +1,6 @@
 
+/* toolbar button */
+
 toolbarbutton.easyblock > image
 {
 	list-style-image: url("chrome://easyblock/content/ui-16.png");
@@ -24,4 +26,29 @@ toolbarpaletteitem[place="palette"] toolbarbutton.easyblock > image
 	list-style-image: url("chrome://easyblock/content/easyblock.png");
 	-moz-image-region: rect(0px 64px 64px 0px);
 	margin: 4px 0px !important;
+}
+
+
+/** notification */
+
+notification[type="info"].easyblock
+{
+	background-color: rgba(230, 225, 235, 0.25) !important;
+}
+
+notification[type="info"].easyblock image.messageImage
+{
+	list-style-image: url("chrome://easyblock/content/ui-16.png") !important;
+	-moz-image-region: rect(0px 16px 16px 0px);
+	margin: 4px 5px 4px 7px;
+}
+
+notification[type="info"].easyblock[ebstate="disabled"] image.messageImage
+{
+	-moz-image-region: rect(16px 16px 32px 0px);
+}
+
+notification[type="info"].easyblock description
+{
+	margin-inline-start: 5px !important;
 }
