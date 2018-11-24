@@ -101,7 +101,7 @@ var ui =
 
 	createBtn: function(doc, addon)
 	{
-		let winUI, btn, menu, item;
+		let winUI, btn, menu, item, reloadItem;
 
 		btn = doc.createElement("toolbarbutton");
 		btn.setAttribute("id", BTN_ID);
@@ -130,6 +130,17 @@ var ui =
 
 		winUI = WinUI.create(btn, item);
 		winUI.updateState(addon.disabled);
+
+		reloadItem = doc.createElement("menuitem");
+		reloadItem.setAttribute("label", "Reload");
+		reloadItem.addEventListener("command", (event) =>
+		{
+			if (!event && !event.target)
+				return;
+
+			addon.reload();
+		}, false);
+		menu.appendChild(reloadItem);
 
 		doc.defaultView.addEventListener('unload', (event) => 
 		{
