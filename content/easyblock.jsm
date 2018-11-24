@@ -100,6 +100,12 @@ var EasyBlock =
 		io.log("Disable 'EasyBlock' addon...");
 	},
 
+	reload: function()
+	{
+		this.db.close();
+		this.db.load('blacklist.txt', ui.notify(this, 'Blacklist sites reloaded!'));
+	},
+
 	print: function(doc, elem)
 	{
 		this.db.print(doc, elem);
