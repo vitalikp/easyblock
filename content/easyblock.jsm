@@ -139,11 +139,11 @@ var EasyBlock =
 			switch (topic)
 			{
 				case OBS_REQ:
-					bldb.blockReq(subject);
+					EasyBlock.db.blockReq(subject);
 					return;
 
 				case OBS_RESP:
-					bldb.blockResp(subject);
+					EasyBlock.db.blockResp(subject);
 					return;
 			}
 		}
