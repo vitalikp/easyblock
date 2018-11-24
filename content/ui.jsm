@@ -58,6 +58,31 @@ const WinUI =
 	}
 };
 
+const Notify =
+{
+	sendUI: function(state, type, msg)
+	{
+		let win, doc, node;
+
+		if (!type || !msg)
+			return;
+
+		win = Services.wm.getMostRecentWindow("navigator:browser");
+		doc = win.document;
+
+		let notificationBox = win.getBrowser().getNotificationBox();
+
+		node = doc.createElement("notification");
+		node.setAttribute("type", type);
+		node.setAttribute("class", "easyblock");
+		node.setAttribute("label", msg);
+		if (state)
+			node.setAttribute("ebstate", "disabled");
+		else
+			node.setAttribute("ebstate", "normal");
+		notificationBox.appendChild(node);
+	}
+};
 
 var ui =
 {
@@ -210,5 +235,10 @@ var ui =
 	updateStatus: function(state)
 	{
 		ui.wins.forEach((winUI) => winUI.updateState(state));
+	},
+
+	notify: function(addon, msg)
+	{
+		Notify.sendUI(addon.disabled, 'info', msg);
 	}
 };
