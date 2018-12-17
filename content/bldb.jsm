@@ -174,6 +174,28 @@ var blgroup =
 		subject.cancel(Cr.NS_BINDING_ABORTED);
 	},
 
+	print: function(doc, elem)
+	{
+		let label, site;
+		let i = 0;
+
+		if (!doc || !elem)
+			return;
+
+		label = doc.createElement("label");
+		label.setAttribute("value", this.name + ':');
+		elem.appendChild(label);
+
+		while (i < this.data.length)
+		{
+			site = this.data[i++];
+
+			label = doc.createElement("label");
+			label.setAttribute("value", site);
+			elem.appendChild(label);
+		}
+	},
+
 	toString: function()
 	{
 		let res;
