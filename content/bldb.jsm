@@ -126,7 +126,6 @@ var blgroup =
 	id: -1,
 	name: '',
 	data: [],
-	cnt: 0,
 
 	create: function(name)
 	{
@@ -135,7 +134,6 @@ var blgroup =
 		group = Object.create(this);
 		group.name = name;
 		group.data = [];
-		group.cnt = 0;
 
 		return group;
 	},
@@ -207,8 +205,7 @@ var blgroup =
 	{
 		let res;
 
-		res = '[' + this.cnt + '] ';
-		res += this.name;
+		res = this.name;
 		res += ' (' + this.data.length + ')';
 
 		return res;
