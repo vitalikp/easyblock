@@ -190,6 +190,7 @@ var bldb =
 {
 	commRegEx: '',
 	data: [],
+	groups: [],
 
 	create: function(fn)
 	{
@@ -204,6 +205,7 @@ var bldb =
 
 	close: function()
 	{
+		this.groups = [];
 		this.data = [];
 	},
 
