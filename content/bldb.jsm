@@ -165,20 +165,6 @@ var blgroup =
 		return null;
 	},
 
-	check: function(url, type)
-	{
-		let res, i;
-
-		i = 0;
-		while (i < this.data.length)
-		{
-			if (this.data[i++].check(url, type))
-				return true;
-		}
-
-		return false;
-	},
-
 	print: function(doc, elem)
 	{
 		let label, site;
