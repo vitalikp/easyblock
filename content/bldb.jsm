@@ -221,6 +221,24 @@ var bldb =
 //		io.log('add url "' + site.name + '" to blacklist');
 	},
 
+	addGroup: function(group)
+	{
+		let id;
+
+		if (!group || !group.name)
+			return;
+
+		if (this.groups.findIndex((g) => group.name == g.name) >= 0)
+			return;
+
+		id = this.groups.length;
+
+		this.data.push(group);
+		this.groups.push(group);
+		group.id = id;
+//		io.log('add group "' + group.name + '" to blacklist');
+	},
+
 	load: function(fn, onLoad)
 	{
 		let db, site, index;
