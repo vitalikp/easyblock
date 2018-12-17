@@ -148,6 +148,24 @@ var blgroup =
 		this.data.push(site);
 	},
 
+	find: function(url, type)
+	{
+		let site;
+		let i = 0;
+
+		if (!url && !type)
+			return null;
+
+		while (i < this.data.length)
+		{
+			site = this.data[i++];
+			if (site.check(url, type))
+				return site;
+		}
+
+		return null;
+	},
+
 	check: function(url, type)
 	{
 		let res, i;
