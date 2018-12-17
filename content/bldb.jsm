@@ -202,7 +202,7 @@ var blgroup =
 			return;
 
 		label = doc.createElement("label");
-		label.setAttribute("value", this.name + ':');
+		label.setAttribute("value", this + ':');
 		elem.appendChild(label);
 
 		while (i < this.data.length)
