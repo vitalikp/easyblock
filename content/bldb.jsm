@@ -181,18 +181,6 @@ var blgroup =
 		return false;
 	},
 
-	block: function(subject)
-	{
-		if (!subject)
-			return;
-
-		this.cnt++;
-		io.log("Blocking site group '" + this.name + "'");
-
-		subject.loadFlags = Ci.nsICachingChannel.LOAD_ONLY_FROM_CACHE;
-		subject.cancel(Cr.NS_BINDING_ABORTED);
-	},
-
 	print: function(doc, elem)
 	{
 		let label, site;
