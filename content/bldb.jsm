@@ -123,6 +123,7 @@ var blsite =
 
 var blgroup =
 {
+	id: -1,
 	name: '',
 	data: [],
 	cnt: 0,
