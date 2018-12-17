@@ -230,7 +230,6 @@ var blgroup =
 var bldb =
 {
 	commRegEx: '',
-	data: [],
 	defGroup: null,
 	groups: [],
 
@@ -248,7 +247,6 @@ var bldb =
 	close: function()
 	{
 		this.groups = [];
-		this.data = [];
 	},
 
 	add: function(group)
@@ -263,7 +261,6 @@ var bldb =
 
 		id = this.groups.length;
 
-		this.data.push(group);
 		this.groups.push(group);
 		group.id = id;
 		if (!id)
