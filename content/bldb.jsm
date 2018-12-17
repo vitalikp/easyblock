@@ -146,6 +146,7 @@ var blgroup =
 			return;
 
 		this.data.push(site);
+//		io.log(this.name + ': add url "' + site.name + '"');
 	},
 
 	find: function(url, type)
@@ -250,19 +251,7 @@ var bldb =
 		this.data = [];
 	},
 
-	add: function(site)
-	{
-		if (!site || !site.name)
-			return;
-
-		if (this.data.findIndex((s) => site.name == s.name) >= 0)
-			return;
-
-		this.data.push(site);
-//		io.log('add url "' + site.name + '" to blacklist');
-	},
-
-	addGroup: function(group)
+	add: function(group)
 	{
 		let id;
 
@@ -298,7 +287,7 @@ var bldb =
 				return;
 
 			group = blgroup.create('Default');
-			db.addGroup(group);
+			db.add(group);
 			if (!db.defGroup)
 				return;
 
@@ -321,7 +310,7 @@ var bldb =
 					{
 						case 'title':
 							group = blgroup.create(res[2]);
-							db.addGroup(group);
+							db.add(group);
 							break;
 					}
 					return;
