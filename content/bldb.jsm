@@ -412,19 +412,17 @@ var bldb =
 
 	print: function(doc, elem)
 	{
-		let label, site;
+		let group;
 		let i = 0;
 
 		if (!doc || !elem)
 			return;
 
-		while (i < this.data.length)
+		while (i < this.groups.length)
 		{
-			site = this.data[i++];
+			group = this.groups[i++];
 
-			label = doc.createElement("label");
-			label.setAttribute("value", site);
-			elem.appendChild(label);
+			group.print(doc, elem);
 		}
 	}
 };
