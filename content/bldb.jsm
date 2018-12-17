@@ -190,6 +190,7 @@ var bldb =
 {
 	commRegEx: '',
 	data: [],
+	defGroup: null,
 	groups: [],
 
 	create: function(fn)
@@ -259,7 +260,7 @@ var bldb =
 			{
 				if (!line)
 				{
-					group = null;
+					group = db.defGroup;
 					return;
 				}
 
@@ -273,7 +274,7 @@ var bldb =
 					{
 						case 'title':
 							group = blgroup.create(res[2]);
-							db.add(group);
+							db.addGroup(group);
 							break;
 					}
 					return;
