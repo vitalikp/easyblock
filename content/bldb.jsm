@@ -299,6 +299,8 @@ var bldb =
 
 			group = blgroup.create('Default');
 			db.addGroup(group);
+			if (!db.defGroup)
+				return;
 
 			arr = data.split(/\r\n|\n/);
 			arr.forEach((line) =>
@@ -336,12 +338,7 @@ var bldb =
 				}
 
 				site = blsite.create(line);
-				if (group)
-				{
-					group.addSite(site);
-					return;
-				}
-				db.add(site);
+				group.addSite(site);
 			});
 
 			if (onLoad)
@@ -364,15 +361,19 @@ var bldb =
 
 	find: function(url, type)
 	{
-		let site;
+		let group, site;
 		let i = 0;
 
 		if (!url && !type)
 			return null;
 
-		while (i < this.data.length)
+		while (i < this.groups.length)
 		{
-			site = this.data[i++];
+			group = this.groups[i++];
+			site = group.find(url, type);
+			if (!site)
+				continue;
+
 			if (site.check(url, type))
 				return site;
 		}
