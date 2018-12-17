@@ -11,8 +11,10 @@
 
 	<script type="application/javascript" src="chrome://easyblock/content/options.js"/>
 
-	<vbox id="bl">
-		<label value="Blacklist:"/>
-	</vbox>
+	<groupbox>
+		<caption label="Blacklist"/>
+		<vbox id="bl">
+		</vbox>
+	</groupbox>
 
 </window>
