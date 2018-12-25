@@ -126,6 +126,7 @@ var blgroup =
 	id: -1,
 	name: '',
 	data: [],
+	enabled: true,
 
 	create: function(name)
 	{
@@ -151,6 +152,9 @@ var blgroup =
 	{
 		let site;
 		let i = 0;
+
+		if (!this.enabled)
+			return null;
 
 		if (!url && !type)
 			return null;
