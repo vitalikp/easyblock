@@ -197,9 +197,38 @@ var ui =
 		return btn;
 	},
 
+	selectToolbar: function(toolbars)
+	{
+		let toolbar, currSet, items, nextItem;
+		let i, index;
+
+		i = 0;
+		while (i < toolbars.length)
+		{
+			toolbar = toolbars[i++];
+			if (!toolbar)
+				continue;
+
+			currSet = toolbar.getAttribute("currentset");
+			if (!currSet)
+				continue;
+
+			items = currSet.split(",");
+			index = items.indexOf(BTN_ID);
+			if (index < 0)
+				continue;
+
+			if (index < items.length)
+				nextItem = items[index+1];
+			ui.toolbarId = toolbar._customizationTarget.id;
+			ui.nextItemId = nextItem;
+			break;
+		}
+	},
+
 	initToolbar: function(doc, addon)
 	{
-		let toolbars, btn, nextItem;
+		let btn;
 
 		if (!ui.toolbox)
 			ui.toolbox = doc.getElementById("navigator-toolbox");
@@ -210,26 +239,7 @@ var ui =
 		ui.toolbox.palette.appendChild(btn);
 
 		if (!ui.toolbarId)
-		{
-			toolbars = ui.toolbox.externalToolbars.slice();
-			for (let toolbar of toolbars)
-			{
-				let currentSet = toolbar.getAttribute("currentset");
-				if (currentSet)
-				{
-					let items = currentSet.split(",");
-					let index = items.indexOf(BTN_ID);
-					if (index >= 0)
-					{
-						if (index < items.length)
-							nextItem = items[index+1];
-						ui.toolbarId = toolbar.id;
-						ui.nextItemId = nextItem;
-						break;
-					}
-				}
-			}
-		}
+			ui.selectToolbar(ui.toolbox.childNodes);
 
 		if (!ui.toolbarId)
 			return;
