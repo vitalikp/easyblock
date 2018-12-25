@@ -94,15 +94,6 @@ var EasyBlock =
 		return true;
 	},
 
-	disable: function(cb)
-	{
-		if (this.disabled || !cb)
-			return;
-
-		this.toggle(true);
-		cb(this.disabled);
-	},
-
 	reload: function()
 	{
 		this.db.close();
