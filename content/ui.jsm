@@ -18,6 +18,55 @@ const sss = Cc["@mozilla.org/content/style-sheet-service;1"].getService(Ci.nsISt
 const BTN_ID = "easyblock-btn";
 
 
+const MenuToggle =
+{
+	elem: null,
+
+	create: function(obj, name, menu, cb)
+	{
+		let doc, menuState, elem;
+
+		doc = menu.ownerDocument;
+
+		elem = doc.createElement("menuitem");
+		elem.setAttribute("type", "checkbox");
+		elem.setAttribute("label", name);
+		elem.addEventListener("command", (event) =>
+		{
+			let value;
+
+			if (!event || !event.target || !obj)
+				return;
+
+			value = event.target.hasAttribute('checked');
+
+			if (obj.toggle(value) && cb)
+				cb(value);
+		}, false);
+		menu.appendChild(elem);
+
+		menuState = Object.create(MenuToggle);
+		menuState.elem = elem;
+
+		return menuState;
+	},
+
+	destroy: function()
+	{
+		if (!this.elem)
+			return;
+
+		if (this.elem.parentNode)
+			this.elem.parentNode.removeChild(this.elem);
+		this.elem = null;
+	},
+
+	update: function(state)
+	{
+		this.elem.setAttribute('checked', state);
+	}
+};
+
 const WinUI =
 {
 	btn: null,
@@ -43,7 +92,7 @@ const WinUI =
 		}
 		if (this.menuItem)
 		{
-			this.menuItem.parentNode.removeChild(this.menuItem);
+			this.menuItem.destroy();
 			this.menuItem = null;
 		}
 	},
@@ -54,7 +103,7 @@ const WinUI =
 			this.btn.setAttribute("ebstate", "disabled");
 		else
 			this.btn.setAttribute("ebstate", "normal");
-		this.menuItem.setAttribute('checked', state);
+		this.menuItem.update(state);
 	}
 };
 
@@ -113,20 +162,7 @@ var ui =
 
 		menu = doc.createElement("menupopup");
 
-		item = doc.createElement("menuitem");
-		item.setAttribute("type", "checkbox");
-		item.setAttribute("label", "Disabled");
-		item.addEventListener("command", (event) =>
-		{
-			if (!event && !event.target)
-				return;
-
-			if (event.target.hasAttribute('checked'))
-				addon.disable(ui.updateStatus);
-			else
-				addon.enable(ui.updateStatus);
-		}, false);
-		menu.appendChild(item);
+		item = MenuToggle.create(addon, "Disabled", menu, ui.updateStatus);
 
 		winUI = WinUI.create(btn, item);
 		winUI.updateState(addon.disabled);
