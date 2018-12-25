@@ -80,14 +80,27 @@ var EasyBlock =
 		window.addEventListener("load", listener, false);
 	},
 
+	toggle: function(value)
+	{
+		if (this.disabled == value)
+			return false;
+
+		this.disabled = value;
+		if (!value)
+			io.log("Enable 'EasyBlock' addon...");
+		else
+			io.log("Disable 'EasyBlock' addon...");
+
+		return true;
+	},
+
 	enable: function(cb)
 	{
 		if (!this.disabled || !cb)
 			return;
 
-		this.disabled = false;
+		this.toggle(false);
 		cb(this.disabled);
-		io.log("Enable 'EasyBlock' addon...");
 	},
 
 	disable: function(cb)
@@ -95,9 +108,8 @@ var EasyBlock =
 		if (this.disabled || !cb)
 			return;
 
-		this.disabled = true;
+		this.toggle(true);
 		cb(this.disabled);
-		io.log("Disable 'EasyBlock' addon...");
 	},
 
 	reload: function()
