@@ -153,7 +153,7 @@ var blgroup =
 		return true;
 	},
 
-	addSite: function(site)
+	add: function(site)
 	{
 		if (!site)
 			return;
@@ -313,7 +313,7 @@ var bldb =
 				}
 
 				site = blsite.create(line);
-				group.addSite(site);
+				group.add(site);
 			});
 
 			if (onLoad)
