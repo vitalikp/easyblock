@@ -115,7 +115,8 @@ var blsite =
 
 		res = '[' + this.cnt + '] ';
 		res += this.name;
-		res += ' (' + this.query.length + ')';
+		if (this.query.length > 0)
+			res += ' (' + this.query.length + ')';
 
 		return res;
 	}
