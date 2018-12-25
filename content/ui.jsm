@@ -241,6 +241,9 @@ var ui =
 			ui.selectToolbar(ui.toolbox.childNodes);
 
 		if (!ui.toolbarId)
+			ui.selectToolbar(ui.toolbox.externalToolbars);
+
+		if (!ui.toolbarId)
 		{
 			ui.toolbox.palette.appendChild(btn);
 			return;
