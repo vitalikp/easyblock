@@ -87,7 +87,8 @@ const WinUI =
 	{
 		if (this.btn)
 		{
-			this.btn.parentNode.removeChild(this.btn);
+			if (this.btn.parentNode)
+				this.btn.parentNode.removeChild(this.btn);
 			this.btn = null;
 		}
 		if (this.menuItem)
