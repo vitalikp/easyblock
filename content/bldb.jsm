@@ -139,6 +139,20 @@ var blgroup =
 		return group;
 	},
 
+	toggle: function(value)
+	{
+		if (this.enabled == value)
+			return false;
+
+		this.enabled = value;
+		if (value)
+			io.log("Enable '" + this.name + "' group");
+		else
+			io.log("Disable '" + this.name + "' group");
+
+		return true;
+	},
+
 	addSite: function(site)
 	{
 		if (!site)
