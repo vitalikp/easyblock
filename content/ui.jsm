@@ -236,13 +236,15 @@ var ui =
 			return;
 
 		btn = ui.createBtn(doc, addon);
-		ui.toolbox.palette.appendChild(btn);
 
 		if (!ui.toolbarId)
 			ui.selectToolbar(ui.toolbox.childNodes);
 
 		if (!ui.toolbarId)
+		{
+			ui.toolbox.palette.appendChild(btn);
 			return;
+		}
 
 		let toolbox = doc.getElementById(ui.toolbarId);
 		if (toolbox)
