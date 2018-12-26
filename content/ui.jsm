@@ -41,7 +41,7 @@ const MenuToggle =
 			value = event.target.hasAttribute('checked');
 
 			if (obj.toggle(value) && cb)
-				cb(value);
+				cb(obj);
 		}, false);
 		menu.appendChild(elem);
 
@@ -98,13 +98,13 @@ const WinUI =
 		}
 	},
 
-	updateState: function(state)
+	updateState: function(addon)
 	{
-		if (state)
+		if (addon.disabled)
 			this.btn.setAttribute("ebstate", "disabled");
 		else
 			this.btn.setAttribute("ebstate", "normal");
-		this.menuItem.update(state);
+		this.menuItem.update(addon.disabled);
 	}
 };
 
@@ -166,7 +166,7 @@ var ui =
 		item = MenuToggle.create(addon, "Disabled", menu, ui.updateStatus);
 
 		winUI = WinUI.create(btn, item);
-		winUI.updateState(addon.disabled);
+		winUI.updateState(addon);
 
 		reloadItem = doc.createElement("menuitem");
 		reloadItem.setAttribute("label", "Reload");
@@ -295,9 +295,9 @@ var ui =
 		sss.unregisterSheet(styleUri, sss.USER_SHEET);
 	},
 
-	updateStatus: function(state)
+	updateStatus: function(data)
 	{
-		ui.wins.forEach((winUI) => winUI.updateState(state));
+		ui.wins.forEach((winUI) => winUI.updateState(data));
 	},
 
 	notify: function(addon, msg)
