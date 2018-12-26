@@ -22,7 +22,7 @@ const MenuToggle =
 {
 	elem: null,
 
-	create: function(obj, name, menu, cb)
+	create: function(obj, name, menu, action)
 	{
 		let doc, menuState, elem;
 
@@ -40,8 +40,8 @@ const MenuToggle =
 
 			value = event.target.hasAttribute('checked');
 
-			if (obj.toggle(value) && cb)
-				cb('State', obj);
+			if (obj.toggle(value))
+				ui.update(action, obj);
 		}, false);
 		menu.appendChild(elem);
 
@@ -163,7 +163,7 @@ var ui =
 
 		menu = doc.createElement("menupopup");
 
-		item = MenuToggle.create(addon, "Disabled", menu, ui.update);
+		item = MenuToggle.create(addon, "Disabled", menu, 'State');
 
 		winUI = WinUI.create(btn, item);
 		winUI.updateState(addon);
