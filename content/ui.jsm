@@ -41,7 +41,7 @@ const MenuToggle =
 			value = event.target.hasAttribute('checked');
 
 			if (obj.toggle(value) && cb)
-				cb(obj);
+				cb('State', obj);
 		}, false);
 		menu.appendChild(elem);
 
@@ -295,9 +295,10 @@ var ui =
 		sss.unregisterSheet(styleUri, sss.USER_SHEET);
 	},
 
-	update: function(data)
+	update: function(action, data)
 	{
-		ui.wins.forEach((winUI) => winUI.updateState(data));
+		action = 'update' + action;
+		ui.wins.forEach((winUI) => winUI[action](data));
 	},
 
 	notify: function(addon, msg)
