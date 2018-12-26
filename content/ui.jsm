@@ -163,7 +163,7 @@ var ui =
 
 		menu = doc.createElement("menupopup");
 
-		item = MenuToggle.create(addon, "Disabled", menu, ui.updateStatus);
+		item = MenuToggle.create(addon, "Disabled", menu, ui.update);
 
 		winUI = WinUI.create(btn, item);
 		winUI.updateState(addon);
@@ -295,7 +295,7 @@ var ui =
 		sss.unregisterSheet(styleUri, sss.USER_SHEET);
 	},
 
-	updateStatus: function(data)
+	update: function(data)
 	{
 		ui.wins.forEach((winUI) => winUI.updateState(data));
 	},
