@@ -97,7 +97,7 @@ var EasyBlock =
 	reload: function()
 	{
 		this.db.close();
-		this.db.load('blacklist.txt', ui.notify(this, 'Blacklist sites reloaded!'));
+		this.db.load(ui.notify(this, 'Blacklist sites reloaded!'));
 	},
 
 	print: function(doc, elem)

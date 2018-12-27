@@ -231,7 +231,7 @@ var bldb =
 		db = Object.create(bldb);
 		db.commRegEx = new RegExp(COMM_PATTERN);
 		db.fn = fn;
-		db.load(fn);
+		db.load();
 
 		return db;
 	},
@@ -260,15 +260,15 @@ var bldb =
 //		io.log('add group "' + group.name + '" to blacklist');
 	},
 
-	load: function(fn, onLoad)
+	load: function(onLoad)
 	{
 		let db, site, index;
 
-		io.log("load blacklist sites from '" + fn + "' file");
+		io.log("load blacklist sites from '" + this.fn + "' file");
 
 		db = this;
 
-		io.loadText(fn, (data) =>
+		io.loadText(this.fn, (data) =>
 		{
 			let arr, res, group;
 
