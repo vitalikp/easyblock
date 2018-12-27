@@ -219,6 +219,7 @@ var blgroup =
 
 var bldb =
 {
+	fn: '',
 	commRegEx: '',
 	defGroup: null,
 	groups: [],
@@ -229,6 +230,7 @@ var bldb =
 
 		db = Object.create(bldb);
 		db.commRegEx = new RegExp(COMM_PATTERN);
+		db.fn = fn;
 		db.load(fn);
 
 		return db;
