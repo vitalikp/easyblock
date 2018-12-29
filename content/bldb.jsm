@@ -320,7 +320,7 @@ var bldb =
 			});
 
 			if (onLoad)
-				onLoad();
+				onLoad(db);
 		});
 	},
 
