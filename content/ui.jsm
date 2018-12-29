@@ -110,7 +110,7 @@ const WinUI =
 
 const Notify =
 {
-	sendUI: function(state, type, msg)
+	sendUI: function(addon, type, msg)
 	{
 		let win, doc, node;
 
@@ -126,7 +126,7 @@ const Notify =
 		node.setAttribute("type", type);
 		node.setAttribute("class", "easyblock");
 		node.setAttribute("label", msg);
-		if (state)
+		if (addon.disabled)
 			node.setAttribute("ebstate", "disabled");
 		else
 			node.setAttribute("ebstate", "normal");
@@ -303,6 +303,6 @@ var ui =
 
 	notify: function(addon, msg)
 	{
-		Notify.sendUI(addon.disabled, 'info', msg);
+		Notify.sendUI(addon, 'info', msg);
 	}
 };
