@@ -175,7 +175,10 @@ var ui =
 			if (!event && !event.target)
 				return;
 
-			addon.reload();
+			addon.reload((db) =>
+			{
+				ui.notify(addon, 'Blacklist sites reloaded!');
+			});
 		}, false);
 		menu.appendChild(reloadItem);
 

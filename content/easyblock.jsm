@@ -94,10 +94,10 @@ var EasyBlock =
 		return true;
 	},
 
-	reload: function()
+	reload: function(onLoad)
 	{
 		this.db.close();
-		this.db.load(ui.notify(this, 'Blacklist sites reloaded!'));
+		this.db.load(onLoad);
 	},
 
 	print: function(doc, elem)
