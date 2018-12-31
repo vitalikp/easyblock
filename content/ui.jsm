@@ -72,6 +72,7 @@ const WinUI =
 	btn: null,
 	menuItem: null,
 	grpMenu: null,
+	groups: [],
 
 	create: function(btn, menuItem, grpMenu)
 	{
@@ -93,11 +94,14 @@ const WinUI =
 				this.btn.parentNode.removeChild(this.btn);
 			this.btn = null;
 		}
+
 		if (this.menuItem)
 		{
 			this.menuItem.destroy();
 			this.menuItem = null;
 		}
+
+		this.groups = [];
 	},
 
 	updateState: function(addon)
