@@ -253,7 +253,7 @@ var ui =
 
 			addon.reload((db) =>
 			{
-				ui.wins.forEach((winUI) => winUI.loadGroups(db.groups));
+				ui.onLoadDB(db);
 				ui.notify(addon, 'Blacklist sites reloaded!');
 			});
 		}, false);
@@ -373,6 +373,11 @@ var ui =
 	{
 		let styleUri = Services.io.newURI("chrome://easyblock/content/" + style + ".css", null, null);
 		sss.unregisterSheet(styleUri, sss.USER_SHEET);
+	},
+
+	onLoadDB: function(db)
+	{
+		ui.wins.forEach((winUI) => winUI.loadGroups(db.groups));
 	},
 
 	update: function(action, data)
