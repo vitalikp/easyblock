@@ -121,6 +121,11 @@ const WinUI =
 	loadGroups: function(groups)
 	{
 		this.clearGroups();
+	},
+
+	updateGroup: function(group)
+	{
+
 	}
 };
 
