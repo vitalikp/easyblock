@@ -71,14 +71,16 @@ const WinUI =
 {
 	btn: null,
 	menuItem: null,
+	grpMenu: null,
 
-	create: function(btn, menuItem)
+	create: function(btn, menuItem, grpMenu)
 	{
 		let winUI;
 
 		winUI = Object.create(WinUI);
 		winUI.btn = btn;
 		winUI.menuItem = menuItem;
+		winUI.grpMenu = grpMenu;
 
 		return winUI;
 	},
@@ -173,7 +175,7 @@ var ui =
 
 		item = MenuToggle.create(addon, "Disabled", menu, 'State');
 
-		winUI = WinUI.create(btn, item);
+		winUI = WinUI.create(btn, item, grpMenu);
 		winUI.updateState(addon);
 
 		reloadItem = doc.createElement("menuitem");
