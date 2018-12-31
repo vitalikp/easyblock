@@ -224,14 +224,14 @@ var bldb =
 	defGroup: null,
 	groups: [],
 
-	create: function(fn)
+	create: function(fn, onLoad)
 	{
 		var db;
 
 		db = Object.create(bldb);
 		db.commRegEx = new RegExp(COMM_PATTERN);
 		db.fn = fn;
-		db.load();
+		db.load(onLoad);
 
 		return db;
 	},

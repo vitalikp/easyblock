@@ -33,7 +33,7 @@ var EasyBlock =
 
 		EasyBlock.observer.reg(os);
 
-		this.db = bldb.create('blacklist.txt');
+		this.db = bldb.create('blacklist.txt', ui.onLoadDB);
 
 		windows = Services.wm.getEnumerator("navigator:browser");
 
