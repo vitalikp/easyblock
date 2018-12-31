@@ -67,6 +67,43 @@ const MenuToggle =
 	}
 };
 
+const GroupUI =
+{
+	group: null,
+	menuItem: null,
+
+	create: function(group, menu)
+	{
+		let groupUI, menuItem;
+
+		menuItem = MenuToggle.create(group, group, menu, 'Group');
+		menuItem.update(group.enabled);
+
+		groupUI = Object.create(GroupUI);
+		groupUI.group = group;
+		groupUI.menuItem = menuItem;
+
+		return groupUI;
+	},
+
+	destroy: function()
+	{
+		if (this.menuItem)
+		{
+			this.menuItem.destroy();
+			this.menuItem = null;
+		}
+	},
+
+	update: function(group)
+	{
+		if (group.name != this.group.name)
+			return;
+
+		this.menuItem.update(group.enabled);
+	}
+};
+
 const WinUI =
 {
 	btn: null,
@@ -115,17 +152,26 @@ const WinUI =
 
 	clearGroups: function()
 	{
+		this.groups.forEach((grpUI) => grpUI.destroy());
 		this.groups = [];
 	},
 
 	loadGroups: function(groups)
 	{
 		this.clearGroups();
+		groups.forEach((group) =>
+		{
+			let grpUI;
+
+			grpUI = GroupUI.create(group, this.grpMenu);
+
+			this.groups.push(grpUI);
+		});
 	},
 
 	updateGroup: function(group)
 	{
-
+		this.groups.forEach((grpUI) => grpUI.update(group));
 	}
 };
 
