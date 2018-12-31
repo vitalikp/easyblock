@@ -116,6 +116,11 @@ const WinUI =
 	clearGroups: function()
 	{
 		this.groups = [];
+	},
+
+	loadGroups: function(groups)
+	{
+		this.clearGroups();
 	}
 };
 
@@ -186,6 +191,7 @@ var ui =
 
 		winUI = WinUI.create(btn, item, grpMenu);
 		winUI.updateState(addon);
+		winUI.loadGroups(addon.db.groups);
 
 		reloadItem = doc.createElement("menuitem");
 		reloadItem.setAttribute("label", "Reload");
@@ -196,6 +202,7 @@ var ui =
 
 			addon.reload((db) =>
 			{
+				ui.wins.forEach((winUI) => winUI.loadGroups(db.groups));
 				ui.notify(addon, 'Blacklist sites reloaded!');
 			});
 		}, false);
