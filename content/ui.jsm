@@ -151,7 +151,7 @@ var ui =
 
 	createBtn: function(doc, addon)
 	{
-		let winUI, btn, menu, item, reloadItem;
+		let winUI, btn, menu, popupMenu, grpMenu, item, reloadItem;
 
 		btn = doc.createElement("toolbarbutton");
 		btn.setAttribute("id", BTN_ID);
@@ -162,6 +162,14 @@ var ui =
 		btn.setAttribute("tooltiptext", "EasyBlock toolbar button");
 
 		menu = doc.createElement("menupopup");
+
+		grpMenu = doc.createElement("menu");
+		grpMenu.setAttribute("label", "Groups");
+		menu.appendChild(grpMenu);
+
+		popupMenu = doc.createElement("menupopup");
+		grpMenu.appendChild(popupMenu);
+		grpMenu = popupMenu;
 
 		item = MenuToggle.create(addon, "Disabled", menu, 'State');
 
