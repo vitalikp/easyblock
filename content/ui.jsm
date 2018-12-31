@@ -101,7 +101,7 @@ const WinUI =
 			this.menuItem = null;
 		}
 
-		this.groups = [];
+		this.clearGroups();
 	},
 
 	updateState: function(addon)
@@ -111,6 +111,11 @@ const WinUI =
 		else
 			this.btn.setAttribute("ebstate", "normal");
 		this.menuItem.update(addon.disabled);
+	},
+
+	clearGroups: function()
+	{
+		this.groups = [];
 	}
 };
 
