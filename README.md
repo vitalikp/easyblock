@@ -20,6 +20,12 @@ example.net
 # by MIME type in response
 # example.net/img/test.jpg
   type:image/jpeg
+
+# add sites to “Group1” group
+# title: Group1
+example.com
+example.net
+mysite1.com
 ```
 
 # License
