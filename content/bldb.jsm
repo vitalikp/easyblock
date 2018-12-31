@@ -255,8 +255,6 @@ var bldb =
 
 		this.groups.push(group);
 		group.id = id;
-		if (!id)
-			this.defGroup = group;
 //		io.log('add group "' + group.name + '" to blacklist');
 	},
 
@@ -276,9 +274,9 @@ var bldb =
 				return;
 
 			group = blgroup.create('Default');
-			db.add(group);
-			if (!db.defGroup)
-				return;
+			group.id = 0;
+			db.defGroup = group;
+			db.groups.push(group);
 
 			arr = data.split(/\r\n|\n/);
 			arr.forEach((line) =>
