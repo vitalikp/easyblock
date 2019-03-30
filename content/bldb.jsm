@@ -117,16 +117,7 @@ var blsite =
 		if (!url)
 			return false;
 
-		if (!this.hasHost(url.hostname))
-			return false;
-
-		if (!this.hasRules)
-			return true;
-
-		if (this.hasType(type))
-			return true;
-
-		return this.hasPath(url.pathname);
+		return this.hasHost(url.hostname);
 	},
 
 	block: function(subject)
@@ -195,7 +186,7 @@ var blgroup =
 //		io.log(this.name + ': add url "' + site.name + '"');
 	},
 
-	find: function(url, type)
+	find: function(url)
 	{
 		let site;
 		let i = 0;
@@ -203,13 +194,13 @@ var blgroup =
 		if (!this.enabled)
 			return null;
 
-		if (!url && !type)
+		if (!url)
 			return null;
 
 		while (i < this.data.length)
 		{
 			site = this.data[i++];
-			if (site.check(url, type))
+			if (site.check(url))
 				return site;
 		}
 
@@ -367,22 +358,22 @@ var bldb =
 		return url;
 	},
 
-	find: function(url, type)
+	find: function(url)
 	{
 		let group, site;
 		let i = 0;
 
-		if (!url && !type)
+		if (!url)
 			return null;
 
 		while (i < this.groups.length)
 		{
 			group = this.groups[i++];
-			site = group.find(url, type);
+			site = group.find(url);
 			if (!site)
 				continue;
 
-			if (site.check(url, type))
+			if (site.check(url))
 				return site;
 		}
 
@@ -411,6 +402,14 @@ var bldb =
 		if (!site)
 			return;
 
+		if (site.hasRules)
+		{
+			if (site.hasPath(url.pathname))
+				site.block(subject);
+
+			return;
+		}
+
 		site.block(subject);
 	},
 
@@ -430,9 +429,17 @@ var bldb =
 		if (!url)
 			return;
 
-		site = this.find(url, type);
+		site = this.find(url);
 		if (!site)
 			return;
+
+		if (site.hasRules)
+		{
+			if (site.hasType(type) || site.hasPath(url.pathname))
+				site.block(subject);
+
+			return;
+		}
 
 		site.block(subject);
 	},
