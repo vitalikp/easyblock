@@ -122,13 +122,15 @@ var EasyBlock =
 
 		if (site.hasRules)
 		{
-			if (site.hasType(type) || site.hasPath(url.pathname))
-				site.block(req);
-
-			return;
+			if (!site.hasType(type) && !site.hasPath(url.pathname))
+				return;
 		}
 
-		site.block(req);
+		site.cnt++;
+		io.log("Blocking site '" + site.name + "'");
+
+		req.loadFlags = Ci.nsICachingChannel.LOAD_ONLY_FROM_CACHE;
+		req.cancel(Cr.NS_BINDING_ABORTED);
 	},
 
 	print: function(doc, elem)

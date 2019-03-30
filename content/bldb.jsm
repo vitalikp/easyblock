@@ -110,18 +110,6 @@ var blsite =
 		return false;
 	},
 
-	block: function(subject)
-	{
-		if (!subject)
-			return;
-
-		this.cnt++;
-		io.log("Blocking site '" + this.name + "'");
-
-		subject.loadFlags = Ci.nsICachingChannel.LOAD_ONLY_FROM_CACHE;
-		subject.cancel(Cr.NS_BINDING_ABORTED);
-	},
-
 	toString: function()
 	{
 		let res;
