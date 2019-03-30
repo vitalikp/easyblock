@@ -68,6 +68,23 @@ var blsite =
 		this.type.push(new RegExp(line));
 	},
 
+	hasType: function(type)
+	{
+		let i;
+
+		if (!type || !this.type.length)
+			return false;
+
+		i = 0;
+		while (i < this.type.length)
+		{
+			if (this.type[i++].test(type))
+				return true;
+		}
+
+		return false;
+	},
+
 	check: function(url, type)
 	{
 		let res, i;
@@ -82,15 +99,8 @@ var blsite =
 		if (!this.hasRules)
 			return true;
 
-		if (type && this.type.length > 0)
-		{
-			i = 0;
-			while (i < this.type.length)
-			{
-				if (this.type[i++].test(type))
-					return true;
-			}
-		}
+		if (this.hasType(type))
+			return true;
 
 		i = 0;
 		while (i < this.query.length)
