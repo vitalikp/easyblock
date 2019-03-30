@@ -126,11 +126,10 @@ var EasyBlock =
 				return;
 		}
 
-		site.cnt++;
-		io.log("Blocking site '" + site.name + "'");
-
 		req.loadFlags = Ci.nsICachingChannel.LOAD_ONLY_FROM_CACHE;
 		req.cancel(Cr.NS_BINDING_ABORTED);
+
+		site.onBlock();
 	},
 
 	print: function(doc, elem)

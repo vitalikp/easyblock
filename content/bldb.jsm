@@ -110,6 +110,12 @@ var blsite =
 		return false;
 	},
 
+	onBlock: function()
+	{
+		this.cnt++;
+		io.log("Blocking site '" + this.name + "'");
+	},
+
 	toString: function()
 	{
 		let res;
