@@ -374,34 +374,6 @@ var bldb =
 		return !this.find(url);
 	},
 
-	blockReq: function(subject)
-	{
-		let url, site;
-
-		if (!subject)
-			return;
-
-		subject.QueryInterface(Ci.nsIHttpChannel);
-
-		url = this.parse(subject.URI.spec);
-		if (!url)
-			return;
-
-		site = this.find(url);
-		if (!site)
-			return;
-
-		if (site.hasRules)
-		{
-			if (site.hasPath(url.pathname))
-				site.block(subject);
-
-			return;
-		}
-
-		site.block(subject);
-	},
-
 	blockResp: function(subject)
 	{
 		let url, site;
