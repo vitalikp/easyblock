@@ -110,16 +110,6 @@ var blsite =
 		return false;
 	},
 
-	check: function(url, type)
-	{
-		let res;
-
-		if (!url)
-			return false;
-
-		return this.hasHost(url.hostname);
-	},
-
 	block: function(subject)
 	{
 		if (!subject)
@@ -200,7 +190,7 @@ var blgroup =
 		while (i < this.data.length)
 		{
 			site = this.data[i++];
-			if (site.check(url))
+			if (site.hasHost(url.hostname))
 				return site;
 		}
 
@@ -373,8 +363,7 @@ var bldb =
 			if (!site)
 				continue;
 
-			if (site.check(url))
-				return site;
+			return site;
 		}
 
 		return null;
