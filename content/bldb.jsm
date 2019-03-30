@@ -37,6 +37,11 @@ var blsite =
 		return site;
 	},
 
+	get hasRules()
+	{
+		return this.query.length > 0 || this.type.length > 0;
+	},
+
 	addQuery: function(line)
 	{
 		if (!line)
@@ -74,6 +79,9 @@ var blsite =
 		if (!res)
 			return false;
 
+		if (!this.hasRules)
+			return true;
+
 		if (type && this.type.length > 0)
 		{
 			i = 0;
@@ -83,9 +91,6 @@ var blsite =
 					return true;
 			}
 		}
-
-		if (this.query.length == 0)
-			return this.type.length == 0;
 
 		i = 0;
 		while (i < this.query.length)
