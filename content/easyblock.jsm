@@ -100,6 +100,37 @@ var EasyBlock =
 		this.db.load(onLoad);
 	},
 
+	blockHttp: function(req, isResp)
+	{
+		let url, type, site;
+
+		if (!req)
+			return;
+
+		req.QueryInterface(Ci.nsIHttpChannel);
+
+		if (isResp)
+			type = req.contentType;
+
+		url = this.db.parse(req.URI.spec);
+		if (!url)
+			return;
+
+		site = this.db.find(url);
+		if (!site)
+			return;
+
+		if (site.hasRules)
+		{
+			if (site.hasType(type) || site.hasPath(url.pathname))
+				site.block(req);
+
+			return;
+		}
+
+		site.block(req);
+	},
+
 	print: function(doc, elem)
 	{
 		this.db.print(doc, elem);
@@ -139,11 +170,11 @@ var EasyBlock =
 			switch (topic)
 			{
 				case OBS_REQ:
-					EasyBlock.db.blockReq(subject);
+					EasyBlock.blockHttp(subject);
 					return;
 
 				case OBS_RESP:
-					EasyBlock.db.blockResp(subject);
+					EasyBlock.blockHttp(subject, true);
 					return;
 			}
 		}
