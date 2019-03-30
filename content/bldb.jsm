@@ -57,6 +57,23 @@ var blsite =
 		this.query.push(new RegExp('^' + line));
 	},
 
+	hasPath: function(path)
+	{
+		let i;
+
+		if (!path || !this.query.length)
+			return false;
+
+		i = 0;
+		while (i < this.query.length)
+		{
+			if (this.query[i++].test(path))
+				return true;
+		}
+
+		return false;
+	},
+
 	addType: function(line)
 	{
 		if (!line)
@@ -87,7 +104,7 @@ var blsite =
 
 	check: function(url, type)
 	{
-		let res, i;
+		let res;
 
 		if (!url)
 			return false;
@@ -102,14 +119,7 @@ var blsite =
 		if (this.hasType(type))
 			return true;
 
-		i = 0;
-		while (i < this.query.length)
-		{
-			if (this.query[i++].test(url.pathname))
-				return true;
-		}
-
-		return false;
+		return this.hasPath(url.pathname);
 	},
 
 	block: function(subject)
