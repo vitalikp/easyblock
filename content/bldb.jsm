@@ -42,6 +42,14 @@ var blsite =
 		return this.query.length > 0 || this.type.length > 0;
 	},
 
+	hasHost: function(host)
+	{
+		if (!host || !this.host)
+			return false;
+
+		return this.host.test(host) || this.host.test('www.'+host);
+	},
+
 	addQuery: function(line)
 	{
 		if (!line)
@@ -109,8 +117,7 @@ var blsite =
 		if (!url)
 			return false;
 
-		res = this.host.test(url.hostname) || this.host.test('www.'+url.hostname);
-		if (!res)
+		if (!this.hasHost(url.hostname))
 			return false;
 
 		if (!this.hasRules)
