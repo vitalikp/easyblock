@@ -30,11 +30,15 @@ var EasyBlock =
 
 	startup: function(addonData)
 	{
-		var windows;
+		var windows, defprefs;
 
 		EasyBlock.observer.reg(os);
 
 		this.db = bldb.create('blacklist.txt', ui.onLoadDB);
+
+		// init default prefs
+		defprefs = Services.prefs.getDefaultBranch("extensions.easyblock.");
+
 		this.prefs = Services.prefs.getBranch("extensions.easyblock.");
 
 		windows = Services.wm.getEnumerator("navigator:browser");
