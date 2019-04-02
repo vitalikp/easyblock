@@ -38,8 +38,12 @@ var EasyBlock =
 
 		// init default prefs
 		defprefs = Services.prefs.getDefaultBranch("extensions.easyblock.");
+		defprefs.setBoolPref('disabled', false);
 
 		this.prefs = Services.prefs.getBranch("extensions.easyblock.");
+
+		// restore pref options from prefs store
+		this.disabled = this.prefs.getBoolPref('disabled');
 
 		windows = Services.wm.getEnumerator("navigator:browser");
 
@@ -92,6 +96,7 @@ var EasyBlock =
 			return false;
 
 		this.disabled = value;
+		this.prefs.setBoolPref('disabled', this.disabled);
 		if (!value)
 			io.log("Enable 'EasyBlock' addon...");
 		else
