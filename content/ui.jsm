@@ -218,7 +218,7 @@ var ui =
 
 	createBtn: function(doc, addon)
 	{
-		let winUI, btn, menu, popupMenu, grpMenu, item, reloadItem;
+		let win, winUI, btn, menu, popupMenu, grpMenu, item, reloadItem;
 
 		btn = doc.createElement("toolbarbutton");
 		btn.setAttribute("id", BTN_ID);
@@ -229,6 +229,18 @@ var ui =
 		btn.setAttribute("tooltiptext", "EasyBlock toolbar button");
 
 		menu = doc.createElement("menupopup");
+
+		win = doc.defaultView;
+		item = doc.createElement("menuitem");
+		item.setAttribute("label", "Filters");
+		item.addEventListener("command", (event) =>
+		{
+			if (!event && !event.target)
+				return;
+
+			win.openDialog('chrome://easyblock/content/options.xul', 'EasyBlockFilters', 'chrome,titlebar,centerscreen,resizable').focus();
+		});
+		menu.appendChild(item);
 
 		grpMenu = doc.createElement("menu");
 		grpMenu.setAttribute("label", "Groups");
@@ -259,7 +271,7 @@ var ui =
 		}, false);
 		menu.appendChild(reloadItem);
 
-		doc.defaultView.addEventListener('unload', (event) => 
+		win.addEventListener('unload', (event) => 
 		{
 			let i;
 
