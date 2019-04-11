@@ -42,6 +42,30 @@ var blsite =
 		return this.query.length > 0 || this.type.length > 0;
 	},
 
+	addRule: function(rule)
+	{
+		let i;
+
+		if (!rule || !rule.length)
+			return false;
+
+		i = 0;
+		if (rule[i] != '\t' && rule[i++] != ' ' && rule[i] != ' ')
+			return false;
+		rule = rule.substr(i+1);
+
+		if (rule.startsWith('type:'))
+		{
+			this.addType(rule.substr(5));
+
+			return true;
+		}
+
+		this.addQuery(rule);
+
+		return true;
+	},
+
 	hasHost: function(host)
 	{
 		if (!host || !this.host)
@@ -267,7 +291,7 @@ var bldb =
 
 	load: function(onLoad)
 	{
-		let db, site, index;
+		let db, site;
 
 		io.log("load blacklist sites from '" + this.fn + "' file");
 
@@ -310,15 +334,8 @@ var bldb =
 					return;
 				}
 
-				if (site && (line[0] == '\t' || line[0] == ' ' && line[1] == ' '))
-				{
-					index = line.indexOf('type:');
-					if (index > 0)
-						site.addType(line.substr(index+5));
-					else
-						site.addQuery(line);
+				if (site && site.addRule(line))
 					return;
-				}
 
 				site = blsite.create(line);
 				group.add(site);
