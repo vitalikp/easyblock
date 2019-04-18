@@ -383,11 +383,6 @@ var bldb =
 		return null;
 	},
 
-	hasUrl: function(url)
-	{
-		return !this.find(url);
-	},
-
 	print: function(doc, elem)
 	{
 		let group;
