@@ -124,10 +124,10 @@ var EasyBlock =
 			type = req.contentType;
 
 		url = this.db.parse(req.URI.spec);
-		if (!url)
+		if (!url || !url.hostname)
 			return;
 
-		site = this.db.find(url);
+		site = this.db.find(url.hostname);
 		if (!site)
 			return;
 

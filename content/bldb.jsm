@@ -194,21 +194,18 @@ var blgroup =
 //		io.log(this.name + ': add url "' + site.name + '"');
 	},
 
-	find: function(url)
+	find: function(hostname)
 	{
 		let site;
 		let i = 0;
 
-		if (!this.enabled)
-			return null;
-
-		if (!url)
+		if (!hostname || !this.enabled)
 			return null;
 
 		while (i < this.data.length)
 		{
 			site = this.data[i++];
-			if (site.hasHost(url.hostname))
+			if (site.hasHost(hostname))
 				return site;
 		}
 
@@ -362,18 +359,18 @@ var bldb =
 		return url;
 	},
 
-	find: function(url)
+	find: function(hostname)
 	{
 		let group, site;
 		let i = 0;
 
-		if (!url)
+		if (!hostname)
 			return null;
 
 		while (i < this.groups.length)
 		{
 			group = this.groups[i++];
-			site = group.find(url);
+			site = group.find(hostname);
 			if (!site)
 				continue;
 
