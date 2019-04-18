@@ -291,12 +291,11 @@ var bldb =
 
 	load: function(onLoad)
 	{
-		let db, site;
-
-		io.log("load blacklist sites from '" + this.fn + "' file");
+		let db, site, loadtime;
 
 		db = this;
 
+		loadtime = new Date();
 		io.loadText(this.fn, (data) =>
 		{
 			let arr, res, group;
@@ -341,8 +340,12 @@ var bldb =
 				group.add(site);
 			});
 
+			loadtime = new Date() - loadtime;
+
 			if (onLoad)
 				onLoad(db);
+
+			io.log("load blacklist sites from '" + db.fn + "' file (" + loadtime + " ms)");
 		});
 	},
 
