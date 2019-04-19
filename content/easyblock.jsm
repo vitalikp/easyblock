@@ -113,7 +113,7 @@ var EasyBlock =
 
 	blockHttp: function(req, isResp)
 	{
-		let url, type, site;
+		let type, site;
 
 		if (!req)
 			return;
@@ -123,17 +123,16 @@ var EasyBlock =
 		if (isResp)
 			type = req.contentType;
 
-		url = this.db.parse(req.URI.spec);
-		if (!url || !url.hostname)
+		if (!req.URI)
 			return;
 
-		site = this.db.find(url.hostname);
+		site = this.db.find(req.URI.host);
 		if (!site)
 			return;
 
 		if (site.hasRules)
 		{
-			if (!site.hasType(type) && !site.hasPath(url.pathname))
+			if (!site.hasType(type) && !site.hasPath(req.URI.path))
 				return;
 		}
 
