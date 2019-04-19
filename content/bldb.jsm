@@ -8,8 +8,6 @@ const Cr = Components.results;
 var EXPORTED_SYMBOLS = ["bldb"];
 
 // import
-Cu.importGlobalProperties(["URL"]);
-
 Cu.import("chrome://easyblock/content/io.jsm");
 
 
@@ -344,19 +342,6 @@ var bldb =
 
 			io.log("load blacklist sites from '" + db.fn + "' file (" + loadtime + " ms)");
 		});
-	},
-
-	parse: function(uri)
-	{
-		let url;
-
-		if (!uri)
-			return null;
-
-		url = new URL(uri);
-		url.hostname = url.hostname.replace(/^(www\.)?/,'');
-
-		return url;
 	},
 
 	find: function(hostname)
