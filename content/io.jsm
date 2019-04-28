@@ -30,8 +30,11 @@ var io =
 	{
 		let warn;
 
+		if (!msg)
+			return;
+
 		warn = scriptError.createInstance(Ci.nsIScriptError);
-		warn.init("[" + ADDON_NAME + "] " + msg, null, null, 0, 0, warn.warningFlag, null);
+		warn.init("[" + ADDON_NAME + "] " + msg, msg.fileName, msg.lineNumber, msg.lineNumber, 0, warn.warningFlag, null);
 		Services.console.logMessage(warn);
 	},
 
@@ -39,8 +42,11 @@ var io =
 	{
 		let err;
 
+		if (!msg)
+			return;
+
 		err = scriptError.createInstance(Ci.nsIScriptError);
-		err.init("[" + ADDON_NAME + "] " + msg, null, null, 0, 0, err.errorFlag, null);
+		err.init("[" + ADDON_NAME + "] " + msg, msg.fileName, msg.lineNumber, msg.lineNumber, 0, err.errorFlag, null);
 		Services.console.logMessage(err);
 	},
 
