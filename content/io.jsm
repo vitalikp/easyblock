@@ -31,7 +31,7 @@ var io =
 		let warn;
 
 		warn = scriptError.createInstance(Ci.nsIScriptError);
-		warn.init("[" + ADDON_NAME + "] warning: " + msg, null, null, 0, 0, warn.warningFlag, null);
+		warn.init("[" + ADDON_NAME + "] " + msg, null, null, 0, 0, warn.warningFlag, null);
 		Services.console.logMessage(warn);
 	},
 
@@ -40,7 +40,7 @@ var io =
 		let err;
 
 		err = scriptError.createInstance(Ci.nsIScriptError);
-		err.init("[" + ADDON_NAME + "] error: " + msg, null, null, 0, 0, err.errorFlag, null);
+		err.init("[" + ADDON_NAME + "] " + msg, null, null, 0, 0, err.errorFlag, null);
 		Services.console.logMessage(err);
 	},
 
