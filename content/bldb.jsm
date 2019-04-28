@@ -9,6 +9,7 @@ var EXPORTED_SYMBOLS = ["bldb"];
 
 // import
 Cu.import("chrome://easyblock/content/io.jsm");
+Cu.import("chrome://easyblock/content/blhost.jsm");
 
 
 const COMM_PATTERN = "^# (title): ([a-zA-Z0-9]*)$";
@@ -17,18 +18,20 @@ const COMM_PATTERN = "^# (title): ([a-zA-Z0-9]*)$";
 var blsite =
 {
 	name: '',
-	host: '',
+	host: null,
 	query: [],
 	type: [],
 	cnt: 0,
 
-	create: function(host)
+	create: function(hostname)
 	{
-		var site;
+		var site, host;
+
+		host = new blhost(hostname, true);
 
 		site = Object.create(this);
-		site.name = host;
-		site.host = new RegExp('^' + host, "i");
+		site.name = hostname;
+		site.host = host;
 		site.query = [];
 		site.type = [];
 
@@ -69,7 +72,7 @@ var blsite =
 		if (!host || !this.host)
 			return false;
 
-		return this.host.test(host) || this.host.test('www.'+host);
+		return this.host.hasHost(host);
 	},
 
 	addQuery: function(line)
@@ -192,18 +195,18 @@ var blgroup =
 //		io.log(this.name + ': add url "' + site.name + '"');
 	},
 
-	find: function(hostname)
+	find: function(host)
 	{
 		let site;
 		let i = 0;
 
-		if (!hostname || !this.enabled)
+		if (!host || !this.enabled)
 			return null;
 
 		while (i < this.data.length)
 		{
 			site = this.data[i++];
-			if (site.hasHost(hostname))
+			if (site.hasHost(host))
 				return site;
 		}
 
@@ -293,7 +296,8 @@ var bldb =
 		loadtime = new Date();
 		io.loadText(this.fn, (data) =>
 		{
-			let arr, res, group;
+			let arr, res, group, line;
+			let i;
 
 			if (!data)
 				return;
@@ -304,19 +308,22 @@ var bldb =
 			db.groups.push(group);
 
 			arr = data.split(/\r\n|\n/);
-			arr.forEach((line) =>
+
+			i = 0;
+			while (i < arr.length)
 			{
+				line = arr[i++];
 				if (!line)
 				{
 					group = db.defGroup;
-					return;
+					continue;
 				}
 
 				if (line[0] == '#' || line[0] == '!')
 				{
 					res = db.commRegEx.exec(line);
 					if (!res)
-						return;
+						continue;
 
 					switch (res[1])
 					{
@@ -325,15 +332,23 @@ var bldb =
 							db.add(group);
 							break;
 					}
-					return;
+					continue;
 				}
 
 				if (site && site.addRule(line))
-					return;
+					continue;
 
-				site = blsite.create(line);
-				group.add(site);
-			});
+				try
+				{
+					site = blsite.create(line);
+					group.add(site);
+				}
+				catch (e)
+				{
+					io.warn('ignore hostname "' + line + '"');
+					io.error(new SyntaxError(e.message, db.fn, i));
+				}
+			}
 
 			loadtime = new Date() - loadtime;
 
@@ -346,16 +361,25 @@ var bldb =
 
 	find: function(hostname)
 	{
-		let group, site;
+		let group, site, host;
 		let i = 0;
 
 		if (!hostname)
 			return null;
 
+		try
+		{
+			host = new blhost(hostname);
+		}
+		catch (e)
+		{
+			return null;
+		}
+
 		while (i < this.groups.length)
 		{
 			group = this.groups[i++];
-			site = group.find(hostname);
+			site = group.find(host);
 			if (!site)
 				continue;
 
