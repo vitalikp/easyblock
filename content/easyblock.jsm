@@ -105,6 +105,14 @@ var EasyBlock =
 		return true;
 	},
 
+	findSite: function(hostname)
+	{
+		if (!hostname || !this.db)
+			return;
+
+		return this.db.find(hostname);
+	},
+
 	reload: function(onLoad)
 	{
 		this.db.close();
@@ -126,7 +134,7 @@ var EasyBlock =
 		if (!req.URI)
 			return;
 
-		site = this.db.find(req.URI.host);
+		site = this.findSite(req.URI.host);
 		if (!site)
 			return;
 
