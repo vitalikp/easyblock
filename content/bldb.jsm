@@ -2,6 +2,7 @@
 
 const Ci = Components.interfaces;
 const Cu = Components.utils;
+const Cc = Components.classes;
 const Cr = Components.results;
 
 
@@ -14,6 +15,9 @@ Cu.import("chrome://easyblock/content/blhost.jsm");
 
 const COMM_PATTERN = "^# (title): ([a-zA-Z0-9]*)$";
 
+const domparser = Cc["@mozilla.org/xmlextras/domparser;1"].createInstance(Ci.nsIDOMParser);
+const _doc = domparser.parseFromString('<body/>', 'text/html');
+
 
 var blsite =
 {
@@ -21,6 +25,7 @@ var blsite =
 	host: null,
 	query: [],
 	type: [],
+	dom: [],
 	cnt: 0,
 
 	create: function(hostname)
@@ -34,13 +39,14 @@ var blsite =
 		site.host = host;
 		site.query = [];
 		site.type = [];
+		site.dom = [];
 
 		return site;
 	},
 
 	get hasRules()
 	{
-		return this.query.length > 0 || this.type.length > 0;
+		return this.query.length > 0 || this.type.length > 0 || this.dom.length > 0;
 	},
 
 	addRule: function(rule)
@@ -58,6 +64,13 @@ var blsite =
 		if (rule.startsWith('type:'))
 		{
 			this.addType(rule.substr(5));
+
+			return true;
+		}
+
+		if (rule.startsWith('dom:'))
+		{
+			this.addDom(rule.substr(4));
 
 			return true;
 		}
@@ -133,6 +146,22 @@ var blsite =
 		}
 
 		return false;
+	},
+
+	addDom: function(line)
+	{
+		if (!line)
+			return;
+
+		line = line.trim();
+
+		_doc.querySelectorAll(line);
+		this.dom.push(line);
+	},
+
+	get hasDom()
+	{
+		return this.dom.length > 0;
 	},
 
 	onBlock: function()
