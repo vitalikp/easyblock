@@ -29,7 +29,7 @@ a.example.org
 # filter document content with DOM rules (for http and https only)
 # remove element with id “test1”
 example.com
-  dom:test1
+  dom:#test1
 
 
 # add sites to “Group1” group
