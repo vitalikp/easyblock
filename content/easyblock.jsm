@@ -22,11 +22,30 @@ const OBS_REQ = "http-on-modify-request";
 const OBS_RESP = "http-on-examine-response";
 
 
+const ProcessAPI =
+{
+	loadScript: function(name)
+	{
+		Services.mm.loadFrameScript("chrome://easyblock/content/" + name, true);
+	},
+
+	regEvent: function(event, handler)
+	{
+		Services.mm.addMessageListener(event, handler);
+	},
+
+	sendEvent: function(event, data)
+	{
+		Services.mm.broadcastAsyncMessage(event, data);
+	}
+};
+
 var EasyBlock =
 {
 	db: {},
 	disabled: false,
 	prefs: {},
+	filter: null,
 
 	startup: function(addonData)
 	{
@@ -53,6 +72,15 @@ var EasyBlock =
 
 		ui.loadCss("easyblock");
 		io.log("easyblock " + addonData.version + " started!");
+
+		if (!this.filter)
+		{
+			let filter = {};
+
+			// import filter API
+			Cu.import("chrome://easyblock/content/filter.js", filter);
+			this.filter = new filter.Process(ProcessAPI, this);
+		}
 	},
 
 	shutdown: function()
@@ -115,6 +143,7 @@ var EasyBlock =
 
 	reload: function(onLoad)
 	{
+		this.filter.reload();
 		this.db.close();
 		this.db.load(onLoad);
 	},
