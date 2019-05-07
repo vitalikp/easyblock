@@ -335,8 +335,17 @@ var bldb =
 					continue;
 				}
 
-				if (site && site.addRule(line))
+				try
+				{
+					if (site && site.addRule(line))
+						continue;
+				}
+				catch (e)
+				{
+					io.warn(site.name + ': ignore rule "' + line + '"');
+					io.error(new SyntaxError(e.message, db.fn, i));
 					continue;
+				}
 
 				try
 				{
