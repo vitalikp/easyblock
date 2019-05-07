@@ -21,6 +21,17 @@ example.net
 # example.net/img/test.jpg
   type:image/jpeg
 
+# block “a.example.org” host
+# by level domain
+# a.example.org, x.a.example.org, y.a.example.org, z.a.example.org
+a.example.org
+
+# filter document content with DOM rules (for http and https only)
+# remove element with id “test1”
+example.com
+  dom:test1
+
+
 # add sites to “Group1” group
 # title: Group1
 example.com
