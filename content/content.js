@@ -42,11 +42,11 @@ const ContentFilter =
 		}
 	},
 
-	_rm: function(doc, dom)
+	_rm: function(node, dom)
 	{
 		let nodes, sel, i;
 
-		if (!doc || !dom || !dom.length)
+		if (!node || !dom || !dom.length)
 			return;
 
 		i = 0;
@@ -56,7 +56,7 @@ const ContentFilter =
 			if (!sel)
 				continue;
 
-			nodes = doc.querySelectorAll(sel);
+			nodes = node.querySelectorAll(sel);
 			this._rmNodes(nodes);
 			nodes = null;
 		}
