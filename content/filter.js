@@ -76,9 +76,12 @@ Content.prototype =
 		_cache.clear();
 	},
 
-	findDom: function(hostname)
+	findDom: function(hostname, onFind)
 	{
 		let data;
+
+		if (!onFind)
+			return;
 
 		data = _cache.get(hostname);
 		if (!data)
@@ -88,10 +91,14 @@ Content.prototype =
 				return;
 
 			data = data[0];
+
+			if (data.hostname != hostname)
+				return;
+
 			_cache.set(data.hostname, data);
 		}
 
-		return data;
+		onFind(data.dom);
 	},
 
 	receiveMessage: function(msg)

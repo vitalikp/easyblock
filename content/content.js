@@ -64,7 +64,7 @@ const ContentFilter =
 
 	filterDom: function(doc)
 	{
-		let loc, data;
+		let loc;
 
 		if (!this.filter || !doc || doc.nodeType != doc.DOCUMENT_NODE)
 			return;
@@ -73,14 +73,7 @@ const ContentFilter =
 		if (loc.protocol != "https:" && loc.protocol != "http:")
 			return;
 
-		data = this.filter.findDom(loc.hostname);
-		if (!data)
-			return;
-
-		if (data.hostname != doc.location.hostname)
-			return;
-
-		this._rm(doc, data.dom);
+		this.filter.findDom(loc.hostname, (dom) => this._rm(doc, dom));
 	}
 };
 
