@@ -56,12 +56,13 @@ Process.prototype =
 	}
 };
 
-function Content(api)
+function Content(api, obs)
 {
 	if (!_cache)
 		_cache = new Map();
 
 	this.api = api;
+	this.obs = obs;
 
 	this.api.regEvent(EVENT_RELOAD, this);
 }
@@ -74,6 +75,7 @@ Content.prototype =
 			return;
 
 		_cache.clear();
+		this.obs.clear();
 	},
 
 	findDom: function(hostname, onFind)
