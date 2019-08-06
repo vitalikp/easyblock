@@ -98,67 +98,6 @@ ContentObserver.prototype =
 	}
 };
 
-const ContentFilter =
-{
-	filter: null,
-
-	init: function(filter)
-	{
-		this.filter = filter;
-	},
-
-	_rmNodes: function(nodes)
-	{
-		let i, node;
-
-		if (!nodes || !nodes.length)
-			return;
-
-		i = 0;
-		while (i < nodes.length)
-		{
-			node = nodes[i++];
-			if (node && node.parentElement)
-				node.parentElement.removeChild(node);
-			node = null;
-		}
-	},
-
-	_rm: function(node, dom)
-	{
-		let nodes, sel, i;
-
-		if (!node || !dom || !dom.length)
-			return;
-
-		i = 0;
-		while (i < dom.length)
-		{
-			sel = dom[i++];
-			if (!sel)
-				continue;
-
-			nodes = node.querySelectorAll(sel);
-			this._rmNodes(nodes);
-			nodes = null;
-		}
-	},
-
-	filterDom: function(doc)
-	{
-		let loc;
-
-		if (!this.filter || !doc || doc.nodeType != doc.DOCUMENT_NODE)
-			return;
-
-		loc = doc.location;
-		if (loc.protocol != "https:" && loc.protocol != "http:")
-			return;
-
-		this.filter.findDom(loc.hostname, (dom) => this._rm(doc, dom));
-	}
-};
-
 function init(e)
 {
 	let filter = {}, obs, content;
@@ -170,14 +109,7 @@ function init(e)
 	// import filter API
 	Cu.import("chrome://easyblock/content/filter.js", filter);
 	content = new filter.Content(ContentAPI, obs);
-	ContentFilter.init(content);
 
-	addEventListener("DOMContentLoaded", (event) =>
-	{
-		if (!event)
-			return;
-
-		ContentFilter.filterDom(event.originalTarget);
-	});
+	addEventListener("DOMContentLoaded", (event) => obs.onDomLoad(event, content));
 }
 addEventListener('load', init, true);
