@@ -161,7 +161,7 @@ const ContentFilter =
 
 function init(e)
 {
-	let filter = {}, obs;
+	let filter = {}, obs, content;
 
 	removeEventListener("load", init, true);
 
@@ -169,7 +169,8 @@ function init(e)
 
 	// import filter API
 	Cu.import("chrome://easyblock/content/filter.js", filter);
-	ContentFilter.init(new filter.Content(ContentAPI, obs));
+	content = new filter.Content(ContentAPI, obs);
+	ContentFilter.init(content);
 
 	addEventListener("DOMContentLoaded", (event) =>
 	{
