@@ -18,6 +18,8 @@ const ContentAPI =
 
 function ContentObserver()
 {
+	this.config = { childList: true, subtree: true };
+	this.obs = null;
 	this.dom = null;
 }
 
@@ -25,7 +27,27 @@ ContentObserver.prototype =
 {
 	clear: function()
 	{
+		this.unreg();
 		this.dom = null;
+	},
+
+	reg: function(win, node)
+	{
+		if (this.obs || !win || !node)
+			return;
+
+		this.obs = new win.MutationObserver((mutList, obs) => this.onDomEdit(mutList));
+		win.addEventListener("beforeunload", (event) => this.unreg());
+		this.obs.observe(node, this.config);
+	},
+
+	unreg: function()
+	{
+		if (!this.obs)
+			return;
+
+		this.obs.disconnect();
+		this.obs = null;
 	},
 
 	onFind: function(doc, dom)
@@ -34,6 +56,7 @@ ContentObserver.prototype =
 			return;
 
 		this.dom = dom;
+		this.reg(doc.defaultView, doc.body);
 		this.filterNode(doc.body);
 	},
 
@@ -53,9 +76,35 @@ ContentObserver.prototype =
 			return;
 
 		if (this.dom)
+		{
+			this.reg(doc.defaultView, doc.body);
 			this.filterNode(doc.body);
+		}
 		else
 			content.findDom(loc.hostname, (dom) => this.onFind(doc, dom));
+	},
+
+	onDomEdit: function(mutList)
+	{
+		let mut, i, j;
+
+		if (!mutList)
+			return;
+
+		i = 0;
+		while (i < mutList.length)
+		{
+			mut = mutList[i++];
+			if (!mut)
+				continue;
+
+			if (mut.type == 'childList')
+			{
+				j = 0;
+				while (j < mut.addedNodes.length)
+					this.filterNode(mut.addedNodes[j++]);
+			}
+		}
 	},
 
 	filterNode: function(node)
