@@ -26,7 +26,7 @@ example.net
 # a.example.org, x.a.example.org, y.a.example.org, z.a.example.org
 a.example.org
 
-# filter document content with DOM rules (for http and https only)
+# filter document content with DOM rules
 # remove element with id “test1”
 example.com
   dom:#test1
