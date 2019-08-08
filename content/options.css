@@ -21,3 +21,8 @@ groupbox > #bl
 	overflow-x: hidden;
 	overflow-y: auto;
 }
+
+groupbox > #bl vbox[enabled="false"] > label
+{
+	color: #808080;
+}

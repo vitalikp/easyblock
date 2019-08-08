@@ -244,15 +244,20 @@ var blgroup =
 
 	print: function(doc, elem)
 	{
-		let label, site;
+		let vbox, label, site;
 		let i = 0;
 
 		if (!doc || !elem)
 			return;
 
+		vbox = doc.createElement("vbox");
+		if (!this.enabled)
+			vbox.setAttribute("enabled", false);
+		elem.appendChild(vbox);
+
 		label = doc.createElement("label");
 		label.setAttribute("value", this + ':');
-		elem.appendChild(label);
+		vbox.appendChild(label);
 
 		while (i < this.data.length)
 		{
@@ -260,7 +265,7 @@ var blgroup =
 
 			label = doc.createElement("label");
 			label.setAttribute("value", site);
-			elem.appendChild(label);
+			vbox.appendChild(label);
 		}
 	},
 
