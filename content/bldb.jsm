@@ -13,7 +13,7 @@ Cu.import("chrome://easyblock/content/io.jsm");
 Cu.import("chrome://easyblock/content/blhost.jsm");
 
 
-const COMM_PATTERN = "^# (title): ([a-zA-Z0-9]*)$";
+const COMM_PATTERN = "^# ([a-z0-9]*): ([a-zA-Z0-9 ]*)$";
 
 const domparser = Cc["@mozilla.org/xmlextras/domparser;1"].createInstance(Ci.nsIDOMParser);
 const _doc = domparser.parseFromString('<body/>', 'text/html');
@@ -356,7 +356,7 @@ var bldb =
 					switch (res[1])
 					{
 						case 'title':
-							group = blgroup.create(res[2]);
+							group = blgroup.create(res[2].trim());
 							db.add(group);
 							break;
 					}
