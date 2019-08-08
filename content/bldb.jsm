@@ -334,7 +334,6 @@ var bldb =
 			group = blgroup.create('Default');
 			group.id = 0;
 			db.defGroup = group;
-			db.groups.push(group);
 
 			arr = data.split(/\r\n|\n/);
 
@@ -387,6 +386,8 @@ var bldb =
 					io.error(new SyntaxError(e.message, db.fn, i));
 				}
 			}
+
+			db.groups.push(db.defGroup);
 
 			loadtime = new Date() - loadtime;
 
