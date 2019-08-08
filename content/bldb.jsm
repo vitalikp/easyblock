@@ -347,7 +347,7 @@ var bldb =
 					continue;
 				}
 
-				if (line[0] == '#' || line[0] == '!')
+				if (line[0] == '#')
 				{
 					res = db.commRegEx.exec(line);
 					if (!res)
