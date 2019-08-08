@@ -22,7 +22,8 @@ groupbox > #bl
 	overflow-y: auto;
 }
 
-groupbox > #bl vbox[enabled="false"] > label
+groupbox > #bl vbox[enabled="false"] > label,
+groupbox > #bl label[enabled="false"]
 {
 	color: #808080;
 }

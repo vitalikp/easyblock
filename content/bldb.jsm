@@ -21,6 +21,7 @@ const _doc = domparser.parseFromString('<body/>', 'text/html');
 
 var blsite =
 {
+	enabled: true,
 	name: '',
 	host: null,
 	query: [],
@@ -30,11 +31,17 @@ var blsite =
 
 	create: function(hostname)
 	{
-		var site, host;
+		var site, host, enabled = true;
 
+		if (hostname[0] == '!')
+		{
+			hostname = hostname.substr(1);
+			enabled = false;
+		}
 		host = new blhost(hostname, true);
 
 		site = Object.create(this);
+		site.enabled = enabled;
 		site.name = hostname;
 		site.host = host;
 		site.query = [];
@@ -82,7 +89,7 @@ var blsite =
 
 	hasHost: function(host)
 	{
-		if (!host || !this.host)
+		if (!this.enabled || !host || !this.host)
 			return false;
 
 		return this.host.hasHost(host);
@@ -264,6 +271,8 @@ var blgroup =
 			site = this.data[i++];
 
 			label = doc.createElement("label");
+			if (!site.enabled)
+				label.setAttribute("enabled", false);
 			label.setAttribute("value", site);
 			vbox.appendChild(label);
 		}
