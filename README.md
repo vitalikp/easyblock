@@ -26,6 +26,15 @@ example.net
 # a.example.org, x.a.example.org, y.a.example.org, z.a.example.org
 a.example.org
 
+# temporary disable “example.net” host
+!example.net
+
+# temporary disable “example.net” host with rules
+!example.net
+  main.css
+  /img
+  type:image/jpeg
+
 # filter document content with DOM rules
 # remove element with id “test1”
 example.com
