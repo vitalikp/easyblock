@@ -259,7 +259,7 @@ var blgroup =
 			return;
 
 		if (this.data.length > 0)
-			vbox = uitree.create(doc, this + ':', true);
+			vbox = uitree.create(doc, this + ':', this.data.length <= 10);
 		else
 			vbox = uitree.create(doc, this + ':');
 		if (!this.enabled)
