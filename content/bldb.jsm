@@ -11,6 +11,7 @@ var EXPORTED_SYMBOLS = ["bldb"];
 // import
 Cu.import("chrome://easyblock/content/io.jsm");
 Cu.import("chrome://easyblock/content/blhost.jsm");
+Cu.import("chrome://easyblock/content/ui.jsm");
 
 
 const COMM_PATTERN = "^# ([a-z0-9]*): ([a-zA-Z0-9 ]*)$";
@@ -257,14 +258,13 @@ var blgroup =
 		if (!doc || !elem)
 			return;
 
-		vbox = doc.createElement("vbox");
+		if (this.data.length > 0)
+			vbox = uitree.create(doc, this + ':', true);
+		else
+			vbox = uitree.create(doc, this + ':');
 		if (!this.enabled)
 			vbox.setAttribute("enabled", false);
 		elem.appendChild(vbox);
-
-		label = doc.createElement("label");
-		label.setAttribute("value", this + ':');
-		vbox.appendChild(label);
 
 		while (i < this.data.length)
 		{
@@ -274,7 +274,7 @@ var blgroup =
 			if (!site.enabled)
 				label.setAttribute("enabled", false);
 			label.setAttribute("value", site);
-			vbox.appendChild(label);
+			uitree.add(vbox, label);
 		}
 	},
 
