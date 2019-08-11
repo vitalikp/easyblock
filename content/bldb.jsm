@@ -106,7 +106,8 @@ var blsite =
 		if (line[0] != '/')
 			line = '.*' + line;
 		else
-			line += '.*';
+			if (line[line.length-1] == '/')
+				line += '.*';
 
 		this.query.push(new RegExp('^' + line));
 	},
