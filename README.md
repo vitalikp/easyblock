@@ -16,7 +16,9 @@ example.net
   main.css
 # by pattern at the begin path
 # example.net/img/logo.png
-  /img
+  /img/
+# by absolute path
+  /img/logo.png
 # by MIME type in response
 # example.net/img/test.jpg
   type:image/jpeg
@@ -32,7 +34,7 @@ a.example.org
 # temporary disable “example.net” host with rules
 !example.net
   main.css
-  /img
+  /img/
   type:image/jpeg
 
 # filter document content with DOM rules
