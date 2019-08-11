@@ -5,7 +5,7 @@ const Cu = Components.utils;
 const Cc = Components.classes;
 
 
-var EXPORTED_SYMBOLS = ["ui"];
+var EXPORTED_SYMBOLS = ["ui", "uitree"];
 
 // import
 Cu.import("resource://gre/modules/Services.jsm");
@@ -17,6 +17,77 @@ const sss = Cc["@mozilla.org/content/style-sheet-service;1"].getService(Ci.nsISt
 
 const BTN_ID = "easyblock-btn";
 
+
+const uitree =
+{
+	create: function(doc, name, expanded)
+	{
+		let node, label;
+
+		node = doc.createElement("vbox");
+		node.setAttribute("class", "tree");
+
+		label = doc.createElement("label");
+		label.setAttribute("value", name);
+		node.appendChild(label);
+
+		if (expanded != undefined)
+		{
+			node.setAttribute("expanded", expanded);
+		
+			label.addEventListener('click', (event) =>
+			{
+				if (!event || !event.target)
+					return;
+	
+				this.toggle(event.target.parentElement);
+			});
+		}
+
+		return node;
+	},
+
+	expand: function(node)
+	{
+		if (!node || !node.hasAttribute("expanded"))
+			return;
+
+		node.setAttribute("expanded", true);
+	},
+
+	collapse: function(node)
+	{
+		if (!node || !node.hasAttribute("expanded"))
+			return;
+
+		node.setAttribute("expanded", false);
+	},
+
+	toggle: function(node)
+	{
+		if (!node || !node.hasAttribute("expanded"))
+			return;
+
+		if (node.getAttribute("expanded") == 'false')
+			node.setAttribute("expanded", true);
+		else
+			node.setAttribute("expanded", false);
+	},
+
+	add: function(node, item)
+	{
+		if (!node || !item)
+			return;
+
+		if (!node.root)
+		{
+			node.root = node.ownerDocument.createElement("vbox");
+			node.appendChild(node.root);
+		}
+
+		node.root.appendChild(item);
+	}
+};
 
 const MenuToggle =
 {

@@ -27,3 +27,38 @@ groupbox > #bl label[enabled="false"]
 {
 	color: #808080;
 }
+
+groupbox > #bl > vbox.tree
+{
+	padding: 2px 0px;
+}
+
+groupbox > #bl vbox.tree > vbox,
+groupbox > #bl vbox.tree > label
+{
+	padding-left: 17px;
+}
+
+groupbox > #bl vbox.tree[expanded="false"] > label
+{
+	background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNnB4IiBoZWlnaHQ9IjE2cHgiPjxwYXRoIGQ9Im0gMywzIDEwLDUgLTEwLDUgMiwtNSB6IiBmaWxsPSIjNTU1Ii8+PC9zdmc+Cg==");
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+groupbox > #bl vbox.tree[expanded="false"] > vbox
+{
+	visibility: collapse;
+}
+
+groupbox > #bl vbox.tree[expanded="true"] > label
+{
+	background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNnB4IiBoZWlnaHQ9IjE2cHgiPjxwYXRoIGQ9Im0gOCwzIDUsMTAgLTExLC0yIDQuNiwtMi44IHoiIGZpbGw9IiM1NTUiLz48L3N2Zz4K");
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+groupbox > #bl vbox.tree[expanded="true"] > vbox
+{
+	visibility: visible;
+}
