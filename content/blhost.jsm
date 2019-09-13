@@ -5,6 +5,7 @@ var EXPORTED_SYMBOLS = ["blhost"];
 
 
 const tlds = ['com', 'net', 'org'];
+const slds = [];
 
 
 function indexOf(arr, name, add)
@@ -55,6 +56,7 @@ function blhost(name, isrule)
 		throw new Error('length must be 255 characters or less');
 
 	this.tld = -1;
+	this.sld = -1;
 	this.data = [];
 
 	name = name.toLowerCase();
@@ -67,6 +69,10 @@ function blhost(name, isrule)
 		this.tld = indexOf(tlds, label(data[i--]), isrule);
 		if (this.tld < 0 || this.tld >= tlds.length)
 			throw 'tld is unknown';
+
+		this.sld = indexOf(slds, label(data[i--]), isrule);
+		if (this.sld < 0 || this.sld >= slds.length)
+			throw 'sld is unknown';
 
 		while (i >= 0)
 			this.data.push(label(data[i--]));
@@ -83,6 +89,9 @@ blhost.prototype =
 			return false;
 
 		if (host.tld != this.tld)
+			return false;
+
+		if (host.sld != this.sld)
 			return false;
 
 		if (host.data.length < this.data.length)
@@ -110,6 +119,8 @@ blhost.prototype =
 			res += '.';
 		}
 
+		res += slds[this.sld];
+		res += '.';
 		res += tlds[this.tld];
 
 		return res;
