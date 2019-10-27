@@ -114,5 +114,15 @@ Content.prototype =
 				this.clear();
 				break;
 		}
+	},
+
+	onEvent: function(event)
+	{
+		switch (event.type)
+		{
+			case EVENT_RELOAD:
+				this.clear();
+				break;
+		}
 	}
 };
