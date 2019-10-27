@@ -53,6 +53,15 @@ Process.prototype =
 			case EVENT_DOM:
 				return this.findDom(msg.data);
 		}
+	},
+
+	onEvent: function(event)
+	{
+		switch (event.type)
+		{
+			case EVENT_DOM:
+				return this.findDom(event.data);
+		}
 	}
 };
 
