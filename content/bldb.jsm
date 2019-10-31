@@ -22,6 +22,7 @@ const _doc = domparser.parseFromString('<body/>', 'text/html');
 
 var blsite =
 {
+	grpId: 0,
 	enabled: true,
 	name: '',
 	host: null,
@@ -226,10 +227,11 @@ var blgroup =
 
 	add: function(site)
 	{
-		if (!site)
+		if (!site || site.grpId > 0)
 			return;
 
 		this.data.push(site);
+		site.grpId = this.id;
 //		io.log(this.name + ': add url "' + site.name + '"');
 	},
 
