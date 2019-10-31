@@ -148,19 +148,6 @@ Content.prototype =
 		onFind(data.dom);
 	},
 
-	receiveMessage: function(msg)
-	{
-		if (!msg || !msg.name)
-			return;
-
-		switch (msg.name)
-		{
-			case EVENT_RELOAD:
-				this.clear();
-				break;
-		}
-	},
-
 	onEvent: function(event)
 	{
 		switch (event.type)
