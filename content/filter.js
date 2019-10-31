@@ -5,7 +5,6 @@ var EXPORTED_SYMBOLS = ["Process", "Content"];
 const SCRIPT_CONTENT = "content.js";
 
 const EVENT_RELOAD = "EasyBlock:reload";
-const EVENT_FILTER = "EasyBlock:filter";
 const EVENT_DOM = "EasyBlock:DOM";
 
 
