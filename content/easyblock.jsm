@@ -125,6 +125,7 @@ var EasyBlock =
 
 		this.disabled = value;
 		this.prefs.setBoolPref('disabled', this.disabled);
+		this.filter.toggle(this.disabled);
 		if (!value)
 			io.log("Enable 'EasyBlock' addon...");
 		else
