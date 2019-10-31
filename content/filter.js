@@ -6,8 +6,8 @@ const SCRIPT_CONTENT = "content.js";
 
 const EVENT_TYPE = "EasyBlock";
 
-const EVENT_RELOAD = EVENT_TYPE + ":reload";
-const EVENT_DOM = EVENT_TYPE + ":DOM";
+const EVENT_RELOAD = 1;
+const EVENT_DOM = 2;
 
 
 // content data
