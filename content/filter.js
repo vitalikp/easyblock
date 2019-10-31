@@ -4,8 +4,10 @@ var EXPORTED_SYMBOLS = ["Process", "Content"];
 
 const SCRIPT_CONTENT = "content.js";
 
-const EVENT_RELOAD = "EasyBlock:reload";
-const EVENT_DOM = "EasyBlock:DOM";
+const EVENT_TYPE = "EasyBlock";
+
+const EVENT_RELOAD = EVENT_TYPE + ":reload";
+const EVENT_DOM = EVENT_TYPE + ":DOM";
 
 
 // content data
