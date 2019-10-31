@@ -14,20 +14,54 @@ const EVENT_DOM = EVENT_TYPE + ":DOM";
 let _cache = null;
 
 
+function EventBus(name, api, handler)
+{
+	this.owner = EVENT_TYPE + ":" + name;
+	this.api = api;
+	this.handler = handler;
+}
+
+EventBus.prototype =
+{
+	regEvent: function(name)
+	{
+		this.api.regEvent(EVENT_TYPE + ":" + name, this);
+	},
+
+	sendEvent: function(type, data)
+	{
+		this.api.sendEvent(this.owner, { type: type, data: data });
+	},
+
+	sendSyncEvent: function(type, data)
+	{
+		return this.api.sendSyncEvent(this.owner, { type: type, data: data });
+	},
+
+	receiveMessage: function(msg)
+	{
+		if (!msg || this.owner == msg.name)
+			return;
+
+		return this.handler.onEvent(msg.data);
+	}
+}
+
 function Process(api, addon)
 {
 	this.api = api;
 	this.addon = addon;
 
 	this.api.loadScript(SCRIPT_CONTENT);
-	this.api.regEvent(EVENT_DOM, this);
+	this.bus = new EventBus("process", api, this);
+	this.bus.regEvent("content");
 }
 
 Process.prototype =
 {
 	reload: function()
 	{
-		this.api.sendEvent(EVENT_RELOAD, {});
+		this.bus.sendEvent(EVENT_RELOAD, {});
 	},
 
 	findDom: function(data)
@@ -74,7 +108,8 @@ function Content(api, obs)
 	this.api = api;
 	this.obs = obs;
 
-	this.api.regEvent(EVENT_RELOAD, this);
+	this.bus = new EventBus("content", api, this);
+	this.bus.regEvent("process");
 }
 
 Content.prototype =
@@ -98,7 +133,7 @@ Content.prototype =
 		data = _cache.get(hostname);
 		if (!data)
 		{
-			data = this.api.sendSyncEvent(EVENT_DOM, { hostname: hostname });
+			data = this.bus.sendSyncEvent(EVENT_DOM, { hostname: hostname });
 			if (!data || !data[0])
 				return;
 
