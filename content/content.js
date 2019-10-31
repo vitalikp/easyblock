@@ -26,6 +26,14 @@ function ContentObserver()
 
 ContentObserver.prototype =
 {
+	toggle: function(data)
+	{
+		if (!data)
+			return;
+
+		this.disabled = data.value;
+	},
+
 	clear: function()
 	{
 		this.unreg();
