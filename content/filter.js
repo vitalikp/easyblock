@@ -6,8 +6,9 @@ const SCRIPT_CONTENT = "content.js";
 
 const EVENT_TYPE = "EasyBlock";
 
-const EVENT_RELOAD = 1;
-const EVENT_DOM = 2;
+const EVENT_TOGGLE = 1;
+const EVENT_RELOAD = 2;
+const EVENT_DOM = 3;
 
 
 // content data
@@ -59,6 +60,11 @@ function Process(api, addon)
 
 Process.prototype =
 {
+	toggle: function(value)
+	{
+		this.bus.sendEvent(EVENT_TOGGLE, { value: value });
+	},
+
 	reload: function()
 	{
 		this.bus.sendEvent(EVENT_RELOAD, {});
@@ -140,6 +146,10 @@ Content.prototype =
 	{
 		switch (event.type)
 		{
+			case EVENT_TOGGLE:
+				this.obs.toggle(event.data);
+				break;
+
 			case EVENT_RELOAD:
 				this.clear();
 				break;
