@@ -21,6 +21,7 @@ function ContentObserver()
 	this.config = { childList: true, subtree: true };
 	this.obs = null;
 	this.dom = null;
+	this.disabled = false;
 }
 
 ContentObserver.prototype =
@@ -28,6 +29,7 @@ ContentObserver.prototype =
 	clear: function()
 	{
 		this.unreg();
+		this.disabled = false;
 		this.dom = null;
 	},
 
@@ -69,7 +71,7 @@ ContentObserver.prototype =
 	{
 		let doc, loc;
 
-		if (!event || !content)
+		if (this.disabled || !event || !content)
 			return;
 
 		doc = event.originalTarget;
@@ -93,7 +95,7 @@ ContentObserver.prototype =
 	{
 		let mut, i, j;
 
-		if (!mutList)
+		if (this.disabled || !mutList)
 			return;
 
 		i = 0;
@@ -116,7 +118,7 @@ ContentObserver.prototype =
 	{
 		let nodes, sel, i;
 
-		if (!this.dom || !node || !node.parentElement || node.nodeType != node.ELEMENT_NODE)
+		if (this.disabled || !this.dom || !node || !node.parentElement || node.nodeType != node.ELEMENT_NODE)
 			return;
 
 		node = node.parentElement;
