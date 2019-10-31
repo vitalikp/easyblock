@@ -81,7 +81,7 @@ ContentObserver.prototype =
 			this.filterNode(doc.body);
 		}
 		else
-			content.findDom(loc.hostname, (dom) => this.onFind(doc, dom));
+			content.findDom(loc.hostname, (data) => this.onFind(doc, data.dom));
 	},
 
 	onDomEdit: function(mutList)

@@ -133,7 +133,7 @@ Content.prototype =
 			_cache.set(data.hostname, data);
 		}
 
-		onFind(data.dom);
+		onFind(data);
 	},
 
 	onEvent: function(event)
