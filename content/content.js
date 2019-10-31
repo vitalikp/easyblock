@@ -50,9 +50,14 @@ ContentObserver.prototype =
 		this.obs = null;
 	},
 
-	onFind: function(doc, dom)
+	onFind: function(doc, data)
 	{
-		if (!doc || !dom || !dom.length)
+		let dom;
+
+		if (!doc || !data)
+			return;
+		dom = data.dom;
+		if (!dom || !dom.length)
 			return;
 
 		this.dom = dom;
@@ -81,7 +86,7 @@ ContentObserver.prototype =
 			this.filterNode(doc.body);
 		}
 		else
-			content.findDom(loc.hostname, (data) => this.onFind(doc, data.dom));
+			content.findDom(loc.hostname, (data) => this.onFind(doc, data));
 	},
 
 	onDomEdit: function(mutList)
