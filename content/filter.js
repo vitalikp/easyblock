@@ -78,18 +78,6 @@ Process.prototype =
 		return { hostname: data.hostname, dom: site.dom };
 	},
 
-	receiveMessage: function(msg)
-	{
-		if (!msg || !msg.name)
-			return;
-
-		switch (msg.name)
-		{
-			case EVENT_DOM:
-				return this.findDom(msg.data);
-		}
-	},
-
 	onEvent: function(event)
 	{
 		switch (event.type)
