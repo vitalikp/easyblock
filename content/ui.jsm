@@ -164,12 +164,74 @@ GroupUI.prototype =
 	}
 };
 
-function WinUI(btn, menuItem, grpMenu)
+function WinUI(doc, addon)
 {
-	this.btn = btn;
-	this.menuItem = menuItem;
-	this.grpMenu = grpMenu;
+	let win, popupMenu, grpMenu, item, reloadItem;
+
+	this.btn = doc.createElement("toolbarbutton");
+	this.btn.setAttribute("id", BTN_ID);
+	this.btn.setAttribute("type", "menu");
+	this.btn.setAttribute("removable", "true");
+	this.btn.setAttribute("label", "EasyBlock");
+	this.btn.setAttribute("class", "toolbarbutton-1 easyblock");
+	this.btn.setAttribute("tooltiptext", "EasyBlock toolbar button");
+
+	this.menu = doc.createElement("menupopup");
+	this.btn.appendChild(this.menu);
+
+	win = doc.defaultView;
+	item = doc.createElement("menuitem");
+	item.setAttribute("label", "Filters");
+	item.addEventListener("command", (event) =>
+	{
+		if (!event && !event.target)
+			return;
+
+		win.openDialog('chrome://easyblock/content/options.xul', 'EasyBlockFilters', 'chrome,titlebar,centerscreen,resizable').focus();
+	});
+	this.menu.appendChild(item);
+
+	grpMenu = doc.createElement("menu");
+	grpMenu.setAttribute("label", "Groups");
+	this.menu.appendChild(grpMenu);
+
+	popupMenu = doc.createElement("menupopup");
+	grpMenu.appendChild(popupMenu);
+	this.grpMenu = popupMenu;
+
+	this.menuItem = new MenuToggle(addon, "Disabled", this.menu, 'State');
+
+	reloadItem = doc.createElement("menuitem");
+	reloadItem.setAttribute("label", "Reload");
+	reloadItem.addEventListener("command", (event) =>
+	{
+		if (!event && !event.target)
+			return;
+
+		addon.reload((db) =>
+		{
+			ui.onLoadDB(db);
+			ui.notify(addon, 'Blacklist sites reloaded!');
+		});
+	});
+	this.menu.appendChild(reloadItem);
+
+	win.addEventListener('unload', (event) => 
+	{
+		let i;
+
+		i = ui.wins.indexOf(this);
+		if (i >= 0)
+		{
+			ui.wins[i].destroy();
+			ui.wins.splice(i, 1);
+		}
+	});
+
 	this.groups = [];
+
+	this.updateState(addon);
+	this.loadGroups(addon.db.groups);
 }
 
 WinUI.prototype =
@@ -269,75 +331,13 @@ var ui =
 
 	createBtn: function(doc, addon)
 	{
-		let win, winUI, btn, menu, popupMenu, grpMenu, item, reloadItem;
+		let winUI;
 
-		btn = doc.createElement("toolbarbutton");
-		btn.setAttribute("id", BTN_ID);
-		btn.setAttribute("type", "menu");
-		btn.setAttribute("removable", "true");
-		btn.setAttribute("label", "EasyBlock");
-		btn.setAttribute("class", "toolbarbutton-1 easyblock");
-		btn.setAttribute("tooltiptext", "EasyBlock toolbar button");
-
-		menu = doc.createElement("menupopup");
-
-		win = doc.defaultView;
-		item = doc.createElement("menuitem");
-		item.setAttribute("label", "Filters");
-		item.addEventListener("command", (event) =>
-		{
-			if (!event && !event.target)
-				return;
-
-			win.openDialog('chrome://easyblock/content/options.xul', 'EasyBlockFilters', 'chrome,titlebar,centerscreen,resizable').focus();
-		});
-		menu.appendChild(item);
-
-		grpMenu = doc.createElement("menu");
-		grpMenu.setAttribute("label", "Groups");
-		menu.appendChild(grpMenu);
-
-		popupMenu = doc.createElement("menupopup");
-		grpMenu.appendChild(popupMenu);
-		grpMenu = popupMenu;
-
-		item = new MenuToggle(addon, "Disabled", menu, 'State');
-
-		winUI = new WinUI(btn, item, grpMenu);
-		winUI.updateState(addon);
-		winUI.loadGroups(addon.db.groups);
-
-		reloadItem = doc.createElement("menuitem");
-		reloadItem.setAttribute("label", "Reload");
-		reloadItem.addEventListener("command", (event) =>
-		{
-			if (!event && !event.target)
-				return;
-
-			addon.reload((db) =>
-			{
-				ui.onLoadDB(db);
-				ui.notify(addon, 'Blacklist sites reloaded!');
-			});
-		}, false);
-		menu.appendChild(reloadItem);
-
-		win.addEventListener('unload', (event) => 
-		{
-			let i;
-
-			i = ui.wins.indexOf(winUI);
-			if (i >= 0)
-			{
-				ui.wins[i].destroy();
-				ui.wins.splice(i, 1);
-			}
-		});
+		winUI = new WinUI(doc, addon);
 
 		ui.wins.push(winUI);
-		btn.appendChild(menu);
 
-		return btn;
+		return winUI.btn;
 	},
 
 	selectToolbar: function(toolbars)
