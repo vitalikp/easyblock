@@ -89,39 +89,34 @@ const uitree =
 	}
 };
 
-const MenuToggle =
+function MenuToggle(obj, name, menu, action)
 {
-	elem: null,
+	let doc, menuState, elem;
 
-	create: function(obj, name, menu, action)
+	doc = menu.ownerDocument;
+
+	elem = doc.createElement("menuitem");
+	elem.setAttribute("type", "checkbox");
+	elem.setAttribute("label", name);
+	elem.addEventListener("command", (event) =>
 	{
-		let doc, menuState, elem;
+		let value;
 
-		doc = menu.ownerDocument;
+		if (!event || !event.target || !obj)
+			return;
 
-		elem = doc.createElement("menuitem");
-		elem.setAttribute("type", "checkbox");
-		elem.setAttribute("label", name);
-		elem.addEventListener("command", (event) =>
-		{
-			let value;
+		value = event.target.hasAttribute('checked');
 
-			if (!event || !event.target || !obj)
-				return;
+		if (obj.toggle(value))
+			ui.update(action, obj);
+	}, false);
+	menu.appendChild(elem);
 
-			value = event.target.hasAttribute('checked');
+	this.elem = elem;
+}
 
-			if (obj.toggle(value))
-				ui.update(action, obj);
-		}, false);
-		menu.appendChild(elem);
-
-		menuState = Object.create(MenuToggle);
-		menuState.elem = elem;
-
-		return menuState;
-	},
-
+MenuToggle.prototype =
+{
 	destroy: function()
 	{
 		if (!this.elem)
@@ -147,7 +142,7 @@ const GroupUI =
 	{
 		let groupUI, menuItem;
 
-		menuItem = MenuToggle.create(group, group, menu, 'Group');
+		menuItem = new MenuToggle(group, group, menu, 'Group');
 		menuItem.update(group.enabled);
 
 		groupUI = Object.create(GroupUI);
@@ -321,7 +316,7 @@ var ui =
 		grpMenu.appendChild(popupMenu);
 		grpMenu = popupMenu;
 
-		item = MenuToggle.create(addon, "Disabled", menu, 'State');
+		item = new MenuToggle(addon, "Disabled", menu, 'State');
 
 		winUI = WinUI.create(btn, item, grpMenu);
 		winUI.updateState(addon);
