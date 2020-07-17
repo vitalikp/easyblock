@@ -329,17 +329,6 @@ var ui =
 		ui.initToolbar(win.document, addon);
 	},
 
-	createBtn: function(doc, addon)
-	{
-		let winUI;
-
-		winUI = new WinUI(doc, addon);
-
-		ui.wins.push(winUI);
-
-		return winUI.btn;
-	},
-
 	selectToolbar: function(toolbars)
 	{
 		let toolbar, currSet, items, nextItem;
@@ -371,14 +360,16 @@ var ui =
 
 	initToolbar: function(doc, addon)
 	{
-		let btn;
+		let winUI;
 
 		if (!ui.toolbox)
 			ui.toolbox = doc.getElementById("navigator-toolbox");
 		if (!ui.toolbox)
 			return;
 
-		btn = ui.createBtn(doc, addon);
+		winUI = new WinUI(doc, addon);
+
+		ui.wins.push(winUI);
 
 		if (!ui.toolbarId)
 			ui.selectToolbar(ui.toolbox.childNodes);
@@ -388,7 +379,7 @@ var ui =
 
 		if (!ui.toolbarId)
 		{
-			ui.toolbox.palette.appendChild(btn);
+			ui.toolbox.palette.appendChild(winUI.btn);
 			return;
 		}
 
@@ -399,7 +390,7 @@ var ui =
 			if (ui.nextItemId)
 				nextItem = doc.getElementById(ui.nextItemId);
 			if (!toolbox.querySelector('#'+BTN_ID))
-				toolbox.insertBefore(btn, nextItem);
+				toolbox.insertBefore(winUI.btn, nextItem);
 		}
 	},
 
