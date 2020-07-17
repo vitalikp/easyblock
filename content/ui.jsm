@@ -164,25 +164,16 @@ GroupUI.prototype =
 	}
 };
 
-const WinUI =
+function WinUI(btn, menuItem, grpMenu)
 {
-	btn: null,
-	menuItem: null,
-	grpMenu: null,
-	groups: [],
+	this.btn = btn;
+	this.menuItem = menuItem;
+	this.grpMenu = grpMenu;
+	this.groups = [];
+}
 
-	create: function(btn, menuItem, grpMenu)
-	{
-		let winUI;
-
-		winUI = Object.create(WinUI);
-		winUI.btn = btn;
-		winUI.menuItem = menuItem;
-		winUI.grpMenu = grpMenu;
-
-		return winUI;
-	},
-
+WinUI.prototype =
+{
 	destroy: function()
 	{
 		if (this.btn)
@@ -312,7 +303,7 @@ var ui =
 
 		item = new MenuToggle(addon, "Disabled", menu, 'State');
 
-		winUI = WinUI.create(btn, item, grpMenu);
+		winUI = new WinUI(btn, item, grpMenu);
 		winUI.updateState(addon);
 		winUI.loadGroups(addon.db.groups);
 
