@@ -133,25 +133,19 @@ MenuToggle.prototype =
 	}
 };
 
-const GroupUI =
+function GroupUI(group, menu)
 {
-	group: null,
-	menuItem: null,
+	let menuItem;
 
-	create: function(group, menu)
-	{
-		let groupUI, menuItem;
+	menuItem = new MenuToggle(group, group, menu, 'Group');
+	menuItem.update(group.enabled);
 
-		menuItem = new MenuToggle(group, group, menu, 'Group');
-		menuItem.update(group.enabled);
+	this.group = group;
+	this.menuItem = menuItem;
+}
 
-		groupUI = Object.create(GroupUI);
-		groupUI.group = group;
-		groupUI.menuItem = menuItem;
-
-		return groupUI;
-	},
-
+GroupUI.prototype =
+{
 	destroy: function()
 	{
 		if (this.menuItem)
@@ -229,7 +223,7 @@ const WinUI =
 		{
 			let grpUI;
 
-			grpUI = GroupUI.create(group, this.grpMenu);
+			grpUI = new GroupUI(group, this.grpMenu);
 
 			this.groups.push(grpUI);
 		});
