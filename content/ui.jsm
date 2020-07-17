@@ -180,6 +180,9 @@ function WinUI(doc, addon)
 	this.btn.appendChild(this.menu);
 
 	win = doc.defaultView;
+
+	this.toolbox = doc.getElementById("navigator-toolbox");
+
 	item = doc.createElement("menuitem");
 	item.setAttribute("label", "Filters");
 	item.addEventListener("command", (event) =>
