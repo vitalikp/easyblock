@@ -239,6 +239,38 @@ function WinUI(doc, addon)
 
 WinUI.prototype =
 {
+	moveBtn: function(toolBarId, nextItemId)
+	{
+		let toolbar, nextItem;
+
+		if (!this.btn || !toolBarId)
+			return;
+
+		toolbar = this.btn.parentNode;
+		if (toolbar)
+		{
+			if (toolbar.id == toolBarId && nextItemId)
+			{
+				nextItem = this.btn.nextSibling;
+				if (nextItem && nextItem.id == nextItemId)
+					return; // already placed
+			}
+
+			toolbar.removeChild(this.btn);
+		}
+
+		if (this.toolbox && nextItemId)
+		{
+			toolbar = this.toolbox.querySelector('#'+toolBarId);
+			if (toolbar)
+			{
+				nextItem = toolbar.querySelector('#'+nextItemId);
+				if (nextItem)
+					toolbar.insertBefore(this.btn, nextItem);
+			}
+		}
+	},
+
 	destroy: function()
 	{
 		if (this.btn)
