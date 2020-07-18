@@ -352,7 +352,6 @@ const Notify =
 var ui =
 {
 	toolbox: null,
-	nextItemId: null,
 	wins: [],
 
 	init: function(win, addon)
