@@ -434,6 +434,8 @@ var ui =
 			nextItemId = nextItem && nextItem.id;
 		}
 
+		ui.wins.forEach((winUI) => winUI.moveBtn(toolbarId, nextItemId));
+
 		WinUI.toolbarId = toolbarId;
 		WinUI.nextItemId = nextItemId;
 	},
