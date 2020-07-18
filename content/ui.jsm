@@ -429,7 +429,7 @@ var ui =
 		{
 			let parent = btn.parentNode,
 			nextItem = btn.nextSibling;
-			if (parent && parent.localName == "toolbar")
+			if (parent && ["toolbar", "hbox"].includes(parent.localName))
 				toolbarId = parent.id;
 			nextItemId = nextItem && nextItem.id;
 		}
