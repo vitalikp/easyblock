@@ -388,7 +388,7 @@ var ui =
 			if (index < items.length)
 				nextItem = items[index+1];
 			WinUI.toolbarId = toolbar._customizationTarget.id;
-			ui.nextItemId = nextItem;
+			WinUI.nextItemId = nextItem;
 			break;
 		}
 	},
@@ -422,8 +422,8 @@ var ui =
 		if (toolbox)
 		{
 			let nextItem = null;
-			if (ui.nextItemId)
-				nextItem = doc.getElementById(ui.nextItemId);
+			if (WinUI.nextItemId)
+				nextItem = doc.getElementById(WinUI.nextItemId);
 			if (!toolbox.querySelector('#'+BTN_ID))
 				toolbox.insertBefore(winUI.btn, nextItem);
 		}
@@ -449,7 +449,7 @@ var ui =
 		}
 
 		WinUI.toolbarId = toolbarId;
-		ui.nextItemId = nextItemId;
+		WinUI.nextItemId = nextItemId;
 	},
 
 	loadCss: function(style)
