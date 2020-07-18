@@ -352,7 +352,6 @@ const Notify =
 var ui =
 {
 	toolbox: null,
-	toolbarId: null,
 	nextItemId: null,
 	wins: [],
 
