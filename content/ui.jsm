@@ -235,10 +235,31 @@ function WinUI(doc, addon)
 
 	this.updateState(addon);
 	this.loadGroups(addon.db.groups);
+	this.initToolbar();
 }
 
 WinUI.prototype =
 {
+	initToolbar: function()
+	{
+		if (!this.toolbox)
+			return;
+
+		if (!WinUI.toolbarId)
+			ui.selectToolbar(this.toolbox.childNodes);
+
+		if (!WinUI.toolbarId)
+			ui.selectToolbar(this.toolbox.externalToolbars);
+
+		if (!WinUI.toolbarId)
+		{
+			this.toolbox.palette.appendChild(this.btn);
+			return;
+		}
+
+		this.moveBtn(WinUI.toolbarId, WinUI.nextItemId);
+	},
+
 	moveBtn: function(toolBarId, nextItemId)
 	{
 		let toolbar, nextItem;
@@ -395,36 +416,9 @@ var ui =
 	{
 		let winUI;
 
-		if (!ui.toolbox)
-			ui.toolbox = doc.getElementById("navigator-toolbox");
-		if (!ui.toolbox)
-			return;
-
 		winUI = new WinUI(doc, addon);
 
 		ui.wins.push(winUI);
-
-		if (!WinUI.toolbarId)
-			ui.selectToolbar(ui.toolbox.childNodes);
-
-		if (!WinUI.toolbarId)
-			ui.selectToolbar(ui.toolbox.externalToolbars);
-
-		if (!WinUI.toolbarId)
-		{
-			ui.toolbox.palette.appendChild(winUI.btn);
-			return;
-		}
-
-		let toolbox = doc.getElementById(WinUI.toolbarId);
-		if (toolbox)
-		{
-			let nextItem = null;
-			if (WinUI.nextItemId)
-				nextItem = doc.getElementById(WinUI.nextItemId);
-			if (!toolbox.querySelector('#'+BTN_ID))
-				toolbox.insertBefore(winUI.btn, nextItem);
-		}
 	},
 
 	customize: function(event)
