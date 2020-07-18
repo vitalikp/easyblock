@@ -377,10 +377,14 @@ var ui =
 
 	init: function(win, addon)
 	{
+		let winUI;
+
 		if (!win && !win.document)
 			return;
 
-		ui.initToolbar(win.document, addon);
+		winUI = new WinUI(win.document, addon);
+
+		ui.wins.push(winUI);
 	},
 
 	selectToolbar: function(toolbars)
@@ -410,15 +414,6 @@ var ui =
 			WinUI.nextItemId = nextItem;
 			break;
 		}
-	},
-
-	initToolbar: function(doc, addon)
-	{
-		let winUI;
-
-		winUI = new WinUI(doc, addon);
-
-		ui.wins.push(winUI);
 	},
 
 	customize: function(event)
