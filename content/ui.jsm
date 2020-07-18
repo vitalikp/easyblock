@@ -387,7 +387,7 @@ var ui =
 
 			if (index < items.length)
 				nextItem = items[index+1];
-			ui.toolbarId = toolbar._customizationTarget.id;
+			WinUI.toolbarId = toolbar._customizationTarget.id;
 			ui.nextItemId = nextItem;
 			break;
 		}
@@ -406,19 +406,19 @@ var ui =
 
 		ui.wins.push(winUI);
 
-		if (!ui.toolbarId)
+		if (!WinUI.toolbarId)
 			ui.selectToolbar(ui.toolbox.childNodes);
 
-		if (!ui.toolbarId)
+		if (!WinUI.toolbarId)
 			ui.selectToolbar(ui.toolbox.externalToolbars);
 
-		if (!ui.toolbarId)
+		if (!WinUI.toolbarId)
 		{
 			ui.toolbox.palette.appendChild(winUI.btn);
 			return;
 		}
 
-		let toolbox = doc.getElementById(ui.toolbarId);
+		let toolbox = doc.getElementById(WinUI.toolbarId);
 		if (toolbox)
 		{
 			let nextItem = null;
@@ -448,7 +448,7 @@ var ui =
 			nextItemId = nextItem && nextItem.id;
 		}
 
-		ui.toolbarId = toolbarId;
+		WinUI.toolbarId = toolbarId;
 		ui.nextItemId = nextItemId;
 	},
 
