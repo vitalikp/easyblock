@@ -137,7 +137,7 @@ function GroupUI(group, menu)
 {
 	let menuItem;
 
-	menuItem = new MenuToggle(group, group, menu, 'Group');
+	menuItem = new MenuToggle(group, group.name, menu, 'Group');
 	menuItem.update(group.enabled);
 
 	this.group = group;
