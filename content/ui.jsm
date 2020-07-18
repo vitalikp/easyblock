@@ -448,7 +448,7 @@ var ui =
 			nextItemId = nextItem && nextItem.id;
 		}
 
-		ui.toolBarId = toolbarId;
+		ui.toolbarId = toolbarId;
 		ui.nextItemId = nextItemId;
 	},
 
