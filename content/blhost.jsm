@@ -64,6 +64,9 @@ function blhost(name, isrule)
 	data = name.split('.');
 
 	i = data.length - 1;
+	if (!data[i])
+		data.splice(i--, 1);
+
 	if (i > 0)
 	{
 		this.tld = indexOf(tlds, label(data[i--]), isrule);
