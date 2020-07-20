@@ -340,6 +340,7 @@ var bldb =
 		db = this;
 
 		loadtime = new Date();
+		db.groups = [];
 		io.loadText(this.fn, (data) =>
 		{
 			let arr, res, group, line;
