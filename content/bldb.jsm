@@ -176,8 +176,11 @@ var blsite =
 
 	onBlock: function()
 	{
-		this.cnt++;
-		io.log("Blocking site '" + this.name + "'");
+		if (!this.hasDom)
+		{
+			this.cnt++;
+			io.log("Blocking site '" + this.name + "'");
+		}
 	},
 
 	toString: function()
