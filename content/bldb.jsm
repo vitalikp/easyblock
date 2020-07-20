@@ -176,7 +176,9 @@ var blsite =
 
 	onBlock: function()
 	{
-		if (!this.hasDom)
+		if (this.hasDom)
+			io.log("Blocking content site '" + this.name + "'");
+		else
 		{
 			this.cnt++;
 			io.log("Blocking site '" + this.name + "'");
