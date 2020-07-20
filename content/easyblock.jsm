@@ -100,7 +100,6 @@ var EasyBlock =
 			return;
 
 		ui.init(window, EasyBlock);
-		window.addEventListener("aftercustomization", ui.customize, false);
 	},
 
 	watchWindow: function(window, topic)

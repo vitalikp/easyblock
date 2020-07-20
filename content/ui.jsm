@@ -383,6 +383,8 @@ var ui =
 
 		winUI = new WinUI(win.document, addon);
 
+		win.addEventListener("aftercustomization", ui.customize, false);
+
 		ui.wins.push(winUI);
 	},
 
