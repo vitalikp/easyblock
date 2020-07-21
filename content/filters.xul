@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?xml-stylesheet href="chrome://global/skin/global.css" type="text/css"?>
+<?xml-stylesheet href="chrome://easyblock/content/filters.css" type="text/css"?>
+
+<window class="dialog"
+		xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+		orient="vertical"
+		autostretch="always"
+		onload="init();"
+		title="Easy Block filters">
+
+	<script type="application/javascript" src="chrome://easyblock/content/filters.js"/>
+
+	<groupbox>
+		<caption label="Filters"/>
+		<vbox id="bl">
+		</vbox>
+	</groupbox>
+
+</window>

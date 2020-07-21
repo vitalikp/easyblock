@@ -190,7 +190,7 @@ function WinUI(doc, addon)
 		if (!event && !event.target)
 			return;
 
-		win.open('chrome://easyblock/content/options.xul', 'EasyBlockFilters', 'chrome,titlebar,centerscreen,resizable').focus();
+		win.open('chrome://easyblock/content/filters.xul', 'EasyBlockFilters', 'chrome,titlebar,centerscreen,resizable').focus();
 	});
 	this.menu.appendChild(item);
 
