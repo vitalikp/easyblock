@@ -126,12 +126,9 @@ var EasyBlock =
 		ui.init(window, EasyBlock);
 	},
 
-	watchWindow: function(window, topic)
+	watchWindow: function(window)
 	{
 		let listener;
-
-		if (topic != OBS_WIN_OPEN)
-			return;
 
 		listener = (event) =>
 		{
