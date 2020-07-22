@@ -140,7 +140,7 @@ function GroupUI(group, menu)
 	menuItem = new MenuToggle(group, group.name, menu, 'Group');
 	menuItem.update(group.enabled);
 
-	this.group = group;
+	this.id = group.id;
 	this.menuItem = menuItem;
 }
 
@@ -157,7 +157,7 @@ GroupUI.prototype =
 
 	update: function(group)
 	{
-		if (group.name != this.group.name)
+		if (this.id != group.id)
 			return;
 
 		this.menuItem.update(group.enabled);
