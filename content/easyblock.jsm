@@ -170,7 +170,7 @@ var EasyBlock =
 	{
 		let type, site;
 
-		if (!req)
+		if (this.disabled || !req)
 			return;
 
 		req.QueryInterface(Ci.nsIHttpChannel);
@@ -224,9 +224,6 @@ var EasyBlock =
 
 		observe: function(subject, topic, data)
 		{
-			if (EasyBlock.disabled)
-				return;
-
 			switch (topic)
 			{
 				case OBS_REQ:
