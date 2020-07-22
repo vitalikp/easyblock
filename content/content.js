@@ -21,11 +21,24 @@ function ContentObserver()
 	this.config = { childList: true, subtree: true };
 	this.obs = null;
 	this.dom = null;
-	this.disabled = false;
+	this._disabled = false;
 }
 
 ContentObserver.prototype =
 {
+	get disabled()
+	{
+		return this._disabled;
+	},
+
+	set disabled(value)
+	{
+		if (this._disabled == value)
+			return;
+
+		this._disabled = value;
+	},
+
 	toggle: function(data)
 	{
 		if (!data)
@@ -37,7 +50,7 @@ ContentObserver.prototype =
 	clear: function()
 	{
 		this.unreg();
-		this.disabled = false;
+		this._disabled = false;
 		this.dom = null;
 	},
 
