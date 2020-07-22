@@ -21,6 +21,7 @@ function ContentObserver()
 	this.config = { childList: true, subtree: true };
 	this.obs = null;
 	this.dom = null;
+	this.enabled = true;
 	this._disabled = false;
 }
 
@@ -28,7 +29,7 @@ ContentObserver.prototype =
 {
 	get disabled()
 	{
-		return this._disabled;
+		return this._disabled || !this.enabled;
 	},
 
 	set disabled(value)
@@ -50,6 +51,7 @@ ContentObserver.prototype =
 	clear: function()
 	{
 		this.unreg();
+		this.enabled = true;
 		this._disabled = false;
 		this.dom = null;
 	},
