@@ -43,9 +43,31 @@ const ProcessAPI =
 var EasyBlock =
 {
 	db: {},
-	disabled: false,
+	_disabled: false,
 	prefs: {},
 	filter: null,
+
+	get disabled()
+	{
+		return this._disabled;
+	},
+
+	set disabled(value)
+	{
+		if (this._disabled == value)
+			return;
+
+		this.prefs.setBoolPref('disabled', value);
+
+		this.filter.toggle(value);
+
+		if (!value)
+			io.log("Enable 'EasyBlock' addon...");
+		else
+			io.log("Disable 'EasyBlock' addon...");
+
+		this._disabled = value;
+	},
 
 	startup: function(addonData)
 	{
@@ -123,12 +145,6 @@ var EasyBlock =
 			return false;
 
 		this.disabled = value;
-		this.prefs.setBoolPref('disabled', this.disabled);
-		this.filter.toggle(this.disabled);
-		if (!value)
-			io.log("Enable 'EasyBlock' addon...");
-		else
-			io.log("Disable 'EasyBlock' addon...");
 
 		return true;
 	},
