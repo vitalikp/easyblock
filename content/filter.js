@@ -72,7 +72,7 @@ Process.prototype =
 
 	findDom: function(data)
 	{
-		let site;
+		let site, eventData;
 
 		if (!data)
 			return;
@@ -81,7 +81,13 @@ Process.prototype =
 		if (!site || !site.hasDom)
 			return;
 
-		return { hostname: data.hostname, dom: site.dom };
+		eventData =
+		{
+			hostname: data.hostname,
+			dom: site.dom
+		};
+
+		return eventData;
 	},
 
 	onEvent: function(event)
