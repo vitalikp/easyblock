@@ -84,6 +84,7 @@ Process.prototype =
 		eventData =
 		{
 			hostname: data.hostname,
+			grpId: site.grpId,
 			dom: site.dom
 		};
 
