@@ -60,9 +60,9 @@ function Process(api, addon)
 
 Process.prototype =
 {
-	toggle: function(value)
+	toggle: function(value, grpId)
 	{
-		this.bus.sendEvent(EVENT_TOGGLE, { value: value });
+		this.bus.sendEvent(EVENT_TOGGLE, { grpId: grpId, value: value });
 	},
 
 	reload: function()
