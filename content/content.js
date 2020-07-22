@@ -20,6 +20,7 @@ function ContentObserver()
 {
 	this.config = { childList: true, subtree: true };
 	this.obs = null;
+	this.grpId = 0;
 	this.dom = null;
 	this.enabled = true;
 	this._disabled = false;
@@ -45,12 +46,21 @@ ContentObserver.prototype =
 		if (!data)
 			return;
 
+		if (data.grpId > 0)
+		{
+			if (this.grpId == data.grpId)
+				this.enabled = data.value;
+
+			return;
+		}
+
 		this.disabled = data.value;
 	},
 
 	clear: function()
 	{
 		this.unreg();
+		this.grpId = 0;
 		this.enabled = true;
 		this._disabled = false;
 		this.dom = null;
@@ -85,6 +95,7 @@ ContentObserver.prototype =
 		if (!dom || !dom.length)
 			return;
 
+		this.grpId = data.grpId;
 		this.dom = dom;
 		this.reg(doc.defaultView, doc.body);
 		this.filterNode(doc.body);
