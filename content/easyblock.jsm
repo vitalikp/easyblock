@@ -109,7 +109,8 @@ var EasyBlock =
 
 	shutdown: function()
 	{
-		EasyBlock.observer.unreg(os);
+		EasyBlock.observer.unreg(os, OBS_REQ);
+		EasyBlock.observer.unreg(os, OBS_RESP);
 
 		this.db.close();
 
@@ -212,16 +213,13 @@ var EasyBlock =
 			obs.addObserver(this, topic, false);
 		},
 
-		unreg: function(obs)
+		unreg: function(obs, topic)
 		{
-			if (!obs)
+			if (!obs || !topic)
 				return;
 
-			io.log("unreg '" + OBS_REQ + "' observer handler");
-			obs.removeObserver(this, OBS_REQ, false);
-
-			io.log("unreg '" + OBS_RESP + "' observer handler");
-			obs.removeObserver(this, OBS_RESP, false);
+			io.log("unreg '" + topic + "' observer handler");
+			obs.removeObserver(this, topic, false);
 		},
 
 		observe: function(subject, topic, data)
