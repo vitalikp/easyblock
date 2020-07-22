@@ -74,7 +74,8 @@ var EasyBlock =
 	{
 		var windows, defprefs;
 
-		EasyBlock.observer.reg(os);
+		EasyBlock.observer.reg(os, OBS_REQ);
+		EasyBlock.observer.reg(os, OBS_RESP);
 
 		this.db = bldb.create('blacklist.txt', ui.onLoadDB);
 
@@ -202,16 +203,13 @@ var EasyBlock =
 
 	observer:
 	{
-		reg: function(obs)
+		reg: function(obs, topic)
 		{
-			if (!obs)
+			if (!obs || !topic)
 				return;
 
-			io.log("reg '" + OBS_REQ + "' observer handler");
-			obs.addObserver(this, OBS_REQ, false);
-
-			io.log("reg '" + OBS_RESP + "' observer handler");
-			obs.addObserver(this, OBS_RESP, false);
+			io.log("reg '" + topic + "' observer handler");
+			obs.addObserver(this, topic, false);
 		},
 
 		unreg: function(obs)
