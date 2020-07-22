@@ -20,6 +20,7 @@ const os = Cc["@mozilla.org/observer-service;1"].getService(Ci.nsIObserverServic
 
 const OBS_REQ = "http-on-modify-request";
 const OBS_RESP = "http-on-examine-response";
+const OBS_WIN_OPEN = "domwindowopened"
 
 
 const ProcessAPI =
@@ -128,7 +129,7 @@ var EasyBlock =
 	{
 		let listener;
 
-		if (topic != "domwindowopened")
+		if (topic != OBS_WIN_OPEN)
 			return;
 
 		listener = (event) =>
