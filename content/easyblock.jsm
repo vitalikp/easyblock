@@ -92,7 +92,7 @@ var EasyBlock =
 
 		while (windows.hasMoreElements())
 			this.loadWindow(windows.getNext().QueryInterface(Ci.nsIDOMWindow));
-		Services.ww.registerNotification(this.watchWindow);
+		EasyBlock.observer.reg(os, OBS_WIN_OPEN);
 
 		ui.loadCss("easyblock");
 		io.log("easyblock " + addonData.version + " started!");
@@ -111,10 +111,9 @@ var EasyBlock =
 	{
 		EasyBlock.observer.unreg(os, OBS_REQ);
 		EasyBlock.observer.unreg(os, OBS_RESP);
+		EasyBlock.observer.unreg(os, OBS_WIN_OPEN);
 
 		this.db.close();
-
-		Services.ww.unregisterNotification(this.watchWindow);
 
 		ui.unloadCss("easyblock");
 	},
@@ -232,6 +231,10 @@ var EasyBlock =
 
 				case OBS_RESP:
 					EasyBlock.blockHttp(subject, true);
+					return;
+
+				case OBS_WIN_OPEN:
+					EasyBlock.watchWindow(subject);
 					return;
 			}
 		}
