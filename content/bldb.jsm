@@ -321,6 +321,14 @@ var bldb =
 		this.groups = [];
 	},
 
+	get: function(grpId)
+	{
+		if (!grpId || grpId < 0)
+			return null;
+
+		return this.groups[grpId];
+	},
+
 	add: function(group)
 	{
 		let id;
