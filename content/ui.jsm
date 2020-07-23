@@ -91,7 +91,7 @@ const uitree =
 
 function MenuToggle(obj, name, menu)
 {
-	let doc, menuState, elem;
+	let doc, elem;
 
 	doc = menu.ownerDocument;
 
