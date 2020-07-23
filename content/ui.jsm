@@ -147,6 +147,11 @@ function GroupUI(group, menu)
 
 GroupUI.prototype =
 {
+	get enabled()
+	{
+		return this._enabled;
+	},
+
 	destroy: function()
 	{
 		if (this.menuItem)
