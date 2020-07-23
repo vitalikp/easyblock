@@ -138,8 +138,22 @@ var EasyBlock =
 		window.addEventListener("load", listener, false);
 	},
 
-	toggle: function(value)
+	toggle: function(value, grpId)
 	{
+		if (grpId > 0)
+		{
+			let group;
+
+			group = this.db.get(grpId);
+			if (!group)
+				return false;
+
+			if (group.toggle(value))
+				this.filter.toggle(value, grpId);
+
+			return true;
+		}
+
 		if (this.disabled == value)
 			return false;
 
