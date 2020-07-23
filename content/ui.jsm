@@ -137,7 +137,7 @@ function GroupUI(group, menu, winUI)
 {
 	let menuItem;
 
-	menuItem = new MenuToggle(group, group.name, menu, 'Group');
+	menuItem = new MenuToggle(this, group.name, menu, 'Group');
 
 	this.id = group.id;
 	this.menuItem = menuItem;
@@ -160,6 +160,13 @@ GroupUI.prototype =
 		this.menuItem.update(value);
 
 		this._enabled = value;
+	},
+
+	toggle: function(value)
+	{
+		this.enabled = value;
+
+		return this.winUI.toggle(value, this.id);
 	},
 
 	destroy: function()
