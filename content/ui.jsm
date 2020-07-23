@@ -142,6 +142,7 @@ function GroupUI(group, menu)
 
 	this.id = group.id;
 	this.menuItem = menuItem;
+	this._enabled = group.enabled;
 }
 
 GroupUI.prototype =
@@ -161,6 +162,7 @@ GroupUI.prototype =
 			return;
 
 		this.menuItem.update(group.enabled);
+		this._enabled = group.enabled;
 	}
 };
 
