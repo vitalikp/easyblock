@@ -133,7 +133,7 @@ MenuToggle.prototype =
 	}
 };
 
-function GroupUI(group, menu)
+function GroupUI(group, menu, winUI)
 {
 	let menuItem;
 
@@ -142,6 +142,7 @@ function GroupUI(group, menu)
 	this.id = group.id;
 	this.menuItem = menuItem;
 	this.enabled = group.enabled;
+	this.winUI = winUI;
 }
 
 GroupUI.prototype =
@@ -356,7 +357,7 @@ WinUI.prototype =
 		{
 			let grpUI;
 
-			grpUI = new GroupUI(group, this.grpMenu);
+			grpUI = new GroupUI(group, this.grpMenu, this);
 
 			this.groups.push(grpUI);
 		});
