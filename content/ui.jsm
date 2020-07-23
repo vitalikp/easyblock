@@ -246,6 +246,7 @@ function WinUI(doc, addon)
 		}
 	});
 
+	this.addon = addon;
 	this.groups = [];
 
 	this.updateState(addon);
