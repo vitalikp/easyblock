@@ -146,20 +146,22 @@ var EasyBlock =
 
 			group = this.db.get(grpId);
 			if (!group)
-				return false;
+				return;
 
 			if (group.toggle(value))
+			{
 				this.filter.toggle(value, grpId);
+				ui.wins.forEach((winUI) => winUI.updateGroup(group));
+			}
 
-			return true;
+			return;
 		}
 
 		if (this.disabled == value)
-			return false;
+			return;
 
 		this.disabled = value;
-
-		return true;
+		ui.wins.forEach((winUI) => winUI.updateState(this));
 	},
 
 	findSite: function(hostname)
