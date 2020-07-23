@@ -217,7 +217,7 @@ function WinUI(doc, addon)
 	grpMenu.appendChild(popupMenu);
 	this.grpMenu = popupMenu;
 
-	this.menuItem = new MenuToggle(addon, "Disabled", this.menu, 'State');
+	this.menuItem = new MenuToggle(this, "Disabled", this.menu, 'State');
 
 	reloadItem = doc.createElement("menuitem");
 	reloadItem.setAttribute("label", "Reload");
@@ -256,6 +256,14 @@ function WinUI(doc, addon)
 
 WinUI.prototype =
 {
+	toggle: function(value, grpId)
+	{
+		if (!this.addon)
+			return;
+
+		return this.addon.toggle(value, grpId);
+	},
+
 	initToolbar: function()
 	{
 		if (!this.toolbox)
