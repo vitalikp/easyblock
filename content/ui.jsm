@@ -138,11 +138,10 @@ function GroupUI(group, menu)
 	let menuItem;
 
 	menuItem = new MenuToggle(group, group.name, menu, 'Group');
-	menuItem.update(group.enabled);
 
 	this.id = group.id;
 	this.menuItem = menuItem;
-	this._enabled = group.enabled;
+	this.enabled = group.enabled;
 }
 
 GroupUI.prototype =
@@ -150,6 +149,16 @@ GroupUI.prototype =
 	get enabled()
 	{
 		return this._enabled;
+	},
+
+	set enabled(value)
+	{
+		if (this._enabled == value)
+			return;
+
+		this.menuItem.update(value);
+
+		this._enabled = value;
 	},
 
 	destroy: function()
@@ -166,8 +175,7 @@ GroupUI.prototype =
 		if (this.id != group.id)
 			return;
 
-		this.menuItem.update(group.enabled);
-		this._enabled = group.enabled;
+		this.enabled = group.enabled;
 	}
 };
 
