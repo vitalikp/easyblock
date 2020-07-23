@@ -89,7 +89,7 @@ const uitree =
 	}
 };
 
-function MenuToggle(obj, name, menu, action)
+function MenuToggle(obj, name, menu)
 {
 	let doc, menuState, elem;
 
@@ -107,8 +107,7 @@ function MenuToggle(obj, name, menu, action)
 
 		value = event.target.hasAttribute('checked');
 
-		if (obj.toggle(value))
-			ui.update(action, obj);
+		obj.toggle(value);
 	}, false);
 	menu.appendChild(elem);
 
@@ -137,7 +136,7 @@ function GroupUI(group, menu, winUI)
 {
 	let menuItem;
 
-	menuItem = new MenuToggle(this, group.name, menu, 'Group');
+	menuItem = new MenuToggle(this, group.name, menu);
 
 	this.id = group.id;
 	this.menuItem = menuItem;
@@ -166,7 +165,7 @@ GroupUI.prototype =
 	{
 		this.enabled = value;
 
-		return this.winUI.toggle(value, this.id);
+		this.winUI.toggle(value, this.id);
 	},
 
 	destroy: function()
@@ -225,7 +224,7 @@ function WinUI(doc, addon)
 	grpMenu.appendChild(popupMenu);
 	this.grpMenu = popupMenu;
 
-	this.menuItem = new MenuToggle(this, "Disabled", this.menu, 'State');
+	this.menuItem = new MenuToggle(this, "Disabled", this.menu);
 
 	reloadItem = doc.createElement("menuitem");
 	reloadItem.setAttribute("label", "Reload");
@@ -269,7 +268,7 @@ WinUI.prototype =
 		if (!this.addon)
 			return;
 
-		return this.addon.toggle(value, grpId);
+		this.addon.toggle(value, grpId);
 	},
 
 	initToolbar: function()
@@ -489,12 +488,6 @@ var ui =
 	onLoadDB: function(db)
 	{
 		ui.wins.forEach((winUI) => winUI.loadGroups(db.groups));
-	},
-
-	update: function(action, data)
-	{
-		action = 'update' + action;
-		ui.wins.forEach((winUI) => winUI[action](data));
 	},
 
 	notify: function(addon, msg)
