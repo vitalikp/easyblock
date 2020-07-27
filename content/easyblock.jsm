@@ -74,6 +74,15 @@ var EasyBlock =
 	{
 		var windows, defprefs;
 
+		if (!this.filter)
+		{
+			let filter = {};
+
+			// import filter API
+			Cu.import("chrome://easyblock/content/filter.js", filter);
+			this.filter = new filter.Process(ProcessAPI, this);
+		}
+
 		EasyBlock.observer.reg(os, OBS_REQ);
 		EasyBlock.observer.reg(os, OBS_RESP);
 
@@ -96,15 +105,6 @@ var EasyBlock =
 
 		ui.loadCss("easyblock");
 		io.log("easyblock " + addonData.version + " started!");
-
-		if (!this.filter)
-		{
-			let filter = {};
-
-			// import filter API
-			Cu.import("chrome://easyblock/content/filter.js", filter);
-			this.filter = new filter.Process(ProcessAPI, this);
-		}
 	},
 
 	shutdown: function()
