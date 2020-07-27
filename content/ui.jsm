@@ -5,7 +5,7 @@ const Cu = Components.utils;
 const Cc = Components.classes;
 
 
-var EXPORTED_SYMBOLS = ["ui", "uitree"];
+var EXPORTED_SYMBOLS = ["ui", "uitree", "WinUI"];
 
 // import
 Cu.import("resource://gre/modules/Services.jsm");
