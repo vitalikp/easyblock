@@ -100,6 +100,25 @@ ContentObserver.prototype =
 		if (!doc || !data)
 			return;
 		dom = data.dom;
+
+		if (data.css && data.css.length > 0)
+		{
+			let style, i;
+
+			this.styles = [];
+
+			i = 0;
+			while (i < data.css.length)
+			{
+				style = '<style type="text/css">';
+				style += data.css[i++];
+				style += '</style>';
+
+				this.styles.push(style);
+				doc.head.innerHTML += style;
+			}
+		}
+
 		if (!dom || !dom.length)
 			return;
 
@@ -111,7 +130,7 @@ ContentObserver.prototype =
 
 	onDomLoad: function(event)
 	{
-		let doc, loc;
+		let doc, loc, i;
 
 		if (this.disabled || !event || !this.filter)
 			return;
@@ -123,6 +142,10 @@ ContentObserver.prototype =
 		loc = doc.location;
 		if (loc.protocol != "https:" && loc.protocol != "http:")
 			return;
+
+		i = 0;
+		while (i < this.styles.length)
+			doc.head.innerHTML += this.styles[i++];
 
 		if (this.dom)
 		{
