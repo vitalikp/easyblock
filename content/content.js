@@ -107,11 +107,11 @@ ContentObserver.prototype =
 		this.filterNode(doc.body);
 	},
 
-	onDomLoad: function(event, content)
+	onDomLoad: function(event)
 	{
 		let doc, loc;
 
-		if (this.disabled || !event || !content)
+		if (this.disabled || !event || !this.filter)
 			return;
 
 		doc = event.originalTarget;
@@ -128,7 +128,7 @@ ContentObserver.prototype =
 			this.filterNode(doc.body);
 		}
 		else
-			content.findDom(loc.hostname, (data) => this.onFind(doc, data));
+			this.filter.findDom(loc.hostname, (data) => this.onFind(doc, data));
 	},
 
 	onDomEdit: function(mutList)
@@ -202,6 +202,6 @@ function init(e)
 
 	obs = new ContentObserver();
 
-	addEventListener("DOMContentLoaded", (event) => obs.onDomLoad(event, obs.filter));
+	addEventListener("DOMContentLoaded", (event) => obs.onDomLoad(event));
 }
 addEventListener('load', init, true);
