@@ -23,6 +23,7 @@ function ContentObserver()
 	this.config = { childList: true, subtree: true };
 	this.obs = null;
 	this.grpId = 0;
+	this.styles = [];
 	this.dom = null;
 	this.enabled = true;
 	this._disabled = false;
@@ -69,6 +70,7 @@ ContentObserver.prototype =
 		this.grpId = 0;
 		this.enabled = true;
 		this._disabled = false;
+		this.styles = [];
 		this.dom = null;
 	},
 
