@@ -18,12 +18,18 @@ const ContentAPI =
 
 function ContentObserver()
 {
+	let filter = {};
+
 	this.config = { childList: true, subtree: true };
 	this.obs = null;
 	this.grpId = 0;
 	this.dom = null;
 	this.enabled = true;
 	this._disabled = false;
+
+	// import filter API
+	Cu.import("chrome://easyblock/content/filter.js", filter);
+	this.filter = new filter.Content(ContentAPI, this);
 }
 
 ContentObserver.prototype =
@@ -190,16 +196,12 @@ ContentObserver.prototype =
 
 function init(e)
 {
-	let filter = {}, obs, content;
+	let obs;
 
 	removeEventListener("load", init, true);
 
 	obs = new ContentObserver();
 
-	// import filter API
-	Cu.import("chrome://easyblock/content/filter.js", filter);
-	content = new filter.Content(ContentAPI, obs);
-
-	addEventListener("DOMContentLoaded", (event) => obs.onDomLoad(event, content));
+	addEventListener("DOMContentLoaded", (event) => obs.onDomLoad(event, obs.filter));
 }
 addEventListener('load', init, true);
