@@ -1,7 +1,11 @@
 EasyBlock
 ======
-Firefox Add-on.
-Automatically block site from blacklist (&lt;profile dir&gt;/easyblock/blacklist.txt).
+Firefox Add-on.<br/>
+Automatically block site from blacklist.
+
+rule separator — &lt;tab&gt; or two &lt;space&gt; characters<br/>
+group separator — empty &lt;new line&gt; character<br/>
+files location — &lt;profile dir&gt;/easyblock/
 
 ### Blacklist example (blacklist.txt)
 ```
@@ -42,12 +46,24 @@ a.example.org
 example.com
   dom:#test1
 
+# add “example.css“ stylesheet with “style” tag to document content
+# change hyperlink color to red (see below “Stylesheet example”)
+# css rule can be specified multiple times
+example.com
+  css:example
 
 # add sites to “Group1” group
 # title: Group1
 example.com
 example.net
 mysite1.com
+```
+
+### Stylesheet example (example.css)
+```
+# change hyperlink color to red
+a { color: red; }
+
 ```
 
 # License
