@@ -120,10 +120,15 @@ var EasyBlock =
 
 	loadWindow: function(window)
 	{
-		if (!window)
+		let winUI;
+
+		if (!window && !window.document)
 			return;
 
-		ui.init(window, EasyBlock);
+		winUI = new WinUI(window.document, this);
+		window.addEventListener("aftercustomization", ui.customize);
+
+		ui.wins.push(winUI);
 	},
 
 	watchWindow: function(window)
@@ -133,7 +138,7 @@ var EasyBlock =
 		listener = (event) =>
 		{
 			window.removeEventListener("load", listener, false);
-			ui.init(window, EasyBlock);
+			this.loadWindow(window);
 		};
 		window.addEventListener("load", listener, false);
 	},

@@ -405,20 +405,6 @@ var ui =
 {
 	wins: [],
 
-	init: function(win, addon)
-	{
-		let winUI;
-
-		if (!win && !win.document)
-			return;
-
-		winUI = new WinUI(win.document, addon);
-
-		win.addEventListener("aftercustomization", ui.customize, false);
-
-		ui.wins.push(winUI);
-	},
-
 	selectToolbar: function(toolbars)
 	{
 		let toolbar, currSet, items, nextItem;
