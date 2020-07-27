@@ -29,6 +29,7 @@ var blsite =
 	query: [],
 	type: [],
 	dom: [],
+	css: [],
 	cnt: 0,
 
 	create: function(hostname)
@@ -49,13 +50,14 @@ var blsite =
 		site.query = [];
 		site.type = [];
 		site.dom = [];
+		site.css = [];
 
 		return site;
 	},
 
 	get hasRules()
 	{
-		return this.query.length > 0 || this.type.length > 0 || this.dom.length > 0;
+		return this.query.length > 0 || this.type.length > 0 || this.dom.length > 0 || this.css.length > 0;
 	},
 
 	addRule: function(rule)
@@ -80,6 +82,13 @@ var blsite =
 		if (rule.startsWith('dom:'))
 		{
 			this.addDom(rule.substr(4));
+
+			return true;
+		}
+
+		if (rule.startsWith('css:'))
+		{
+			this.addCss(rule.substr(4));
 
 			return true;
 		}
@@ -169,9 +178,28 @@ var blsite =
 		this.dom.push(line);
 	},
 
+	addCss: function(line)
+	{
+		let style, fn;
+
+		if (!line)
+			return;
+
+		fn = line.trim() + '.css';
+		io.loadText(fn, (data) =>
+		{
+			let ln;
+
+			ln = data.split('\n').length;
+
+			io.log("css: style " + fn + " loaded (" + ln + ' lines)');
+			this.css.push(data);
+		});
+	},
+
 	get hasDom()
 	{
-		return this.dom.length > 0;
+		return this.dom.length > 0 || this.css.length > 0;
 	},
 
 	onBlock: function()
