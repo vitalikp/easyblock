@@ -67,7 +67,7 @@ Process.prototype =
 
 	reload: function()
 	{
-		this.bus.sendEvent(EVENT_RELOAD, {});
+		this.bus.sendEvent(EVENT_RELOAD);
 	},
 
 	findDom: function(data)
