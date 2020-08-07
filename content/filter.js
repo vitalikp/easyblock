@@ -118,10 +118,8 @@ Content.prototype =
 {
 	clear: function()
 	{
-		if (!_cache || !_cache.size)
-			return;
-
-		_cache.clear();
+		if (_cache && _cache.size > 0)
+			_cache.clear();
 		this.obs.clear();
 	},
 
