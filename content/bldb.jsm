@@ -351,10 +351,10 @@ var bldb =
 
 	get: function(grpId)
 	{
-		if (!grpId || grpId < 0)
+		if (!grpId || grpId <= 0)
 			return null;
 
-		return this.groups[grpId];
+		return this.groups[grpId - 1];
 	},
 
 	add: function(group)
@@ -367,7 +367,7 @@ var bldb =
 		if (this.groups.findIndex((g) => group.name == g.name) >= 0)
 			return;
 
-		id = this.groups.length;
+		id = this.groups.length + 1;
 
 		this.groups.push(group);
 		group.id = id;
