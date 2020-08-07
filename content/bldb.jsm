@@ -391,7 +391,6 @@ var bldb =
 				return;
 
 			group = blgroup.create('Default');
-			group.id = 0;
 			db.defGroup = group;
 
 			arr = data.split(/\r\n|\n/);
@@ -446,7 +445,7 @@ var bldb =
 				}
 			}
 
-			db.groups.push(db.defGroup);
+			db.add(db.defGroup);
 
 			loadtime = new Date() - loadtime;
 
