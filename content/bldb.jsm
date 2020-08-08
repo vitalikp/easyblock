@@ -20,41 +20,28 @@ const domparser = Cc["@mozilla.org/xmlextras/domparser;1"].createInstance(Ci.nsI
 const _doc = domparser.parseFromString('<body/>', 'text/html');
 
 
-var blsite =
+function blsite(hostname)
 {
-	grpId: 0,
-	enabled: true,
-	name: '',
-	host: null,
-	query: [],
-	type: [],
-	dom: [],
-	css: [],
-	cnt: 0,
+	this.grpId = 0;
 
-	create: function(hostname)
+	this.enabled = true;
+	if (hostname[0] == '!')
 	{
-		var site, host, enabled = true;
+		hostname = hostname.substr(1);
+		this.enabled = false;
+	}
 
-		if (hostname[0] == '!')
-		{
-			hostname = hostname.substr(1);
-			enabled = false;
-		}
-		host = new blhost(hostname, true);
+	this.name = hostname;
+	this.host = new blhost(hostname, true);
+	this.query = [];
+	this.type = [];
+	this.dom = [];
+	this.css = [];
+	this.cnt = 0;
+}
 
-		site = Object.create(this);
-		site.enabled = enabled;
-		site.name = hostname;
-		site.host = host;
-		site.query = [];
-		site.type = [];
-		site.dom = [];
-		site.css = [];
-
-		return site;
-	},
-
+blsite.prototype =
+{
 	get hasRules()
 	{
 		return this.query.length > 0 || this.type.length > 0 || this.dom.length > 0 || this.css.length > 0;
@@ -435,7 +422,7 @@ var bldb =
 
 				try
 				{
-					site = blsite.create(line);
+					site = new blsite(line);
 					group.add(site);
 				}
 				catch (e)
