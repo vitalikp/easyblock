@@ -31,6 +31,8 @@ function ContentObserver()
 	// import filter API
 	Cu.import("chrome://easyblock/content/filter.js", filter);
 	this.filter = new filter.Content(ContentAPI, this);
+
+	addEventListener("DOMContentLoaded", this);
 }
 
 ContentObserver.prototype =
@@ -80,7 +82,7 @@ ContentObserver.prototype =
 			return;
 
 		this.obs = new win.MutationObserver((mutList, obs) => this.onDomEdit(mutList));
-		win.addEventListener("beforeunload", (event) => this.unreg());
+		win.addEventListener("beforeunload", this);
 		this.obs.observe(node, this.config);
 	},
 
@@ -223,6 +225,23 @@ ContentObserver.prototype =
 				node.parentElement.removeChild(node);
 			node = null;
 		}
+	},
+
+	handleEvent: function(event)
+	{
+		if (!event)
+			return;
+
+		switch (event.type)
+		{
+			case "DOMContentLoaded":
+				this.onDomLoad(event);
+				break;
+
+			case "beforeunload":
+				this.unreg();
+				break;
+		}
 	}
 };
 
@@ -233,7 +252,5 @@ function init(e)
 	removeEventListener("load", init, true);
 
 	obs = new ContentObserver();
-
-	addEventListener("DOMContentLoaded", (event) => obs.onDomLoad(event));
 }
 addEventListener('load', init, true);
