@@ -157,14 +157,6 @@ ContentObserver.prototype =
 			this.filter.findDom(loc.hostname, (data) => this.onFind(doc, data));
 	},
 
-	onDomLoad: function(event)
-	{
-		if (!event)
-			return;
-
-		this.filterDom(event.originalTarget);
-	},
-
 	onDomEdit: function(mutList)
 	{
 		let mut, i, j;
@@ -235,7 +227,7 @@ ContentObserver.prototype =
 		switch (event.type)
 		{
 			case "DOMContentLoaded":
-				this.onDomLoad(event);
+				this.filterDom(event.originalTarget);
 				break;
 
 			case "beforeunload":
