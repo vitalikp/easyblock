@@ -128,14 +128,13 @@ ContentObserver.prototype =
 		this.filterNode(doc.body);
 	},
 
-	onDomLoad: function(event)
+	filterDom: function(doc)
 	{
-		let doc, loc, i;
+		let loc, i;
 
-		if (this.disabled || !event || !this.filter)
+		if (this.disabled || !this.filter)
 			return;
 
-		doc = event.originalTarget;
 		if (!doc || doc.nodeType != doc.DOCUMENT_NODE)
 			return;
 
@@ -154,6 +153,14 @@ ContentObserver.prototype =
 		}
 		else
 			this.filter.findDom(loc.hostname, (data) => this.onFind(doc, data));
+	},
+
+	onDomLoad: function(event)
+	{
+		if (!event)
+			return;
+
+		this.filterDom(event.originalTarget);
 	},
 
 	onDomEdit: function(mutList)
