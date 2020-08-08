@@ -237,12 +237,16 @@ ContentObserver.prototype =
 	}
 };
 
-function init(e)
+function init(event)
 {
 	let obs;
 
 	removeEventListener("load", init, true);
 
+	if (!event)
+		return;
+
 	obs = new ContentObserver();
+	obs.filterDom(event.originalTarget);
 }
 addEventListener('load', init, true);
