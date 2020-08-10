@@ -33,6 +33,7 @@ function blsite(hostname)
 
 	this.name = hostname;
 	this.host = new blhost(hostname, true);
+	this.ua = '';
 	this.query = [];
 	this.type = [];
 	this.dom = [];
@@ -44,7 +45,7 @@ blsite.prototype =
 {
 	get hasRules()
 	{
-		return this.query.length > 0 || this.type.length > 0 || this.dom.length > 0 || this.css.length > 0;
+		return this.ua.length > 0 || this.query.length > 0 || this.type.length > 0 || this.dom.length > 0 || this.css.length > 0;
 	},
 
 	addRule: function(rule)
@@ -58,6 +59,13 @@ blsite.prototype =
 		if (rule[i] != '\t' && rule[i++] != ' ' && rule[i] != ' ')
 			return false;
 		rule = rule.substr(i+1);
+
+		if (rule.startsWith('ua:'))
+		{
+			this.ua = rule.substr(3);
+
+			return true;
+		}
 
 		if (rule.startsWith('type:'))
 		{
