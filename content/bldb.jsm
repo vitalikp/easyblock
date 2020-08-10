@@ -244,6 +244,31 @@ function blgroup(name)
 
 blgroup.prototype =
 {
+	setFlags: function(val)
+	{
+		let flags, i;
+
+		if (!val || val.length < 3)
+			return;
+
+		if (val[0] != '(' && val[val.length-1] != ')')
+			return;
+		val = val.slice(1,-1);
+
+		flags = val.split('|');
+
+		i = 0;
+		while (i < flags.length)
+		{
+			switch (flags[i++])
+			{
+				case "disabled":
+					this.enabled = false;
+					break;
+			}
+		}
+	},
+
 	toggle: function(value)
 	{
 		if (this.enabled == value)
@@ -412,6 +437,10 @@ var bldb =
 						case 'title':
 							group = new blgroup(res[2].trim());
 							db.add(group);
+							break;
+
+						case 'flags':
+							group.setFlags(res[2].trim());
 							break;
 					}
 					continue;
