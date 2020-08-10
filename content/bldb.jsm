@@ -225,24 +225,17 @@ blsite.prototype =
 	}
 };
 
-var blgroup =
+
+function blgroup(name)
 {
-	id: -1,
-	name: '',
-	data: [],
-	enabled: true,
+	this.id = -1;
+	this.name = name;
+	this.data = [];
+	this.enabled = true;
+}
 
-	create: function(name)
-	{
-		var group;
-
-		group = Object.create(this);
-		group.name = name;
-		group.data = [];
-
-		return group;
-	},
-
+blgroup.prototype =
+{
 	toggle: function(value)
 	{
 		if (this.enabled == value)
@@ -385,7 +378,7 @@ var bldb =
 			if (!data)
 				return;
 
-			group = blgroup.create('Default');
+			group = new blgroup('Default');
 			db.defGroup = group;
 
 			arr = data.split(/\r\n|\n/);
@@ -409,7 +402,7 @@ var bldb =
 					switch (res[1])
 					{
 						case 'title':
-							group = blgroup.create(res[2].trim());
+							group = new blgroup(res[2].trim());
 							db.add(group);
 							break;
 					}
