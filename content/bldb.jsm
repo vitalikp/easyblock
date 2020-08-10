@@ -417,6 +417,7 @@ var bldb =
 				return;
 
 			group = new blgroup('Default');
+			group.hidden = true;
 			db.defGroup = group;
 
 			arr = data.split(/\r\n|\n/);
