@@ -363,6 +363,9 @@ WinUI.prototype =
 		{
 			let grpUI;
 
+			if (group.hidden)
+				return;
+
 			grpUI = new GroupUI(group, this.grpMenu, this);
 
 			this.groups.push(grpUI);
