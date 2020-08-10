@@ -240,6 +240,7 @@ function blgroup(name)
 	this.name = name;
 	this.data = [];
 	this.enabled = true;
+	this.hidden = false;
 }
 
 blgroup.prototype =
@@ -264,6 +265,10 @@ blgroup.prototype =
 			{
 				case "disabled":
 					this.enabled = false;
+					break;
+
+				case "hidden":
+					this.hidden = true;
 					break;
 			}
 		}
