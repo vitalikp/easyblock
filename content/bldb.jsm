@@ -200,6 +200,18 @@ blsite.prototype =
 		}
 	},
 
+	print: function(doc, elem)
+	{
+		let label;
+
+		label = doc.createElement("label");
+		if (!this.enabled)
+			label.setAttribute("enabled", false);
+		label.setAttribute("value", this);
+
+		uitree.add(elem, label);
+	},
+
 	toString: function()
 	{
 		let res;
@@ -293,11 +305,7 @@ var blgroup =
 		{
 			site = this.data[i++];
 
-			label = doc.createElement("label");
-			if (!site.enabled)
-				label.setAttribute("enabled", false);
-			label.setAttribute("value", site);
-			uitree.add(vbox, label);
+			site.print(doc, vbox);
 		}
 	},
 
