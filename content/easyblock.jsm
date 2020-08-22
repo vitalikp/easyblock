@@ -192,10 +192,14 @@ var EasyBlock =
 		return this.db.find(hostname);
 	},
 
-	reload: function(onLoad)
+	reload: function()
 	{
 		this.filter.reload();
-		this.db.load(onLoad);
+		this.db.load((db) =>
+		{
+			ui.onLoadDB(db);
+			ui.notify(this, 'Blacklist sites reloaded!');
+		});
 	},
 
 	blockHttp: function(req, isResp)

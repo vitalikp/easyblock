@@ -233,11 +233,7 @@ function WinUI(doc, addon)
 		if (!event && !event.target)
 			return;
 
-		addon.reload((db) =>
-		{
-			ui.onLoadDB(db);
-			ui.notify(addon, 'Blacklist sites reloaded!');
-		});
+		addon.reload();
 	});
 	this.menu.appendChild(reloadItem);
 
