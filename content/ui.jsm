@@ -423,8 +423,6 @@ const Notify =
 
 var ui =
 {
-	wins: [],
-
 	selectToolbar: function(toolbars)
 	{
 		let toolbar, currSet, items, nextItem;
