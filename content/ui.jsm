@@ -241,17 +241,7 @@ function WinUI(doc, addon)
 	});
 	this.menu.appendChild(reloadItem);
 
-	win.addEventListener('unload', (event) => 
-	{
-		let i;
-
-		i = ui.wins.indexOf(this);
-		if (i >= 0)
-		{
-			ui.wins[i].destroy();
-			ui.wins.splice(i, 1);
-		}
-	});
+	win.addEventListener('unload', (event) => addon.unloadWin(this));
 
 	this.addon = addon;
 	this.groups = [];

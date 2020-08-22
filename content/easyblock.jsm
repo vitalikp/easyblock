@@ -143,6 +143,21 @@ var EasyBlock =
 		window.addEventListener("load", listener, false);
 	},
 
+	unloadWin: function(winUI)
+	{
+		let i;
+
+		if (!winUI)
+			return;
+
+		i = ui.wins.indexOf(winUI);
+		if (i >= 0)
+		{
+			ui.wins[i].destroy();
+			ui.wins.splice(i, 1);
+		}
+	},
+
 	toggle: function(value, grpId)
 	{
 		if (grpId > 0)
