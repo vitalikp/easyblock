@@ -87,7 +87,10 @@ var EasyBlock =
 		EasyBlock.observer.reg(os, OBS_RESP);
 
 		this.db = new bldb('blacklist.txt');
-		this.db.load(ui.onLoadDB);
+		this.db.load((db) =>
+		{
+			ui.wins.forEach((winUI) => this.loadDBWin(winUI, db));
+		});
 
 		// init default prefs
 		defprefs = Services.prefs.getDefaultBranch("extensions.easyblock.");
@@ -167,6 +170,33 @@ var EasyBlock =
 		}
 	},
 
+	loadDBWin: function(winUI, db)
+	{
+		let group, grp, i;
+
+		if (!winUI || !db)
+			return;
+
+		winUI.clearGroups();
+
+		i = 0;
+		while (i < db.groups.length)
+		{
+			group = db.groups[i++];
+			if (group.hidden)
+				continue;
+
+			grp =
+			{
+				id: group.id,
+				name: group.name,
+				enabled: group.enabled
+			};
+
+			winUI.addGroup(grp);
+		}
+	},
+
 	unloadWin: function(winUI)
 	{
 		let i;
@@ -221,7 +251,7 @@ var EasyBlock =
 		this.filter.reload();
 		this.db.load((db) =>
 		{
-			ui.onLoadDB(db);
+			ui.wins.forEach((winUI) => this.loadDBWin(winUI, db));
 			ui.notify(this, 'Blacklist sites reloaded!');
 		});
 	},
