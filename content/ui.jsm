@@ -454,16 +454,6 @@ var ui =
 		}
 	},
 
-	customize: function(event)
-	{
-		if (!event && !event.target)
-			return;
-
-		WinUI.customize(event.target);
-
-		ui.wins.forEach((winUI) => winUI.moveBtn(WinUI.toolbarId, WinUI.nextItemId));
-	},
-
 	loadCss: function(style)
 	{
 		let styleUri = Services.io.newURI("chrome://easyblock/content/" + style + ".css", null, null);
