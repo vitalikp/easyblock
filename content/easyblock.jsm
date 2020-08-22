@@ -127,7 +127,13 @@ var EasyBlock =
 			return;
 
 		winUI = new WinUI(window.document, this);
-		window.addEventListener("aftercustomization", ui.customize);
+		window.addEventListener("aftercustomization", (event) =>
+		{
+			if (!event)
+				return;
+
+			this.customizeUI(event.target);
+		});
 
 		ui.wins.push(winUI);
 	},
@@ -142,6 +148,23 @@ var EasyBlock =
 			this.loadWindow(window);
 		};
 		window.addEventListener("load", listener, false);
+	},
+
+	customizeUI: function(toolbox)
+	{
+		let winUI, i;
+
+		if (!toolbox)
+			return;
+
+		WinUI.customize(toolbox);
+
+		i = 0;
+		while (i < ui.wins.length)
+		{
+			winUI = ui.wins[i++];
+			winUI.moveBtn(WinUI.toolbarId, WinUI.nextItemId);
+		}
 	},
 
 	unloadWin: function(winUI)
