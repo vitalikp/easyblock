@@ -47,6 +47,7 @@ var EasyBlock =
 	_disabled: false,
 	prefs: {},
 	filter: null,
+	wins: [],
 
 	get disabled()
 	{
@@ -89,7 +90,7 @@ var EasyBlock =
 		this.db = new bldb('blacklist.txt');
 		this.db.load((db) =>
 		{
-			ui.wins.forEach((winUI) => this.loadDBWin(winUI, db));
+			this.wins.forEach((winUI) => this.loadDBWin(winUI, db));
 		});
 
 		// init default prefs
@@ -138,7 +139,7 @@ var EasyBlock =
 			this.customizeUI(event.target);
 		});
 
-		ui.wins.push(winUI);
+		this.wins.push(winUI);
 	},
 
 	watchWindow: function(window)
@@ -163,9 +164,9 @@ var EasyBlock =
 		WinUI.customize(toolbox);
 
 		i = 0;
-		while (i < ui.wins.length)
+		while (i < this.wins.length)
 		{
-			winUI = ui.wins[i++];
+			winUI = this.wins[i++];
 			winUI.moveBtn(WinUI.toolbarId, WinUI.nextItemId);
 		}
 	},
@@ -204,11 +205,11 @@ var EasyBlock =
 		if (!winUI)
 			return;
 
-		i = ui.wins.indexOf(winUI);
+		i = this.wins.indexOf(winUI);
 		if (i >= 0)
 		{
-			ui.wins[i].destroy();
-			ui.wins.splice(i, 1);
+			this.wins[i].destroy();
+			this.wins.splice(i, 1);
 		}
 	},
 
@@ -225,7 +226,7 @@ var EasyBlock =
 			if (group.toggle(value))
 			{
 				this.filter.toggle(value, grpId);
-				ui.wins.forEach((winUI) => winUI.updateGroup(group));
+				this.wins.forEach((winUI) => winUI.updateGroup(group));
 			}
 
 			return;
@@ -235,7 +236,7 @@ var EasyBlock =
 			return;
 
 		this.disabled = value;
-		ui.wins.forEach((winUI) => winUI.updateState(this));
+		this.wins.forEach((winUI) => winUI.updateState(this));
 	},
 
 	findSite: function(hostname)
@@ -251,7 +252,7 @@ var EasyBlock =
 		this.filter.reload();
 		this.db.load((db) =>
 		{
-			ui.wins.forEach((winUI) => this.loadDBWin(winUI, db));
+			this.wins.forEach((winUI) => this.loadDBWin(winUI, db));
 			ui.notify(this, 'Blacklist sites reloaded!');
 		});
 	},
