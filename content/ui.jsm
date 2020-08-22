@@ -466,11 +466,6 @@ var ui =
 		sss.unregisterSheet(styleUri, sss.USER_SHEET);
 	},
 
-	onLoadDB: function(db)
-	{
-		ui.wins.forEach((winUI) => winUI.loadGroups(db.groups));
-	},
-
 	notify: function(addon, msg)
 	{
 		Notify.sendUI(addon, 'info', msg);
