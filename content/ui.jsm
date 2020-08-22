@@ -372,6 +372,29 @@ WinUI.prototype =
 	}
 };
 
+WinUI.customize = function(toolbox)
+{
+	let currentSet, btn;
+	let toolbarId, nextItemId;
+
+	if (!toolbox)
+		return;
+
+	btn = toolbox.parentNode.querySelector('#'+BTN_ID);
+	if (btn)
+	{
+		let parent = btn.parentNode,
+		nextItem = btn.nextSibling;
+		if (parent && ["toolbar", "hbox"].includes(parent.localName))
+			toolbarId = parent.id;
+		nextItemId = nextItem && nextItem.id;
+	}
+
+	WinUI.toolbarId = toolbarId;
+	WinUI.nextItemId = nextItemId;
+};
+
+
 const Notify =
 {
 	sendUI: function(addon, type, msg)
@@ -433,27 +456,12 @@ var ui =
 
 	customize: function(event)
 	{
-		let toolbox, currentSet, btn;
-		let toolbarId, nextItemId;
-
 		if (!event && !event.target)
 			return;
 
-		toolbox = event.target;
-		btn = toolbox.parentNode.querySelector('#'+BTN_ID);
-		if (btn)
-		{
-			let parent = btn.parentNode,
-			nextItem = btn.nextSibling;
-			if (parent && ["toolbar", "hbox"].includes(parent.localName))
-				toolbarId = parent.id;
-			nextItemId = nextItem && nextItem.id;
-		}
+		WinUI.customize(event.target);
 
-		ui.wins.forEach((winUI) => winUI.moveBtn(toolbarId, nextItemId));
-
-		WinUI.toolbarId = toolbarId;
-		WinUI.nextItemId = nextItemId;
+		ui.wins.forEach((winUI) => winUI.moveBtn(WinUI.toolbarId, WinUI.nextItemId));
 	},
 
 	loadCss: function(style)
