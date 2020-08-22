@@ -351,25 +351,16 @@ blgroup.prototype =
 	}
 };
 
-var bldb =
+function bldb(fn)
 {
-	fn: '',
-	commRegEx: '',
-	defGroup: null,
-	groups: [],
+	this.commRegEx = new RegExp(COMM_PATTERN);
+	this.fn = fn;
+	this.defGroup = null;
+	this.groups = [];
+}
 
-	create: function(fn, onLoad)
-	{
-		var db;
-
-		db = Object.create(bldb);
-		db.commRegEx = new RegExp(COMM_PATTERN);
-		db.fn = fn;
-		db.load(onLoad);
-
-		return db;
-	},
-
+bldb.prototype =
+{
 	close: function()
 	{
 		this.groups = [];

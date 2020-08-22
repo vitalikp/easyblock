@@ -86,7 +86,8 @@ var EasyBlock =
 		EasyBlock.observer.reg(os, OBS_REQ);
 		EasyBlock.observer.reg(os, OBS_RESP);
 
-		this.db = bldb.create('blacklist.txt', ui.onLoadDB);
+		this.db = new bldb('blacklist.txt');
+		this.db.load(ui.onLoadDB);
 
 		// init default prefs
 		defprefs = Services.prefs.getDefaultBranch("extensions.easyblock.");
