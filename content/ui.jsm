@@ -313,6 +313,18 @@ WinUI.prototype =
 		}
 	},
 
+	addGroup: function(group)
+	{
+		let grpUI;
+
+		if (!group)
+			return;
+
+		grpUI = new GroupUI(group, this.grpMenu, this);
+
+		this.groups.push(grpUI);
+	},
+
 	destroy: function()
 	{
 		if (this.btn)
@@ -351,14 +363,10 @@ WinUI.prototype =
 		this.clearGroups();
 		groups.forEach((group) =>
 		{
-			let grpUI;
-
 			if (group.hidden)
 				return;
 
-			grpUI = new GroupUI(group, this.grpMenu, this);
-
-			this.groups.push(grpUI);
+			this.addGroup(group);
 		});
 	},
 
