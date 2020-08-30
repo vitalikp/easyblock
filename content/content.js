@@ -125,6 +125,7 @@ ContentObserver.prototype =
 
 		this.hostname = data.hostname;
 		this.grpId = data.grpId;
+		this.enabled = this.filter.get('enabled', { grpId: data.grpId });
 		if (dom && dom.length > 0)
 			this.dom = dom;
 		this.reg(doc.defaultView, doc.body);
