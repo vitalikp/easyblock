@@ -280,7 +280,7 @@ var EasyBlock =
 		if (!req.URI)
 			return;
 
-		site = this.findSite(req.URI.host);
+		site = this.findSite(req.URI.host, req.URI.path);
 		if (!site)
 			return;
 
