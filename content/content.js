@@ -33,6 +33,8 @@ function ContentObserver()
 	Cu.import("chrome://easyblock/content/filter.js", filter);
 	this.filter = new filter.Content(ContentAPI, this);
 
+	this.disabled = this.filter.get('disabled');
+
 	addEventListener("DOMContentLoaded", this);
 }
 
