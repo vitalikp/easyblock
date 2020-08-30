@@ -146,6 +146,9 @@ ContentObserver.prototype =
 		if (loc.protocol != "https:" && loc.protocol != "http:")
 			return;
 
+		if (this.hostname != loc.hostname)
+			this.clear();
+
 		i = 0;
 		while (i < this.styles.length)
 			doc.head.innerHTML += this.styles[i++];
