@@ -8,7 +8,8 @@ const EVENT_TYPE = "EasyBlock";
 
 const EVENT_TOGGLE = 1;
 const EVENT_RELOAD = 2;
-const EVENT_DOM = 3;
+const EVENT_GET = 3;
+const EVENT_DOM = 4;
 
 
 // content data
@@ -70,6 +71,29 @@ Process.prototype =
 		this.bus.sendEvent(EVENT_RELOAD);
 	},
 
+	get: function(data)
+	{
+		if (!data)
+			return;
+
+		switch (data.name)
+		{
+			case 'enabled':
+				{
+					let group;
+
+					group = this.addon.getGroup(data.grpId);
+					if (!group)
+						return null;
+
+					return group.enabled;
+				}
+
+			case 'disabled':
+				return this.addon.disabled;
+		}
+	},
+
 	findDom: function(data)
 	{
 		let site, eventData;
@@ -96,6 +120,9 @@ Process.prototype =
 	{
 		switch (event.type)
 		{
+			case EVENT_GET:
+				return this.get(event.data);
+
 			case EVENT_DOM:
 				return this.findDom(event.data);
 		}
@@ -121,6 +148,22 @@ Content.prototype =
 		if (_cache && _cache.size > 0)
 			_cache.clear();
 		this.obs.clear();
+	},
+
+	get: function(name, data)
+	{
+		let res;
+
+		if (!name)
+			return;
+
+		data = Object.assign({ name: name }, data);
+
+		res = this.bus.sendSyncEvent(EVENT_GET, data);
+		if (!res)
+			return null;
+
+		return res[0];
 	},
 
 	findDom: function(hostname, onFind)
