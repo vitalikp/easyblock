@@ -478,7 +478,7 @@ bldb.prototype =
 		});
 	},
 
-	find: function(hostname)
+	find: function(hostname, path)
 	{
 		let group, site, host;
 		let i = 0;
@@ -501,6 +501,12 @@ bldb.prototype =
 			site = group.find(host);
 			if (!site)
 				continue;
+
+			if (path && site.hasRules)
+			{
+				if (!site.hasPath(path))
+					continue;
+			}
 
 			return site;
 		}
