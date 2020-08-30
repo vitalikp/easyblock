@@ -239,6 +239,14 @@ var EasyBlock =
 		this.wins.forEach((winUI) => winUI.updateState(this));
 	},
 
+	getGroup: function(grpId)
+	{
+		if (!this.db)
+			return;
+
+		return this.db.get(grpId);
+	},
+
 	findSite: function(hostname)
 	{
 		if (!hostname || !this.db)
