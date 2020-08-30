@@ -22,6 +22,7 @@ function ContentObserver()
 
 	this.config = { childList: true, subtree: true };
 	this.obs = null;
+	this.hostname = '';
 	this.grpId = 0;
 	this.styles = [];
 	this.dom = null;
@@ -124,6 +125,7 @@ ContentObserver.prototype =
 		if (!dom || !dom.length)
 			return;
 
+		this.hostname = data.hostname;
 		this.grpId = data.grpId;
 		this.dom = dom;
 		this.reg(doc.defaultView, doc.body);
