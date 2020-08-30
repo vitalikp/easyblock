@@ -129,7 +129,7 @@ ContentObserver.prototype =
 		this.grpId = data.grpId;
 		this.dom = dom;
 		this.reg(doc.defaultView, doc.body);
-		this.filterNode(doc.body);
+		this.apply(doc);
 	},
 
 	filterDom: function(doc)
@@ -156,7 +156,7 @@ ContentObserver.prototype =
 		if (this.dom)
 		{
 			this.reg(doc.defaultView, doc.body);
-			this.filterNode(doc.body);
+			this.apply(doc);
 		}
 		else
 			this.filter.findDom(loc.hostname, (data) => this.onFind(doc, data));
@@ -183,6 +183,14 @@ ContentObserver.prototype =
 					this.filterNode(mut.addedNodes[j++]);
 			}
 		}
+	},
+
+	apply: function(doc)
+	{
+		if (this.disabled || !doc)
+			return;
+
+		this.filterNode(doc.body);
 	},
 
 	filterNode: function(node)
