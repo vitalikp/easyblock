@@ -118,23 +118,20 @@ ContentObserver.prototype =
 				style += '</style>';
 
 				this.styles.push(style);
-				doc.head.innerHTML += style;
 			}
 		}
 
-		if (!dom || !dom.length)
-			return;
-
 		this.hostname = data.hostname;
 		this.grpId = data.grpId;
-		this.dom = dom;
+		if (dom && dom.length > 0)
+			this.dom = dom;
 		this.reg(doc.defaultView, doc.body);
 		this.apply(doc);
 	},
 
 	filterDom: function(doc)
 	{
-		let loc, i;
+		let loc;
 
 		if (this.disabled || !this.filter)
 			return;
@@ -148,10 +145,6 @@ ContentObserver.prototype =
 
 		if (this.hostname != loc.hostname)
 			this.clear();
-
-		i = 0;
-		while (i < this.styles.length)
-			doc.head.innerHTML += this.styles[i++];
 
 		if (this.dom)
 		{
@@ -187,8 +180,14 @@ ContentObserver.prototype =
 
 	apply: function(doc)
 	{
+		let i;
+
 		if (this.disabled || !doc)
 			return;
+
+		i = 0;
+		while (i < this.styles.length)
+			doc.head.innerHTML += this.styles[i++];
 
 		this.filterNode(doc.body);
 	},
