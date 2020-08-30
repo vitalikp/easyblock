@@ -247,12 +247,12 @@ var EasyBlock =
 		return this.db.get(grpId);
 	},
 
-	findSite: function(hostname)
+	findSite: function(hostname, path)
 	{
 		if (!hostname || !this.db)
 			return;
 
-		return this.db.find(hostname);
+		return this.db.find(hostname, path);
 	},
 
 	reload: function()
