@@ -22,8 +22,17 @@ var io =
 {
 	init: function()
 	{
+		let dirSrv, profPath;
+
 		if (this.console)
 			return;
+
+		dirSrv = Cc["@mozilla.org/file/directory_service;1"].getService(Ci.nsIProperties);
+
+		// db path in profile
+		profPath = dirSrv.get("ProfD", Ci.nsIFile);
+		profPath.append(ADDON_NAME);
+		this.addonPath = profPath.path;
 
 		this.console = Cc["@mozilla.org/consoleservice;1"].getService(Ci.nsIConsoleService);
 	},
@@ -61,7 +70,7 @@ var io =
 	{
 		let path;
 
-		path = OS.Path.join(ADDON_PATH.path, fn);
+		path = OS.Path.join(this.addonPath, fn);
 
 		OS.File.stat(path).then(callback, (res) =>
 		{
@@ -121,7 +130,7 @@ var io =
 		if (!fn || !callback)
 			return;
 
-		path = OS.Path.join(ADDON_PATH.path, fn);
+		path = OS.Path.join(this.addonPath, fn);
 
 		try
 		{
