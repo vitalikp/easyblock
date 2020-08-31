@@ -7,7 +7,6 @@ const Cu = Components.utils;
 var EXPORTED_SYMBOLS = ["io"];
 
 Cu.import("resource://gre/modules/osfile.jsm");
-Cu.import("resource://gre/modules/Services.jsm");
 Cu.import("resource://gre/modules/FileUtils.jsm");
 
 
@@ -21,7 +20,13 @@ const ADDON_PATH = FileUtils.getDir("ProfD", [ADDON_NAME], true);
 
 var io =
 {
-	console: Services.console,
+	init: function()
+	{
+		if (this.console)
+			return;
+
+		this.console = Cc["@mozilla.org/consoleservice;1"].getService(Ci.nsIConsoleService);
+	},
 
 	log: function(msg)
 	{
@@ -152,3 +157,4 @@ var io =
 		}
 	}
 };
+io.init();
