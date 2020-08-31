@@ -21,9 +21,11 @@ const ADDON_PATH = FileUtils.getDir("ProfD", [ADDON_NAME], true);
 
 var io =
 {
+	console: Services.console,
+
 	log: function(msg)
 	{
-		Services.console.logStringMessage("[" + ADDON_NAME + "] " + msg);
+		this.console.logStringMessage("[" + ADDON_NAME + "] " + msg);
 	},
 
 	warn: function(msg)
@@ -35,7 +37,7 @@ var io =
 
 		warn = scriptError.createInstance(Ci.nsIScriptError);
 		warn.init("[" + ADDON_NAME + "] " + msg, msg.fileName, msg.lineNumber, msg.lineNumber, 0, warn.warningFlag, null);
-		Services.console.logMessage(warn);
+		this.console.logMessage(warn);
 	},
 
 	error: function(msg)
@@ -47,7 +49,7 @@ var io =
 
 		err = scriptError.createInstance(Ci.nsIScriptError);
 		err.init("[" + ADDON_NAME + "] " + msg, msg.fileName, msg.lineNumber, msg.lineNumber, 0, err.errorFlag, null);
-		Services.console.logMessage(err);
+		this.console.logMessage(err);
 	},
 
 	stat: function(fn, callback)
