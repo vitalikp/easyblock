@@ -7,15 +7,11 @@ const Cu = Components.utils;
 var EXPORTED_SYMBOLS = ["io"];
 
 Cu.import("resource://gre/modules/osfile.jsm");
-Cu.import("resource://gre/modules/FileUtils.jsm");
 
 
 const scriptError = Cc["@mozilla.org/scripterror;1"];
 
 const ADDON_NAME = "easyblock";
-
-// db path in profile
-const ADDON_PATH = FileUtils.getDir("ProfD", [ADDON_NAME], true);	
 
 
 var io =
