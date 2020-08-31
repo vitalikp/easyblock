@@ -38,28 +38,27 @@ var io =
 		this.console.logStringMessage("[" + ADDON_NAME + "] " + msg);
 	},
 
-	warn: function(msg)
+	logMsg: function(flags, msg)
 	{
-		let warn;
+		let errMsg;
 
 		if (!msg)
 			return;
 
-		warn = scriptError.createInstance(Ci.nsIScriptError);
-		warn.init("[" + ADDON_NAME + "] " + msg, msg.fileName, msg.lineNumber, msg.lineNumber, 0, warn.warningFlag, null);
-		this.console.logMessage(warn);
+		errMsg = scriptError.createInstance(Ci.nsIScriptError);
+		errMsg.initWithWindowID("[" + ADDON_NAME + "] " + msg, msg.fileName, msg.lineNumber, msg.lineNumber, 0, flags, null, 0);
+
+		this.console.logMessage(errMsg);
+	},
+
+	warn: function(msg)
+	{
+		return this.logMsg(Ci.nsIScriptError.warningFlag, msg);
 	},
 
 	error: function(msg)
 	{
-		let err;
-
-		if (!msg)
-			return;
-
-		err = scriptError.createInstance(Ci.nsIScriptError);
-		err.init("[" + ADDON_NAME + "] " + msg, msg.fileName, msg.lineNumber, msg.lineNumber, 0, err.errorFlag, null);
-		this.console.logMessage(err);
+		return this.logMsg(Ci.nsIScriptError.errorFlag, msg);
 	},
 
 	stat: function(fn, callback)
