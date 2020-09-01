@@ -7,6 +7,7 @@ const Cu = Components.utils;
 var EXPORTED_SYMBOLS = ["io"];
 
 Cu.import("resource://gre/modules/osfile.jsm");
+Cu.import("resource://gre/modules/Task.jsm");
 
 
 const scriptError = Cc["@mozilla.org/scripterror;1"];
@@ -138,6 +139,44 @@ var io =
 		{
 			io.error('fail to load ' + fn + ' file: ' + e);
 		}
+	},
+
+	saveFile: function(fn, data)
+	{
+		let path;
+
+		if (!fn || !data)
+			return;
+
+		path = OS.Path.join(this.addonPath, fn);
+
+		switch (typeof(data))
+		{
+			case 'string':
+				data = new TextEncoder().encode(data);
+				break;
+		}
+
+		Task.spawn(function*()
+		{
+			let file;
+
+			try
+			{
+				file = yield OS.File.open(path, { write: true, trunc: true });
+				yield file.write(data);
+				yield file.flush();
+			}
+			catch(e)
+			{
+				io.error('fail to save ' + fn + ' file: ' + e);
+			}
+			finally
+			{
+				if (file)
+					yield file.close();
+			}
+		});
 	},
 
 	onLoad: function(path, stat, callback)
