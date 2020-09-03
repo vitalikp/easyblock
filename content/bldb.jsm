@@ -79,7 +79,7 @@ blsite.prototype =
 
 	addRule: function(rule)
 	{
-		let i;
+		let i, type;
 
 		if (!rule || !rule.length)
 			return false;
@@ -89,35 +89,38 @@ blsite.prototype =
 			return false;
 		rule = rule.substr(i+1);
 
-		if (rule.startsWith('ua:'))
+		i = rule.indexOf(':');
+		if (i <= 0 || i >= rule.length)
 		{
-			this.ua = rule.substr(3);
+			this.addQuery(rule);
 
 			return true;
 		}
 
-		if (rule.startsWith('type:'))
+		type = rule.substr(0, i);
+		rule = rule.substr(i+1);
+
+		switch (type)
 		{
-			this.addType(rule.substr(5));
+			case "ua":
+				this.ua = rule;
+				break;
 
-			return true;
+			case "type":
+				this.addType(rule);
+				break;
+
+			case "dom":
+				this.addDom(rule);
+				break;
+
+			case "css":
+				this.addCss(rule);
+				break;
+
+			default:
+				throw new Error('rule "' + type + '" is unknown');
 		}
-
-		if (rule.startsWith('dom:'))
-		{
-			this.addDom(rule.substr(4));
-
-			return true;
-		}
-
-		if (rule.startsWith('css:'))
-		{
-			this.addCss(rule.substr(4));
-
-			return true;
-		}
-
-		this.addQuery(rule);
 
 		return true;
 	},
