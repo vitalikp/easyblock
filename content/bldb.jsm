@@ -173,6 +173,11 @@ blsite.prototype =
 		this.dom.push(line);
 	},
 
+	get styles()
+	{
+		return this.css;
+	},
+
 	addCss: function(line)
 	{
 		let style, fn;
