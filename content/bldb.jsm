@@ -20,6 +20,35 @@ const domparser = Cc["@mozilla.org/xmlextras/domparser;1"].createInstance(Ci.nsI
 const _doc = domparser.parseFromString('<body/>', 'text/html');
 
 
+function CssRule(name)
+{
+	this.name = name.trim();
+	this.data = '';
+
+	this.load(this.name + '.css');
+}
+
+CssRule.prototype =
+{
+	load: function(fn)
+	{
+		io.loadText(fn, (data) =>
+		{
+			let ln;
+
+			ln = data.split('\n').length;
+
+			io.log("css: style " + fn + " loaded (" + ln + ' lines)');
+			this.data = data;
+		});
+	},
+
+	toString: function()
+	{
+		return this.name;
+	}
+};
+
 function blsite(hostname)
 {
 	this.grpId = 0;
@@ -175,26 +204,22 @@ blsite.prototype =
 
 	get styles()
 	{
-		return this.css;
+		let styles, i;
+
+		styles = [];
+		i = 0;
+		while (i < this.css.length)
+			styles.push(this.css[i++].data);
+
+		return styles;
 	},
 
 	addCss: function(line)
 	{
-		let style, fn;
-
 		if (!line)
 			return;
 
-		fn = line.trim() + '.css';
-		io.loadText(fn, (data) =>
-		{
-			let ln;
-
-			ln = data.split('\n').length;
-
-			io.log("css: style " + fn + " loaded (" + ln + ' lines)');
-			this.css.push(data);
-		});
+		this.css.push(new CssRule(line));
 	},
 
 	get hasDom()
