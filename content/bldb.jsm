@@ -243,14 +243,93 @@ blsite.prototype =
 
 	print: function(doc, elem)
 	{
-		let label;
+		let vbox, node, label, rule;
+		let i;
 
-		label = doc.createElement("label");
+		if (this.hasRules)
+			vbox = uitree.create(doc, this, false);
+		else
+			vbox = uitree.create(doc, this);
 		if (!this.enabled)
-			label.setAttribute("enabled", false);
-		label.setAttribute("value", this);
+			vbox.setAttribute("enabled", false);
 
-		uitree.add(elem, label);
+		uitree.add(elem, vbox);
+
+		if (this.ua)
+		{
+			node = uitree.create(doc, "User-Agent", false);
+			uitree.add(vbox, node);
+
+			label = doc.createElement("label");
+			label.setAttribute("value", this.ua);
+			uitree.add(node, label);
+		}
+
+		if (this.query.length > 0)
+		{
+			node = uitree.create(doc, "Path (" + this.query.length + ")", false);
+			uitree.add(vbox, node);
+
+			i = 0;
+			while (i < this.query.length)
+			{
+				rule = this.query[i++];
+				rule = rule.source.substr(1);
+
+				label = doc.createElement("label");
+				label.setAttribute("value", rule);
+				uitree.add(node, label);
+			}
+		}
+
+		if (this.type.length > 0)
+		{
+			node = uitree.create(doc, "Type (" + this.type.length + ")", false);
+			uitree.add(vbox, node);
+
+			i = 0;
+			while (i < this.type.length)
+			{
+				rule = this.type[i++];
+				rule = rule.source;
+
+				label = doc.createElement("label");
+				label.setAttribute("value", rule);
+				uitree.add(node, label);
+			}
+		}
+
+		if (this.dom.length > 0)
+		{
+			node = uitree.create(doc, "Content (" + this.dom.length + ")", false);
+			uitree.add(vbox, node);
+
+			i = 0;
+			while (i < this.dom.length)
+			{
+				rule = this.dom[i++];
+	
+				label = doc.createElement("label");
+				label.setAttribute("value", rule);
+				uitree.add(node, label);
+			}
+		}
+
+		if (this.css.length > 0)
+		{
+			node = uitree.create(doc, "CSS (" + this.css.length + ")", false);
+			uitree.add(vbox, node);
+
+			i = 0;
+			while (i < this.css.length)
+			{
+				rule = this.css[i++];
+
+				label = doc.createElement("label");
+				label.setAttribute("value", rule);
+				uitree.add(node, label);
+			}
+		}
 	},
 
 	toString: function()
