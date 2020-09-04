@@ -156,6 +156,10 @@ blsite.prototype =
 		if (!path || !this.query.length)
 			return false;
 
+		i = path.indexOf('?');
+		if (i > 0 && i < path.length)
+			path = path.substr(0, i);
+
 		i = 0;
 		while (i < this.query.length)
 		{
