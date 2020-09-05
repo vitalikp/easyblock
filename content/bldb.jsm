@@ -232,14 +232,8 @@ blsite.prototype =
 			return;
 
 		line = line.trim();
-		line = line.replace('*', '.*');
-		if (line[0] != '/')
-			line = '.*' + line;
-		else
-			if (line[line.length-1] == '/')
-				line += '.*';
 
-		this.pathes.push(new RegExp('^' + line));
+		this.pathes.push(new PathRule(line));
 	},
 
 	hasPath: function(path)
@@ -256,7 +250,7 @@ blsite.prototype =
 		i = 0;
 		while (i < this.pathes.length)
 		{
-			if (this.pathes[i++].test(path))
+			if (this.pathes[i++].hasPath(path))
 				return true;
 		}
 
@@ -371,7 +365,6 @@ blsite.prototype =
 			while (i < this.pathes.length)
 			{
 				rule = this.pathes[i++];
-				rule = rule.source.substr(1);
 
 				label = doc.createElement("label");
 				label.setAttribute("value", rule);
