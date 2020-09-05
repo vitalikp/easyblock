@@ -92,7 +92,7 @@ blsite.prototype =
 		i = rule.indexOf(':');
 		if (i <= 0 || i >= rule.length)
 		{
-			this.addQuery(rule);
+			this.addPath(rule);
 
 			return true;
 		}
@@ -133,7 +133,7 @@ blsite.prototype =
 		return this.host.hasHost(host);
 	},
 
-	addQuery: function(line)
+	addPath: function(line)
 	{
 		if (!line)
 			return;
