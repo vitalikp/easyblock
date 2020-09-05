@@ -63,7 +63,7 @@ function blsite(hostname)
 	this.name = hostname;
 	this.host = new blhost(hostname, true);
 	this.ua = '';
-	this.query = [];
+	this.pathes = [];
 	this.type = [];
 	this.dom = [];
 	this.css = [];
@@ -74,7 +74,7 @@ blsite.prototype =
 {
 	get hasRules()
 	{
-		return this.ua.length > 0 || this.query.length > 0 || this.type.length > 0 || this.dom.length > 0 || this.css.length > 0;
+		return this.ua.length > 0 || this.pathes.length > 0 || this.type.length > 0 || this.dom.length > 0 || this.css.length > 0;
 	},
 
 	addRule: function(rule)
@@ -146,14 +146,14 @@ blsite.prototype =
 			if (line[line.length-1] == '/')
 				line += '.*';
 
-		this.query.push(new RegExp('^' + line));
+		this.pathes.push(new RegExp('^' + line));
 	},
 
 	hasPath: function(path)
 	{
 		let i;
 
-		if (!path || !this.query.length)
+		if (!path || !this.pathes.length)
 			return false;
 
 		i = path.indexOf('?');
@@ -161,9 +161,9 @@ blsite.prototype =
 			path = path.substr(0, i);
 
 		i = 0;
-		while (i < this.query.length)
+		while (i < this.pathes.length)
 		{
-			if (this.query[i++].test(path))
+			if (this.pathes[i++].test(path))
 				return true;
 		}
 
@@ -269,15 +269,15 @@ blsite.prototype =
 			uitree.add(node, label);
 		}
 
-		if (this.query.length > 0)
+		if (this.pathes.length > 0)
 		{
-			node = uitree.create(doc, "Path (" + this.query.length + ")", false);
+			node = uitree.create(doc, "Path (" + this.pathes.length + ")", false);
 			uitree.add(vbox, node);
 
 			i = 0;
-			while (i < this.query.length)
+			while (i < this.pathes.length)
 			{
-				rule = this.query[i++];
+				rule = this.pathes[i++];
 				rule = rule.source.substr(1);
 
 				label = doc.createElement("label");
@@ -342,8 +342,8 @@ blsite.prototype =
 
 		res = '[' + this.cnt + '] ';
 		res += this.name;
-		if (this.query.length > 0)
-			res += ' (' + this.query.length + ')';
+		if (this.pathes.length > 0)
+			res += ' (' + this.pathes.length + ')';
 
 		return res;
 	}
