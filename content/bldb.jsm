@@ -49,6 +49,99 @@ CssRule.prototype =
 	}
 };
 
+function PathRule(path)
+{
+	this.path = path;
+	this.data = [];
+
+	this._parse();
+}
+
+PathRule.cmp = function(val1, val2)
+{
+	if (val1 == val2)
+		return true;
+
+	if (val1.test)
+		return val1.test(val2);
+
+	return false;
+};
+
+PathRule.prototype =
+{
+	_parse: function()
+	{
+		let data, val, i;
+
+		data = this.path.split('/');
+
+		i = 0;
+		while (i < data.length)
+		{
+			val = data[i];
+			if (val.indexOf('*') >= 0)
+				data[i] = new RegExp('^'+val.replace('*', '.*'));
+
+			i++;
+		}
+
+		this.data = data;
+	},
+
+	hasPath: function(path)
+	{
+		let data, len, dlen, i, j;
+
+		if (!path)
+			return false;
+
+		data = path.split('/');
+		len = this.data.length;
+		dlen = data.length;
+
+		if (!this.data[len-1])
+		{
+			len--;
+			dlen--;
+		}
+
+		i = 0;
+		j = 0;
+
+		if (!data[0])
+		{
+			if (this.data[0])
+			{
+				j++;
+			}
+		}
+
+		while (i < len)
+		{
+			if (j >= dlen)
+				return false;
+
+			if (!PathRule.cmp(this.data[i], data[j++]))
+			{
+				if (this.data[0] && i < 1)
+					continue;
+
+				return false;
+			}
+
+			i++;
+		}
+
+		return true;
+	},
+
+	toString: function()
+	{
+		return this.path;
+	}
+};
+
 function blsite(hostname)
 {
 	this.grpId = 0;
