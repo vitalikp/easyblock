@@ -81,7 +81,7 @@ ContentObserver.prototype =
 
 	reg: function(win, node)
 	{
-		if (this.obs || !win || !node)
+		if (!this.dom || this.obs || !win || !node)
 			return;
 
 		this.obs = new win.MutationObserver((mutList, obs) => this.onDomEdit(mutList));
