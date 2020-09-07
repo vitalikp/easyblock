@@ -149,7 +149,7 @@ ContentObserver.prototype =
 		if (this.hostname != loc.hostname)
 			this.clear();
 
-		if (this.dom)
+		if (this.hostname)
 		{
 			this.reg(doc.defaultView, doc.body);
 			this.apply(doc);
