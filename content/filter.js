@@ -96,7 +96,7 @@ Process.prototype =
 
 	findDom: function(data)
 	{
-		let site, eventData;
+		let site, eventData, grpId;
 
 		if (!data)
 			return;
@@ -105,10 +105,14 @@ Process.prototype =
 		if (!site || !site.hasDom)
 			return;
 
+		grpId = -1;
+		if (site.group)
+			grpId = site.group.id;
+
 		eventData =
 		{
 			hostname: data.hostname,
-			grpId: site.grpId,
+			grpId: grpId,
 			dom: site.dom,
 			styles: site.styles
 		};

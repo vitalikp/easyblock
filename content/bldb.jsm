@@ -145,6 +145,7 @@ PathRule.prototype =
 function blsite(hostname)
 {
 	this.grpId = 0;
+	this.group = null;
 
 	this.enabled = true;
 	if (hostname[0] == '!')
@@ -492,11 +493,11 @@ blgroup.prototype =
 
 	add: function(site)
 	{
-		if (!site || site.grpId > 0)
+		if (!site || site.group)
 			return;
 
 		this.data.push(site);
-		site.grpId = this.id;
+		site.group = this;
 //		io.log(this.name + ': add url "' + site.name + '"');
 	},
 
