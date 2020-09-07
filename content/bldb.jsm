@@ -634,6 +634,7 @@ bldb.prototype =
 					switch (res[1])
 					{
 						case 'title':
+							io.warn(new SyntaxError(res[2].trim() + ': "title" field for group name is deprecated, use "group" instead', db.fn, i));
 						case 'group':
 							group = new blgroup(res[2].trim());
 							db.add(group);
