@@ -144,7 +144,6 @@ PathRule.prototype =
 
 function blsite(hostname)
 {
-	this.grpId = 0;
 	this.group = null;
 
 	this.enabled = true;
