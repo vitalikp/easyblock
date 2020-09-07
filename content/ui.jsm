@@ -192,11 +192,17 @@ function WinUI(doc, addon)
 
 	this.btn = doc.createElement("toolbarbutton");
 	this.btn.setAttribute("id", BTN_ID);
-	this.btn.setAttribute("type", "menu");
 	this.btn.setAttribute("removable", "true");
 	this.btn.setAttribute("label", "EasyBlock");
 	this.btn.setAttribute("class", "toolbarbutton-1 easyblock");
 	this.btn.setAttribute("tooltiptext", "EasyBlock toolbar button");
+	this.btn.addEventListener("command", (event) =>
+	{
+		if (!event && !event.target)
+			return;
+
+		this.menu.openPopup(this.btn, "after_start", 0, -3, false, false);
+	});
 
 	this.menu = doc.createElement("menupopup");
 	this.btn.appendChild(this.menu);
