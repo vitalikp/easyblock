@@ -634,6 +634,7 @@ bldb.prototype =
 					switch (res[1])
 					{
 						case 'title':
+						case 'group':
 							group = new blgroup(res[2].trim());
 							db.add(group);
 							break;
