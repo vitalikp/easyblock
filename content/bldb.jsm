@@ -344,7 +344,7 @@ blsite.prototype =
 		rule = rule.substr(i+1);
 
 		i = rule.indexOf(':');
-		if (i <= 0 || i >= rule.length)
+		if (i < 0 || i >= rule.length)
 		{
 			this.addPath(rule);
 
