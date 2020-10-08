@@ -595,7 +595,7 @@ bldb.prototype =
 
 	load: function(onLoad)
 	{
-		let db, site, loadtime;
+		let db, loadtime;
 
 		db = this;
 
@@ -603,75 +603,10 @@ bldb.prototype =
 		db.groups = [];
 		io.loadText(this.fn, (data) =>
 		{
-			let arr, res, group, line;
-			let i;
-
 			if (!data)
 				return;
 
-			group = new blgroup('Default');
-			group.hidden = true;
-			db.defGroup = group;
-
-			arr = data.split(/\r\n|\n/);
-
-			i = 0;
-			while (i < arr.length)
-			{
-				line = arr[i++];
-				if (!line)
-				{
-					group = db.defGroup;
-					continue;
-				}
-
-				if (line[0] == '#')
-				{
-					res = db.commRegEx.exec(line);
-					if (!res)
-						continue;
-
-					switch (res[1])
-					{
-						case 'title':
-							io.warn(new SyntaxError(res[2].trim() + ': "title" field for group name is deprecated, use "group" instead', db.fn, i));
-						case 'group':
-							group = new blgroup(res[2].trim());
-							db.add(group);
-							break;
-
-						case 'flags':
-							group.setFlags(res[2].trim());
-							break;
-					}
-					continue;
-				}
-
-				try
-				{
-					if (site && site.addRule(line))
-						continue;
-				}
-				catch (e)
-				{
-					io.warn(site.name + ': ignore rule "' + line + '"');
-					io.error(new SyntaxError(e.message, db.fn, i));
-					continue;
-				}
-
-				try
-				{
-					site = new blsite(line);
-					group.add(site);
-				}
-				catch (e)
-				{
-					io.warn('ignore hostname "' + line + '"');
-					io.error(new SyntaxError(e.message, db.fn, i));
-				}
-			}
-
-			db.add(db.defGroup);
+			bldb.parse(db, data);
 
 			loadtime = new Date() - loadtime;
 
@@ -733,4 +668,76 @@ bldb.prototype =
 			group.print(doc, elem);
 		}
 	}
+};
+
+bldb.parse = function(db, data)
+{
+	let arr, res, group, site, line, i;
+
+	if (!db || !data)
+		return;
+
+	group = new blgroup('Default');
+	group.hidden = true;
+	db.defGroup = group;
+
+	arr = data.split(/\r\n|\n/);
+
+	i = 0;
+	while (i < arr.length)
+	{
+		line = arr[i++];
+		if (!line)
+		{
+			group = db.defGroup;
+			continue;
+		}
+
+		if (line[0] == '#')
+		{
+			res = db.commRegEx.exec(line);
+			if (!res)
+				continue;
+
+			switch (res[1])
+			{
+				case 'title':
+					io.warn(new SyntaxError(res[2].trim() + ': "title" field for group name is deprecated, use "group" instead', db.fn, i));
+				case 'group':
+					group = new blgroup(res[2].trim());
+					db.add(group);
+					break;
+
+				case 'flags':
+					group.setFlags(res[2].trim());
+					break;
+			}
+			continue;
+		}
+
+		try
+		{
+			if (site && site.addRule(line))
+				continue;
+		}
+		catch (e)
+		{
+			io.warn(site.name + ': ignore rule "' + line + '"');
+			io.error(new SyntaxError(e.message, db.fn, i));
+			continue;
+		}
+
+		try
+		{
+			site = new blsite(line);
+			group.add(site);
+		}
+		catch (e)
+		{
+			io.warn('ignore hostname "' + line + '"');
+			io.error(new SyntaxError(e.message, db.fn, i));
+		}
+	}
+
+	db.add(db.defGroup);
 };
