@@ -20,6 +20,9 @@ const domparser = Cc["@mozilla.org/xmlextras/domparser;1"].createInstance(Ci.nsI
 const _doc = domparser.parseFromString('<body/>', 'text/html');
 
 
+const RULE_NONE = 0;
+
+
 function CssRule(name)
 {
 	this.name = name.trim();
