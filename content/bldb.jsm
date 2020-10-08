@@ -24,6 +24,162 @@ const RULE_NONE = 0;
 const RULE_COMM = 1;
 const RULE_PROP = 2;
 
+function BlRule(ln)
+{
+	this.ln = ln;
+	this.level = 0;
+	this.disabled = false;
+	this.type = RULE_NONE;
+	this.name = null;
+	this.rules = [];
+	this.value = '';
+}
+
+BlRule.prototype = 
+{
+	parse: function(line)
+	{
+		let level, i;
+
+		if (!line || !line.length)
+			return;
+
+		if (line[0] == '#')
+		{
+			this.type = RULE_COMM;
+			line = line.substr(1);
+		}
+
+		i = 0;
+		level = 0;
+		while (line[i] == '\t' || line[i++] == ' ' && line[i] == ' ')
+		{
+			level++;
+			line = line.substr(i+1);
+			i = 0;
+		}
+		this.level = level;
+
+		if (line[0] == '!')
+		{
+			this.disabled = true;
+			line = line.substr(1);
+		}
+
+		i = line.indexOf(':');
+		if (i >= 0 && i < line.length)
+		{
+			this.name = line.substr(0, i).trim();
+			line = line.substr(i+1);
+			this.type = RULE_PROP;
+		}
+
+		this.value = line.trim();
+	},
+
+	add: function(rule)
+	{
+		if (!rule)
+			return false;
+
+		if (this.level < rule.level - 1)
+		{
+			if (this.rules.length < 1)
+				return false;
+
+			return this.rules[this.rules.length-1].add(rule);
+		}
+
+		this.rules.push(rule);
+
+		return true;
+	},
+
+	toString: function()
+	{
+		let res = '';
+
+		if (this.name)
+		{
+			res += 'name=';
+			res += this.name;
+			res += ' ';
+		}
+
+		res += '"';
+		res += this.value;
+		res += '" ';
+
+		return res;
+	}
+};
+
+BlRule.parse = function(fn, data, off, rules)
+{
+	let prule, rule;
+	let ch, begin, line, ln;
+
+	if (!data || data.length <= off)
+		return;
+
+	begin = off;
+	ln = 1;
+	while (off < data.length)
+	{
+		ch = data[off++];
+
+		if (ch == '\n' || ch == '\r')
+		{
+			rule = null;
+			line = data.substr(begin, off - begin - 1);
+			if (line)
+			{
+				rule = new BlRule(ln);
+				rule.parse(line);
+			}
+		}
+
+		if (ch == '\r')
+			ch = data[off++];
+
+		if (ch == '\n')
+		{
+			begin = off;
+			ln++;
+
+			if (rule)
+			{
+				if (!prule || prule.level >= rule.level)
+				{
+					if (rule.level > 0)
+					{
+						if (rule.name)
+							io.error(new SyntaxError('ignore ' + rule.name + ' rule "' + rule.value + '"', fn, rule.ln));
+						else
+							io.error(new SyntaxError('ignore rule "' + rule.value + '"', fn, rule.ln));
+
+						continue;
+					}
+				}
+				else
+				{
+					if (prule.add(rule))
+						continue;
+
+					if (rule.name)
+						io.error(new SyntaxError(prule.value + ': ignore ' + rule.name + ' rule "' + rule.value + '"', fn, rule.ln));
+					else
+						io.error(new SyntaxError(prule.value + ': ignore rule "' + rule.value + '"', fn, rule.ln));
+
+					continue;
+				}
+			}
+
+			prule = rule;
+			rules.push(rule);
+		}
+	}
+};
 
 function CssRule(name)
 {
