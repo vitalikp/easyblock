@@ -890,8 +890,7 @@ bldb.parse = function(db, data)
 		}
 		catch (e)
 		{
-			io.warn(site.name + ': ignore rule "' + line + '"');
-			io.error(new SyntaxError(e.message, db.fn, i));
+			io.error(new SyntaxError(site.name + ': ignore rule "' + line + '": ' + e.message, db.fn, i));
 			continue;
 		}
 
@@ -902,8 +901,7 @@ bldb.parse = function(db, data)
 		}
 		catch (e)
 		{
-			io.warn('ignore hostname "' + line + '"');
-			io.error(new SyntaxError(e.message, db.fn, i));
+			io.error(new SyntaxError('ignore hostname "' + line + '": ' + e.message, db.fn, i));
 		}
 	}
 
