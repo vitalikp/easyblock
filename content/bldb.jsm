@@ -303,19 +303,14 @@ PathRule.prototype =
 	}
 };
 
-function blsite(hostname)
+function blsite(rule)
 {
 	this.group = null;
 
-	this.enabled = true;
-	if (hostname[0] == '!')
-	{
-		hostname = hostname.substr(1);
-		this.enabled = false;
-	}
+	this.enabled = !rule.disabled;
 
-	this.name = hostname;
-	this.host = new blhost(hostname, true);
+	this.name = rule.value;
+	this.host = new blhost(rule.value, true);
 	this.ua = '';
 	this.pathes = [];
 	this.type = [];
@@ -333,31 +328,20 @@ blsite.prototype =
 
 	addRule: function(rule)
 	{
-		let i, type;
+		if (!rule || rule.level < 1)
+			return;
 
-		if (!rule || !rule.length)
-			return false;
-
-		i = 0;
-		if (rule[i] != '\t' && rule[i++] != ' ' && rule[i] != ' ')
-			return false;
-		rule = rule.substr(i+1);
-
-		i = rule.indexOf(':');
-		if (i < 0 || i >= rule.length)
+		if (!rule.name)
 		{
 			this.addPath(rule);
 
-			return true;
+			return;
 		}
 
-		type = rule.substr(0, i);
-		rule = rule.substr(i+1);
-
-		switch (type)
+		switch (rule.name)
 		{
 			case "ua":
-				this.ua = rule;
+				this.ua = rule.value;
 				break;
 
 			case "type":
@@ -375,8 +359,6 @@ blsite.prototype =
 			default:
 				throw new Error('rule is unknown');
 		}
-
-		return true;
 	},
 
 	hasHost: function(host)
@@ -387,14 +369,12 @@ blsite.prototype =
 		return this.host.hasHost(host);
 	},
 
-	addPath: function(line)
+	addPath: function(rule)
 	{
-		if (!line)
+		if (!rule || !rule.value)
 			return;
 
-		line = line.trim();
-
-		this.pathes.push(new PathRule(line));
+		this.pathes.push(new PathRule(rule.value));
 	},
 
 	hasPath: function(path)
@@ -418,12 +398,14 @@ blsite.prototype =
 		return false;
 	},
 
-	addType: function(line)
+	addType: function(rule)
 	{
-		if (!line)
+		let line;
+
+		if (!rule || !rule.value)
 			return;
 
-		line = line.trim();
+		line = rule.value;
 		line = line.replace('*', '.*');
 
 		this.type.push(new RegExp(line));
@@ -446,17 +428,15 @@ blsite.prototype =
 		return false;
 	},
 
-	addDom: function(line)
+	addDom: function(rule)
 	{
-		if (!line)
+		if (!rule || !rule.value)
 			return;
-
-		line = line.trim();
 
 		try
 		{
-			_doc.querySelectorAll(line);
-			this.dom.push(line);
+			_doc.querySelectorAll(rule.value);
+			this.dom.push(rule.value);
 		}
 		catch (e)
 		{
@@ -476,12 +456,12 @@ blsite.prototype =
 		return styles;
 	},
 
-	addCss: function(line)
+	addCss: function(rule)
 	{
-		if (!line)
+		if (!rule || !rule.value)
 			return;
 
-		this.css.push(new CssRule(line));
+		this.css.push(new CssRule(rule.value));
 	},
 
 	get hasDom()
@@ -840,68 +820,78 @@ bldb.prototype =
 
 bldb.parse = function(db, data)
 {
-	let arr, res, group, site, line, i;
+	let rules, rule, subrule, group, site, i, j;
 
 	if (!db || !data)
 		return;
+
+	rules = [];
+	BlRule.parse(db.fn, data, 0, rules);
 
 	group = new blgroup('Default');
 	group.hidden = true;
 	db.defGroup = group;
 
-	arr = data.split(/\r\n|\n/);
-
 	i = 0;
-	while (i < arr.length)
+	while (i < rules.length)
 	{
-		line = arr[i++];
-		if (!line)
+		rule = rules[i++];
+		if (!rule)
 		{
 			group = db.defGroup;
 			continue;
 		}
 
-		if (line[0] == '#')
+		switch (rule.type)
 		{
-			res = db.commRegEx.exec(line);
-			if (!res)
+			case RULE_COMM:
 				continue;
 
-			switch (res[1])
-			{
-				case 'title':
-					io.warn(new SyntaxError(res[2].trim() + ': "title" field for group name is deprecated, use "group" instead', db.fn, i));
-				case 'group':
-					group = new blgroup(res[2].trim());
-					db.add(group);
-					break;
+			case RULE_PROP:
+				switch (rule.name)
+				{
+					case 'title':
+						io.warn(new SyntaxError(rule.value + ': "title" field for group name is deprecated, use "group" instead', db.fn, i));
+					case 'group':
+						group = new blgroup(rule.value);
+						db.add(group);
+						break;
 
-				case 'flags':
-					group.setFlags(res[2].trim());
-					break;
-			}
-			continue;
-		}
-
-		try
-		{
-			if (site && site.addRule(line))
+					case 'flags':
+						group.setFlags(rule.value);
+						break;
+				}
 				continue;
-		}
-		catch (e)
-		{
-			io.error(new SyntaxError(site.name + ': ignore rule "' + line + '": ' + e.message, db.fn, i));
-			continue;
-		}
 
-		try
-		{
-			site = new blsite(line);
-			group.add(site);
-		}
-		catch (e)
-		{
-			io.error(new SyntaxError('ignore hostname "' + line + '": ' + e.message, db.fn, i));
+			default:
+				try
+				{
+					site = new blsite(rule);
+					group.add(site);
+				}
+				catch (e)
+				{
+					io.error(new SyntaxError('ignore hostname "' + rule.value + '": ' + e.message, db.fn, rule.ln));
+					continue;
+				}
+	
+				j = 0;
+				while (j < rule.rules.length)
+				{
+					subrule = rule.rules[j++];
+	
+					try
+					{
+						site.addRule(subrule);
+					}
+					catch (e)
+					{
+						if (subrule.name)
+							io.error(new SyntaxError(site.name + ': ignore ' + subrule.name + ' rule "' + subrule.value + '": ' + e.message, db.fn, subrule.ln));
+						else
+							io.error(new SyntaxError(site.name + ': ignore rule "' + subrule.value + '": ' + e.message, db.fn, subrule.ln));
+					}
+				}
 		}
 	}
 
