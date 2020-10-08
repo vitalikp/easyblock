@@ -373,7 +373,7 @@ blsite.prototype =
 				break;
 
 			default:
-				throw new Error('rule "' + type + '" is unknown');
+				throw new Error('rule is unknown');
 		}
 
 		return true;
