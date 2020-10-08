@@ -21,6 +21,7 @@ const _doc = domparser.parseFromString('<body/>', 'text/html');
 
 
 const RULE_NONE = 0;
+const RULE_COMM = 1;
 
 
 function CssRule(name)
