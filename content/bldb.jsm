@@ -453,8 +453,15 @@ blsite.prototype =
 
 		line = line.trim();
 
-		_doc.querySelectorAll(line);
-		this.dom.push(line);
+		try
+		{
+			_doc.querySelectorAll(line);
+			this.dom.push(line);
+		}
+		catch (e)
+		{
+			throw new Error('selector is not a valid');
+		}
 	},
 
 	get styles()
