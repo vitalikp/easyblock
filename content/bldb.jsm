@@ -341,6 +341,9 @@ blsite.prototype =
 		switch (rule.name)
 		{
 			case "ua":
+				if (rule.rules.length > 0)
+					throw new Error('subrules is not supported');
+
 				this.ua = rule.value;
 				break;
 
@@ -374,6 +377,9 @@ blsite.prototype =
 		if (!rule || !rule.value)
 			return;
 
+		if (rule.rules.length > 0)
+			throw new Error('subrules is not supported');
+
 		this.pathes.push(new PathRule(rule.value));
 	},
 
@@ -405,6 +411,9 @@ blsite.prototype =
 		if (!rule || !rule.value)
 			return;
 
+		if (rule.rules.length > 0)
+			throw new Error('subrules is not supported');
+
 		line = rule.value;
 		line = line.replace('*', '.*');
 
@@ -433,6 +442,9 @@ blsite.prototype =
 		if (!rule || !rule.value)
 			return;
 
+		if (rule.rules.length > 0)
+			throw new Error('subrules is not supported');
+
 		try
 		{
 			_doc.querySelectorAll(rule.value);
@@ -460,6 +472,9 @@ blsite.prototype =
 	{
 		if (!rule || !rule.value)
 			return;
+
+		if (rule.rules.length > 0)
+			throw new Error('subrules is not supported');
 
 		this.css.push(new CssRule(rule.value));
 	},
