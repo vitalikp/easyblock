@@ -11,11 +11,8 @@ function startup(data, reason)
 	EasyBlock.startup(data);
 }
 
-function shutdown(data,reason)
+function shutdown(data, reason)
 {
-	if (reason == APP_SHUTDOWN)
-		return;
-
 	EasyBlock.shutdown();
 }
 
