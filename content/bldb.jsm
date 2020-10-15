@@ -484,9 +484,9 @@ blsite.prototype =
 		return this.dom.length > 0 || this.css.length > 0;
 	},
 
-	onBlock: function()
+	onBlock: function(content)
 	{
-		if (this.hasDom)
+		if (content)
 			io.log("Blocking content site '" + this.name + "'");
 		else
 		{
