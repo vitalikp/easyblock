@@ -716,6 +716,30 @@ blgroup.prototype =
 	}
 };
 
+blgroup.validName = function(name)
+{
+	let i, ch;
+
+	if (!name || name.length < 1)
+		return false;
+
+	i = 0;
+	while (i < name.length)
+	{
+		ch = name.charCodeAt(i++);
+		if (ch != 0x20 && ch < 0x30 || ch > 0x7a)
+			return false;
+
+		if (ch > 0x39 && ch < 0x41)
+			return false;
+
+		if (ch > 0x5a && ch < 0x61)
+			return false;
+	}
+
+	return true;
+};
+
 function bldb(fn)
 {
 	this.commRegEx = new RegExp(COMM_PATTERN);
