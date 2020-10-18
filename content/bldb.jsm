@@ -742,7 +742,6 @@ blgroup.validName = function(name)
 
 function bldb(fn)
 {
-	this.commRegEx = new RegExp(COMM_PATTERN);
 	this.fn = fn;
 	this.defGroup = null;
 	this.groups = [];
