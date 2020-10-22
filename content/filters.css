@@ -41,7 +41,7 @@ groupbox > #bl vbox.tree > label
 
 groupbox > #bl vbox.tree[expanded="false"] > label
 {
-	background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNnB4IiBoZWlnaHQ9IjE2cHgiPjxwYXRoIGQ9Im0gMywzIDEwLDUgLTEwLDUgMiwtNSB6IiBmaWxsPSIjNTU1Ii8+PC9zdmc+Cg==");
+	background-image: url("chrome://easyblock/content/ui.svg#expander_off");
 	background-repeat: no-repeat;
 	cursor: pointer;
 }
@@ -53,7 +53,7 @@ groupbox > #bl vbox.tree[expanded="false"] > vbox
 
 groupbox > #bl vbox.tree[expanded="true"] > label
 {
-	background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNnB4IiBoZWlnaHQ9IjE2cHgiPjxwYXRoIGQ9Im0gOCwzIDUsMTAgLTExLC0yIDQuNiwtMi44IHoiIGZpbGw9IiM1NTUiLz48L3N2Zz4K");
+	background-image: url("chrome://easyblock/content/ui.svg#expander_on");
 	background-repeat: no-repeat;
 	cursor: pointer;
 }
