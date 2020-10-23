@@ -96,7 +96,6 @@ function MenuToggle(obj, name, menu)
 	doc = menu.ownerDocument;
 
 	elem = doc.createElement("menuitem");
-	elem.setAttribute("type", "checkbox");
 	elem.setAttribute("label", name);
 	elem.addEventListener("command", (event) =>
 	{
@@ -107,7 +106,7 @@ function MenuToggle(obj, name, menu)
 
 		value = event.target.hasAttribute('checked');
 
-		obj.toggle(value);
+		obj.toggle(!value);
 	}, false);
 	menu.appendChild(elem);
 
