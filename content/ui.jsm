@@ -91,12 +91,12 @@ const uitree =
 
 function MenuToggle(obj, name, menu)
 {
-	let doc, elem;
+	let doc, elem, label;
 
 	doc = menu.ownerDocument;
 
 	elem = doc.createElement("menuitem");
-	elem.setAttribute("label", name);
+	elem.setAttribute("class", "menuToggle");
 	elem.addEventListener("command", (event) =>
 	{
 		let value;
@@ -108,6 +108,11 @@ function MenuToggle(obj, name, menu)
 
 		obj.toggle(!value);
 	}, false);
+
+	label = doc.createElement("label");
+	label.setAttribute("value", name);
+	elem.appendChild(label);
+
 	menu.appendChild(elem);
 
 	this.elem = elem;

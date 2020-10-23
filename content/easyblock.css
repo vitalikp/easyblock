@@ -45,3 +45,25 @@ notification[type="info"].easyblock description
 {
 	margin-inline-start: 5px !important;
 }
+
+
+/** menu */
+
+menuitem.menuToggle
+{
+	-moz-appearance: none !important;
+	padding: 4px 6px;
+}
+
+menuitem.menuToggle > label
+{
+	background-position: left center;
+	background-repeat: no-repeat;
+	padding-left: 20px;
+	margin: 0 1px !important;
+}
+
+menuitem.menuToggle[checked="true"] > label
+{
+	background-image: url("chrome://easyblock/content/ui.svg#checkbox");
+}
