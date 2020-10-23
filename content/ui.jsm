@@ -128,7 +128,10 @@ MenuToggle.prototype =
 
 	update: function(state)
 	{
-		this.elem.setAttribute('checked', state);
+		if (state)
+			this.elem.setAttribute('checked', "true");
+		else
+			this.elem.removeAttribute("checked");
 	}
 };
 
