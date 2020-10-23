@@ -1,19 +1,13 @@
-
 /* toolbar button */
 
 toolbarbutton.easyblock > image
 {
-	list-style-image: url("chrome://easyblock/content/ui-16.png");
-}
-
-[iconsize="small"] toolbarbutton.easyblock > image
-{
-	-moz-image-region: rect(0px 16px 16px 0px);
+	list-style-image: url("chrome://easyblock/content/ui.svg#easyblock");
 }
 
 [iconsize="small"] toolbarbutton.easyblock[ebstate="disabled"] > image
 {
-	-moz-image-region: rect(16px 16px 32px 0px);
+	filter: grayscale(40%) opacity(80%);
 }
 
 toolbarpaletteitem[place="palette"] toolbarbutton.easyblock
@@ -38,14 +32,13 @@ notification[type="info"].easyblock
 
 notification[type="info"].easyblock image.messageImage
 {
-	list-style-image: url("chrome://easyblock/content/ui-16.png") !important;
-	-moz-image-region: rect(0px 16px 16px 0px);
+	list-style-image: url("chrome://easyblock/content/ui.svg#easyblock") !important;
 	margin: 4px 5px 4px 7px;
 }
 
 notification[type="info"].easyblock[ebstate="disabled"] image.messageImage
 {
-	-moz-image-region: rect(16px 16px 32px 0px);
+	filter: grayscale(40%) opacity(80%);
 }
 
 notification[type="info"].easyblock description
