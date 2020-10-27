@@ -173,7 +173,8 @@ BlRule.parse = function(fn, data, off, rules)
 				}
 			}
 
-			prule = rule;
+			if (!rule || rule.type != RULE_COMM)
+				prule = rule;
 			rules.push(rule);
 		}
 	}
