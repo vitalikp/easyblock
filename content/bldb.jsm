@@ -437,16 +437,23 @@ blsite.prototype =
 
 	addDom: function(rule)
 	{
+		let obj;
+
 		if (!rule || !rule.value)
 			return;
 
 		if (rule.rules.length > 0)
 			throw new Error('subrules is not supported');
 
+		obj =
+		{
+			sel: rule.value
+		};
+
 		try
 		{
-			_doc.querySelectorAll(rule.value);
-			this.dom.push(rule.value);
+			_doc.querySelectorAll(obj.sel);
+			this.dom.push(obj);
 		}
 		catch (e)
 		{
@@ -561,7 +568,7 @@ blsite.prototype =
 				rule = this.dom[i++];
 	
 				label = doc.createElement("label");
-				label.setAttribute("value", rule);
+				label.setAttribute("value", rule.sel);
 				uitree.add(node, label);
 			}
 		}

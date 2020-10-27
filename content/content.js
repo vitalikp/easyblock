@@ -197,7 +197,7 @@ ContentObserver.prototype =
 
 	filterNode: function(node)
 	{
-		let nodes, sel, i;
+		let nodes, obj, i;
 
 		if (this.disabled || !this.dom || !node || !node.parentElement || node.nodeType != node.ELEMENT_NODE)
 			return;
@@ -207,11 +207,11 @@ ContentObserver.prototype =
 		i = 0;
 		while (i < this.dom.length)
 		{
-			sel = this.dom[i++];
-			if (!sel)
+			obj = this.dom[i++];
+			if (!obj || !obj.sel)
 				continue;
 
-			nodes = node.querySelectorAll(sel);
+			nodes = node.querySelectorAll(obj.sel);
 			this.filterNodes(nodes);
 			nodes = null;
 		}
