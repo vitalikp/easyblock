@@ -72,6 +72,7 @@ ContentObserver.prototype =
 	clear: function()
 	{
 		this.unreg();
+		this.hostname = '';
 		this.grpId = 0;
 		this.enabled = true;
 		this._disabled = false;
