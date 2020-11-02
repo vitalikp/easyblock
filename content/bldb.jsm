@@ -296,6 +296,16 @@ PathRule.prototype =
 		return true;
 	},
 
+	print: function(doc, elem)
+	{
+		let label;
+
+		label = doc.createElement("label");
+		label.setAttribute("value", this.path);
+
+		uitree.add(elem, label);
+	},
+
 	toString: function()
 	{
 		return this.path;
@@ -534,10 +544,10 @@ blsite.prototype =
 			while (i < this.pathes.length)
 			{
 				rule = this.pathes[i++];
+				if (!rule)
+					continue;
 
-				label = doc.createElement("label");
-				label.setAttribute("value", rule);
-				uitree.add(node, label);
+				rule.print(doc, node);
 			}
 		}
 
