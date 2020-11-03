@@ -203,6 +203,16 @@ CssRule.prototype =
 		});
 	},
 
+	print: function(doc, elem)
+	{
+		let label;
+
+		label = doc.createElement("label");
+		label.setAttribute("value", this.name);
+
+		uitree.add(elem, label);
+	},
+
 	toString: function()
 	{
 		return this.name;
@@ -593,10 +603,10 @@ blsite.prototype =
 			while (i < this.css.length)
 			{
 				rule = this.css[i++];
+				if (!rule)
+					continue;
 
-				label = doc.createElement("label");
-				label.setAttribute("value", rule);
-				uitree.add(node, label);
+				rule.print(doc, node);
 			}
 		}
 	},
