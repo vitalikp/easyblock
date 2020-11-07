@@ -122,8 +122,12 @@ blhost.prototype =
 			res += '.';
 		}
 
-		res += slds[this.sld];
-		res += '.';
+		if (this.sld >= 0)
+		{
+			res += slds[this.sld];
+			res += '.';
+		}
+
 		res += tlds[this.tld];
 
 		return res;
