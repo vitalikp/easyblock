@@ -67,18 +67,21 @@ function blhost(name, isrule)
 	if (!data[i])
 		data.splice(i--, 1);
 
-	if (i > 0)
+	if (i >= 0)
 	{
 		this.tld = indexOf(tlds, label(data[i--]), isrule);
 		if (this.tld < 0 || this.tld >= tlds.length)
 			throw 'tld is unknown';
 
-		this.sld = indexOf(slds, label(data[i--]), isrule);
-		if (this.sld < 0 || this.sld >= slds.length)
-			throw 'sld is unknown';
-
-		while (i >= 0)
-			this.data.push(label(data[i--]));
+		if (i >= 0)
+		{
+			this.sld = indexOf(slds, label(data[i--]), isrule);
+			if (this.sld < 0 || this.sld >= slds.length)
+				throw 'sld is unknown';
+	
+			while (i >= 0)
+				this.data.push(label(data[i--]));
+		}
 	}
 }
 
