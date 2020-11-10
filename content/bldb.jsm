@@ -180,6 +180,32 @@ BlRule.parse = function(fn, data, off, rules)
 	}
 };
 
+function StrRule(name, value)
+{
+	this.name = name;
+	this.value = value;
+}
+
+StrRule.prototype =
+{
+	print: function(doc, elem)
+	{
+		let node, label;
+
+		node = uitree.create(doc, this.name, false);
+		uitree.add(elem, node);
+
+		label = doc.createElement("label");
+		label.setAttribute("value", this.value);
+		uitree.add(node, label);
+	},
+
+	toString: function()
+	{
+		return this.value;
+	}
+};
+
 function CssRule(name)
 {
 	this.name = name.trim();
@@ -330,7 +356,7 @@ function blsite(rule)
 
 	this.name = rule.value;
 	this.host = new blhost(rule.value, true);
-	this.ua = '';
+	this.ua = null;
 	this.pathes = [];
 	this.type = [];
 	this.dom = [];
@@ -342,7 +368,7 @@ blsite.prototype =
 {
 	get hasRules()
 	{
-		return this.ua.length > 0 || this.pathes.length > 0 || this.type.length > 0 || this.dom.length > 0 || this.css.length > 0;
+		return this.ua || this.pathes.length > 0 || this.type.length > 0 || this.dom.length > 0 || this.css.length > 0;
 	},
 
 	addRule: function(rule)
@@ -363,7 +389,7 @@ blsite.prototype =
 				if (rule.rules.length > 0)
 					throw new Error('subrules is not supported');
 
-				this.ua = rule.value;
+				this.ua = new StrRule("User-Agent", rule.value);
 				break;
 
 			case "type":
@@ -536,14 +562,7 @@ blsite.prototype =
 		uitree.add(elem, vbox);
 
 		if (this.ua)
-		{
-			node = uitree.create(doc, "User-Agent", false);
-			uitree.add(vbox, node);
-
-			label = doc.createElement("label");
-			label.setAttribute("value", this.ua);
-			uitree.add(node, label);
-		}
+			this.ua.print(doc, vbox);
 
 		if (this.pathes.length > 0)
 		{
