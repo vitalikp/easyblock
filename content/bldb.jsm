@@ -482,6 +482,11 @@ blsite.prototype =
 		return false;
 	},
 
+	get content()
+	{
+		return this.dom;
+	},
+
 	addDom: function(rule)
 	{
 		let obj;
