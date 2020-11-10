@@ -113,7 +113,7 @@ Process.prototype =
 		{
 			hostname: data.hostname,
 			grpId: grpId,
-			dom: site.content,
+			content: site.content,
 			styles: site.styles
 		};
 

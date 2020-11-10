@@ -105,7 +105,7 @@ ContentObserver.prototype =
 
 		if (!doc || !data)
 			return;
-		dom = data.dom;
+		dom = data.content;
 
 		if (data.styles && data.styles.length > 0)
 		{
