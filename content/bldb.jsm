@@ -383,6 +383,9 @@ blsite.prototype =
 			return;
 		}
 
+		if (rule.disabled)
+			return;
+
 		switch (rule.name)
 		{
 			case "ua":
