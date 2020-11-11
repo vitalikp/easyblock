@@ -366,6 +366,11 @@ function blsite(rule)
 
 blsite.prototype =
 {
+	get hasPathes()
+	{
+		return this.pathes.length > 0;
+	},
+
 	get hasRules()
 	{
 		return this.ua || this.pathes.length > 0 || this.type.length > 0 || this.dom.length > 0 || this.css.length > 0;
@@ -880,7 +885,7 @@ bldb.prototype =
 			if (!site)
 				continue;
 
-			if (path && site.hasRules)
+			if (path && site.hasPathes)
 			{
 				if (!site.hasPath(path))
 					continue;
