@@ -206,6 +206,51 @@ StrRule.prototype =
 	}
 };
 
+function DomRule(rule)
+{
+	this.value = '';
+
+	this._parse(rule);
+}
+
+DomRule.prototype =
+{
+	_parse: function(rule)
+	{
+		if (!rule || !rule.value)
+			return;
+
+		if (rule.rules.length > 0)
+			throw new Error('subrules is not supported');
+
+		try
+		{
+			_doc.querySelectorAll(rule.value);
+		}
+		catch (e)
+		{
+			throw new Error('selector is not a valid');
+		}
+
+		this.value = rule.value;
+	},
+
+	print: function(doc, elem)
+	{
+		let label;
+
+		label = doc.createElement("label");
+		label.setAttribute("value", this.value);
+
+		uitree.add(elem, label);
+	},
+
+	toString: function()
+	{
+		return this.value;
+	}
+};
+
 function CssRule(name)
 {
 	this.name = name.trim();
@@ -492,33 +537,30 @@ blsite.prototype =
 
 	get content()
 	{
-		return this.dom;
+		let content, rule, obj, i;
+
+		content = [];
+		i = 0;
+		while (i < this.dom.length)
+		{
+			rule = this.dom[i++];
+			if (!rule)
+				continue;
+
+			obj =
+			{
+				sel: rule.value
+			};
+
+			content.push(obj);
+		}
+
+		return content;
 	},
 
 	addDom: function(rule)
 	{
-		let obj;
-
-		if (!rule || !rule.value)
-			return;
-
-		if (rule.rules.length > 0)
-			throw new Error('subrules is not supported');
-
-		obj =
-		{
-			sel: rule.value
-		};
-
-		try
-		{
-			_doc.querySelectorAll(obj.sel);
-			this.dom.push(obj);
-		}
-		catch (e)
-		{
-			throw new Error('selector is not a valid');
-		}
+		this.dom.push(new DomRule(rule));
 	},
 
 	get styles()
@@ -619,10 +661,10 @@ blsite.prototype =
 			while (i < this.dom.length)
 			{
 				rule = this.dom[i++];
+				if (!rule)
+					continue;
 	
-				label = doc.createElement("label");
-				label.setAttribute("value", rule.sel);
-				uitree.add(node, label);
+				rule.print(doc, node);
 			}
 		}
 
