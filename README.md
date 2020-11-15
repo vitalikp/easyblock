@@ -53,7 +53,7 @@ example.com
   css:example
 
 # add sites to “Group1” group
-# title: Group1
+# group: Group1
 example.com
 example.net
 mysite1.com
