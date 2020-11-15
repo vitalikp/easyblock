@@ -208,6 +208,7 @@ StrRule.prototype =
 
 function DomRule(rule)
 {
+	this.attrs = [];
 	this.value = '';
 
 	this._parse(rule);
@@ -217,11 +218,38 @@ DomRule.prototype =
 {
 	_parse: function(rule)
 	{
+		let subrule, i;
+
 		if (!rule || !rule.value)
 			return;
 
 		if (rule.rules.length > 0)
-			throw new Error('subrules is not supported');
+		{
+			i = 0;
+			while (i < rule.rules.length)
+			{
+				subrule = rule.rules[i++];
+				if (!subrule)
+					continue;
+
+				if (subrule.name != 'attr')
+				{
+					io.error(new SyntaxError(rule.name + ': ignore ' + subrule.name + ' rule "' + subrule.value + '": rule is unknown', '?', subrule.ln)); // FIXME need set filename!
+					continue;
+				}
+
+				if (subrule.rules.length > 0)
+				{
+					io.error(new SyntaxError(rule.name + ': ignore ' + subrule.name + ' rule "' + subrule.value + '": subrules is not supported', '?', subrule.ln));// FIXME need set filename!
+					continue;
+				}
+	
+				this.attrs.push(subrule.value);
+			}
+	
+			if (this.attrs.length < 1)
+				throw new Error('no valid subrules found');
+		}
 
 		try
 		{
@@ -237,12 +265,28 @@ DomRule.prototype =
 
 	print: function(doc, elem)
 	{
-		let label;
+		let vbox, node, label, i;
 
-		label = doc.createElement("label");
-		label.setAttribute("value", this.value);
+		if (this.attrs.length > 0)
+		{
+			vbox = uitree.create(doc, this.value, false);
 
-		uitree.add(elem, label);
+			node = uitree.create(doc, "Attribute (" + this.attrs.length + ")", false);
+			uitree.add(vbox, node);
+
+			i = 0;
+			while (i < this.attrs.length)
+			{
+				label = doc.createElement("label");
+				label.setAttribute("value", this.attrs[i++]);
+
+				uitree.add(node, label);
+			}
+		}
+		else
+			vbox = uitree.create(doc, this.value);
+
+		uitree.add(elem, vbox);
 	},
 
 	toString: function()
@@ -549,7 +593,8 @@ blsite.prototype =
 
 			obj =
 			{
-				sel: rule.value
+				sel: rule.value,
+				attrs: rule.attrs
 			};
 
 			content.push(obj);
