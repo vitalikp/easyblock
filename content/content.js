@@ -213,7 +213,7 @@ ContentObserver.prototype =
 				continue;
 
 			nodes = node.querySelectorAll(obj.sel);
-			this.filterNodes(nodes);
+			this.filterNodes(nodes, obj.attrs);
 			nodes = null;
 		}
 	},
@@ -237,19 +237,29 @@ ContentObserver.prototype =
 		}
 	},
 
-	filterNodes: function(nodes)
+	filterNodes: function(nodes, attrs)
 	{
-		let i, node;
+		let i, node, hasAttrs;
 
 		if (!nodes || !nodes.length)
 			return;
+
+		hasAttrs = attrs && attrs.length > 0;
 
 		i = 0;
 		while (i < nodes.length)
 		{
 			node = nodes[i++];
-			if (node && node.parentElement)
-				node.parentElement.removeChild(node);
+			if (node)
+			{
+				if (!hasAttrs)
+				{
+					if (node.parentElement)
+						node.parentElement.removeChild(node);
+				}
+				else
+					this.filterNodeAttrs(node, attrs);
+			}
 			node = null;
 		}
 	},
