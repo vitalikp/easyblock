@@ -471,6 +471,9 @@ blsite.prototype =
 		if (!rule || rule.level < 1)
 			return;
 
+		if (rule.type != RULE_NONE)
+			return;
+
 		if (!rule.name)
 		{
 			this.addPath(rule);
