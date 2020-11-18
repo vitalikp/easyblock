@@ -114,6 +114,13 @@ var EasyBlock =
 
 	shutdown: function()
 	{
+		let i;
+
+		i = 0;
+		while (i < this.wins.length)
+			this.wins[i++].destroy();
+		this.wins = [];
+
 		EasyBlock.observer.unreg(os, OBS_REQ);
 		EasyBlock.observer.unreg(os, OBS_RESP);
 		EasyBlock.observer.unreg(os, OBS_WIN_OPEN);
