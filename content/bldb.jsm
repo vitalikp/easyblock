@@ -69,7 +69,8 @@ BlRule.prototype =
 		{
 			this.name = line.substr(0, i).trim();
 			line = line.substr(i+1);
-			this.type = RULE_PROP;
+			if (this.type == RULE_COMM)
+				this.type = RULE_PROP;
 		}
 
 		this.value = line.trim();
