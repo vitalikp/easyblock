@@ -104,7 +104,7 @@ function MenuToggle(obj, name, menu)
 		if (!event || !event.target || !obj)
 			return;
 
-		value = event.target.hasAttribute('checked');
+		value = event.target.hasAttribute("toggled");
 
 		obj.toggle(!value);
 	}, false);
@@ -133,9 +133,9 @@ MenuToggle.prototype =
 	update: function(state)
 	{
 		if (state)
-			this.elem.setAttribute('checked', "true");
+			this.elem.setAttribute("toggled", "true");
 		else
-			this.elem.removeAttribute("checked");
+			this.elem.removeAttribute("toggled");
 	}
 };
 
