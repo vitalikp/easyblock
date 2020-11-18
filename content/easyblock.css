@@ -63,7 +63,7 @@ menuitem.menuToggle > label
 	margin: 0 1px !important;
 }
 
-menuitem.menuToggle[checked="true"] > label
+menuitem.menuToggle[toggled="true"] > label
 {
 	background-image: url("chrome://easyblock/content/ui.svg#checkbox");
 }
