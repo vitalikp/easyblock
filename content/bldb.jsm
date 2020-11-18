@@ -230,7 +230,7 @@ DomRule.prototype =
 			while (i < rule.rules.length)
 			{
 				subrule = rule.rules[i++];
-				if (!subrule)
+				if (!subrule || subrule.type != RULE_NONE)
 					continue;
 
 				if (subrule.name != 'attr')
