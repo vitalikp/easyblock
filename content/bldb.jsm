@@ -898,9 +898,14 @@ function bldb(fn)
 
 bldb.prototype =
 {
-	close: function()
+	clear: function()
 	{
 		this.groups = [];
+	},
+
+	close: function()
+	{
+		this.clear();
 	},
 
 	get: function(grpId)
@@ -935,7 +940,7 @@ bldb.prototype =
 		db = this;
 
 		loadtime = new Date();
-		db.groups = [];
+		db.clear();
 		io.loadText(this.fn, (data) =>
 		{
 			if (!data)
