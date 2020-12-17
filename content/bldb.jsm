@@ -940,7 +940,6 @@ bldb.prototype =
 		db = this;
 
 		loadtime = new Date();
-		db.clear();
 		io.loadText(this.fn, (data) =>
 		{
 			if (!data)

@@ -264,6 +264,7 @@ var EasyBlock =
 
 	reload: function()
 	{
+		this.db.clear();
 		this.filter.reload();
 		this.db.load((db) =>
 		{
