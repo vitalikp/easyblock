@@ -11,7 +11,6 @@ EXT_FILES = \
 
 FILES = \
 	content \
-	defaults \
 	bootstrap.js
 
 # tools
