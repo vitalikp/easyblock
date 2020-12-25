@@ -253,10 +253,7 @@ ContentObserver.prototype =
 			if (node)
 			{
 				if (!hasAttrs)
-				{
-					if (node.parentElement)
-						node.parentElement.removeChild(node);
-				}
+					node.remove();
 				else
 					this.filterNodeAttrs(node, attrs);
 			}
