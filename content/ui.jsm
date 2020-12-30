@@ -99,14 +99,10 @@ function MenuToggle(obj, name, menu)
 	elem.setAttribute("class", "menuToggle");
 	elem.addEventListener("command", (event) =>
 	{
-		let value;
-
 		if (!event || !event.target || !obj)
 			return;
 
-		value = event.target.hasAttribute("toggled");
-
-		obj.toggle(!value);
+		obj.toggle(!this.toggled);
 	}, false);
 
 	label = doc.createElement("label");
@@ -121,6 +117,11 @@ function MenuToggle(obj, name, menu)
 
 MenuToggle.prototype =
 {
+	get toggled()
+	{
+		return this._toggled;
+	},
+
 	destroy: function()
 	{
 		if (!this.elem)
