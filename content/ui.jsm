@@ -116,6 +116,7 @@ function MenuToggle(obj, name, menu)
 	menu.appendChild(elem);
 
 	this.elem = elem;
+	this._toggled = false;
 }
 
 MenuToggle.prototype =
