@@ -155,7 +155,6 @@ function GroupUI(group, menu, winUI)
 
 	this.id = group.id;
 	this.menuItem = menuItem;
-	this._enabled = group.enabled;
 	this.winUI = winUI;
 }
 
