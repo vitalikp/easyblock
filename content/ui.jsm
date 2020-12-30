@@ -143,11 +143,6 @@ MenuToggle.prototype =
 		if (this.elem.parentNode)
 			this.elem.parentNode.removeChild(this.elem);
 		this.elem = null;
-	},
-
-	update: function(state)
-	{
-		this.toggled = state;
 	}
 };
 
@@ -175,7 +170,7 @@ GroupUI.prototype =
 		if (this._enabled == value)
 			return;
 
-		this.menuItem.update(value);
+		this.menuItem.toggled = value;
 
 		this._enabled = value;
 	},
@@ -370,7 +365,7 @@ WinUI.prototype =
 			this.btn.setAttribute("ebstate", "disabled");
 		else
 			this.btn.setAttribute("ebstate", "normal");
-		this.menuItem.update(addon.disabled);
+		this.menuItem.toggled = addon.disabled;
 	},
 
 	clearGroups: function()
