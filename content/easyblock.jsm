@@ -16,6 +16,7 @@ Cu.import("chrome://easyblock/content/bldb.jsm");
 
 
 const os = Cc["@mozilla.org/observer-service;1"].getService(Ci.nsIObserverService);
+const ps = Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefService);
 
 
 const OBS_REQ = "http-on-modify-request";
@@ -94,10 +95,10 @@ var EasyBlock =
 		});
 
 		// init default prefs
-		defprefs = Services.prefs.getDefaultBranch("extensions.easyblock.");
+		defprefs = ps.getDefaultBranch("extensions.easyblock.");
 		defprefs.setBoolPref('disabled', false);
 
-		this.prefs = Services.prefs.getBranch("extensions.easyblock.");
+		this.prefs = ps.getBranch("extensions.easyblock.");
 
 		// restore pref options from prefs store
 		this.disabled = this.prefs.getBoolPref('disabled');
