@@ -122,6 +122,19 @@ MenuToggle.prototype =
 		return this._toggled;
 	},
 
+	set toggled(value)
+	{
+		if (!this.elem || this._toggled == value)
+			return;
+
+		if (value)
+			this.elem.setAttribute("toggled", "true");
+		else
+			this.elem.removeAttribute("toggled");
+
+		this._toggled = value;
+	},
+
 	destroy: function()
 	{
 		if (!this.elem)
@@ -134,10 +147,7 @@ MenuToggle.prototype =
 
 	update: function(state)
 	{
-		if (state)
-			this.elem.setAttribute("toggled", "true");
-		else
-			this.elem.removeAttribute("toggled");
+		this.toggled = state;
 	}
 };
 
