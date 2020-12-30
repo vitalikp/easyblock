@@ -161,11 +161,6 @@ function GroupUI(group, menu, winUI)
 
 GroupUI.prototype =
 {
-	get enabled()
-	{
-		return this._enabled;
-	},
-
 	toggle: function(value)
 	{
 		this.menuItem.toggled = value;
