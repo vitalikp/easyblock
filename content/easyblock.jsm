@@ -21,7 +21,7 @@ const ps = Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefService
 
 const OBS_REQ = "http-on-modify-request";
 const OBS_RESP = "http-on-examine-response";
-const OBS_WIN_OPEN = "domwindowopened"
+const OBS_WIN_OPEN = "domwindowopened";
 
 
 const ProcessAPI =
