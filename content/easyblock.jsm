@@ -60,16 +60,18 @@ var EasyBlock =
 		if (this._disabled == value)
 			return;
 
+		this._disabled = value;
+
 		this.prefs.setBoolPref('disabled', value);
 
 		this.filter.toggle(value);
+
+		this.wins.forEach((winUI) => winUI.updateState(this));
 
 		if (!value)
 			io.log("Enable 'EasyBlock' addon...");
 		else
 			io.log("Disable 'EasyBlock' addon...");
-
-		this._disabled = value;
 	},
 
 	startup: function(addonData)
@@ -240,11 +242,7 @@ var EasyBlock =
 			return;
 		}
 
-		if (this.disabled == value)
-			return;
-
 		this.disabled = value;
-		this.wins.forEach((winUI) => winUI.updateState(this));
 	},
 
 	getGroup: function(grpId)
