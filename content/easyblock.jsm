@@ -272,6 +272,38 @@ var EasyBlock =
 		});
 	},
 
+	setReqUA: function(req)
+	{
+		let origin, dn, ua;
+
+		if (!req || !req.URI)
+			return;
+
+		if (req.referrer)
+		{
+			dn = req.referrer.host;
+
+			try
+			{
+				origin = req.getRequestHeader("Origin");
+				if (origin)
+					dn = io.newURI(origin).host;
+			}
+			catch (e)
+			{
+				
+			}
+		}
+		else
+			dn = req.URI.host;
+
+		ua = this.db.findUA(dn);
+		if (!ua)
+			return;
+
+		req.setRequestHeader("User-Agent", ua, false);
+	},
+
 	blockHttp: function(req, isResp)
 	{
 		let type, site;
