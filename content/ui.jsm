@@ -459,13 +459,13 @@ var ui =
 
 	loadCss: function(style)
 	{
-		let styleUri = Services.io.newURI("chrome://easyblock/content/" + style + ".css", null, null);
+		let styleUri = io.newURI(style + ".css");
 		sss.loadAndRegisterSheet(styleUri, sss.USER_SHEET);
 	},
 
 	unloadCss: function(style)
 	{
-		let styleUri = Services.io.newURI("chrome://easyblock/content/" + style + ".css", null, null);
+		let styleUri = io.newURI(style + ".css");
 		sss.unregisterSheet(styleUri, sss.USER_SHEET);
 	},
 
