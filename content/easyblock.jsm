@@ -314,6 +314,8 @@ var EasyBlock =
 
 		if (isResp)
 			type = req.contentType;
+		else
+			this.setReqUA(req);
 
 		if (!req.URI)
 			return;
@@ -324,9 +326,6 @@ var EasyBlock =
 
 		if (site.hasRules)
 		{
-			if (site.ua)
-				req.setRequestHeader("User-Agent", site.ua, false);
-
 			if (!site.hasType(type) && !site.hasPath(req.URI.path))
 				return;
 		}
