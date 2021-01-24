@@ -992,6 +992,39 @@ bldb.prototype =
 		return null;
 	},
 
+	findUA: function(dn)
+	{
+		let group, site, host, ua;
+		let i;
+
+		if (!dn)
+			return null;
+
+		try
+		{
+			host = new blhost(dn);
+		}
+		catch (e)
+		{
+			return null;
+		}
+
+		ua = null;
+
+		i = 0;
+		while (i < this.groups.length)
+		{
+			group = this.groups[i++];
+			site = group.find(host);
+			if (!site || !site.ua)
+				continue;
+
+			ua = site.ua;
+		}
+
+		return ua;
+	},
+
 	print: function(doc, elem)
 	{
 		let group;
