@@ -10,6 +10,7 @@ Cu.import("resource://gre/modules/osfile.jsm");
 Cu.import("resource://gre/modules/Task.jsm");
 
 
+const ios = Cc["@mozilla.org/network/io-service;1"].getService(Ci.nsIIOService2);
 const scriptError = Cc["@mozilla.org/scripterror;1"];
 
 const ADDON_NAME = "easyblock";
@@ -32,6 +33,24 @@ var io =
 		this.addonPath = profPath.path;
 
 		this.console = Cc["@mozilla.org/consoleservice;1"].getService(Ci.nsIConsoleService);
+	},
+
+	newURI: function(url)
+	{
+		if (!url)
+			return null;
+
+		if (url.indexOf(':') < 0)
+			url = "chrome://" + ADDON_NAME + "/content/" + url;
+
+		try
+		{
+			return ios.newURI(url);
+		}
+		catch (e)
+		{
+			return null;
+		}
 	},
 
 	log: function(msg)
