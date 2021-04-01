@@ -239,18 +239,6 @@ var EasyBlock =
 		this.wins.push(winUI);
 	},
 
-	watchWindow: function(window)
-	{
-		let listener;
-
-		listener = (event) =>
-		{
-			window.removeEventListener("load", listener, false);
-			this.loadWindow(window);
-		};
-		window.addEventListener("load", listener, false);
-	},
-
 	customizeUI: function(toolbox)
 	{
 		let winUI, i;
