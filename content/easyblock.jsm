@@ -19,6 +19,8 @@ const os = Cc["@mozilla.org/observer-service;1"].getService(Ci.nsIObserverServic
 const ps = Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefService);
 
 
+const ADDON_PREF = "extensions.easyblock.";
+
 const OBS_REQ = "http-on-modify-request";
 const OBS_RESP = "http-on-examine-response";
 const OBS_WIN_OPEN = "domwindowopened";
@@ -97,10 +99,10 @@ var EasyBlock =
 		});
 
 		// init default prefs
-		defprefs = ps.getDefaultBranch("extensions.easyblock.");
+		defprefs = ps.getDefaultBranch(ADDON_PREF);
 		defprefs.setBoolPref('disabled', false);
 
-		this.prefs = ps.getBranch("extensions.easyblock.");
+		this.prefs = ps.getBranch(ADDON_PREF);
 
 		// restore pref options from prefs store
 		this.disabled = this.prefs.getBoolPref('disabled');
