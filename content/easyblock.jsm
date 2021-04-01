@@ -42,6 +42,90 @@ const ProcessAPI =
 	}
 };
 
+function ObsHandler(addon)
+{
+	this.addon = addon;
+}
+
+ObsHandler.prototype =
+{
+	reg: function(obs, topic)
+	{
+		if (!obs || !topic)
+			return;
+
+		io.log("reg '" + topic + "' observer handler");
+		obs.addObserver(this, topic, false);
+	},
+
+	unreg: function(obs, topic)
+	{
+		if (!obs || !topic)
+			return;
+
+		io.log("unreg '" + topic + "' observer handler");
+		obs.removeObserver(this, topic, false);
+	},
+
+	onReq: function(req)
+	{
+		if (!req || this.addon.disabled)
+			return;
+
+		req.QueryInterface(Ci.nsIHttpChannel);
+		if (!req.URI)
+			return;
+
+		this.addon.setReqUA(req);
+		this.addon.blockHttp(req);
+	},
+
+	onResp: function(req)
+	{
+		if (!req || this.addon.disabled)
+			return;
+
+		req.QueryInterface(Ci.nsIHttpChannel);
+		if (!req.URI)
+			return;
+
+		this.addon.blockHttp(req, true);
+	},
+
+	onWinOpen: function(win)
+	{
+		let listener;
+
+		if (!win)
+			return;
+
+		listener = (event) =>
+		{
+			win.removeEventListener("load", listener, false);
+			this.addon.loadWindow(win);
+		};
+		win.addEventListener("load", listener, false);
+	},
+
+	observe: function(subject, topic, data)
+	{
+		switch (topic)
+		{
+			case OBS_REQ:
+				this.onReq(subject);
+				return;
+
+			case OBS_RESP:
+				this.onResp(subject);
+				return;
+
+			case OBS_WIN_OPEN:
+				this.onWinOpen(subject);
+				return;
+		}
+	}
+};
+
 var EasyBlock =
 {
 	db: {},
@@ -87,6 +171,7 @@ var EasyBlock =
 			this.filter = new filter.Process(ProcessAPI, this);
 		}
 
+		EasyBlock.observer = new ObsHandler(this);
 		EasyBlock.observer.reg(os, OBS_REQ);
 		EasyBlock.observer.reg(os, OBS_RESP);
 
@@ -308,15 +393,11 @@ var EasyBlock =
 	{
 		let type, site;
 
-		if (this.disabled || !req)
+		if (!req)
 			return;
-
-		req.QueryInterface(Ci.nsIHttpChannel);
 
 		if (isResp)
 			type = req.contentType;
-		else
-			this.setReqUA(req);
 
 		if (!req.URI)
 			return;
@@ -340,44 +421,5 @@ var EasyBlock =
 	print: function(doc, elem)
 	{
 		this.db.print(doc, elem);
-	},
-
-	observer:
-	{
-		reg: function(obs, topic)
-		{
-			if (!obs || !topic)
-				return;
-
-			io.log("reg '" + topic + "' observer handler");
-			obs.addObserver(this, topic, false);
-		},
-
-		unreg: function(obs, topic)
-		{
-			if (!obs || !topic)
-				return;
-
-			io.log("unreg '" + topic + "' observer handler");
-			obs.removeObserver(this, topic, false);
-		},
-
-		observe: function(subject, topic, data)
-		{
-			switch (topic)
-			{
-				case OBS_REQ:
-					EasyBlock.blockHttp(subject);
-					return;
-
-				case OBS_RESP:
-					EasyBlock.blockHttp(subject, true);
-					return;
-
-				case OBS_WIN_OPEN:
-					EasyBlock.watchWindow(subject);
-					return;
-			}
-		}
 	}
 };
