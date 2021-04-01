@@ -14,7 +14,6 @@ const EventType =
 	DOM: 4
 };
 
-const EVENT_GET = 3;
 const EVENT_DOM = 4;
 
 
