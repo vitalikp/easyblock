@@ -6,6 +6,14 @@ const SCRIPT_CONTENT = "content.js";
 
 const EVENT_TYPE = "EasyBlock";
 
+const EventType =
+{
+	TOGGLE: 1,
+	RELOAD: 2,
+	GET: 3,
+	DOM: 4
+};
+
 const EVENT_TOGGLE = 1;
 const EVENT_RELOAD = 2;
 const EVENT_GET = 3;
@@ -63,12 +71,12 @@ Process.prototype =
 {
 	toggle: function(value, grpId)
 	{
-		this.bus.sendEvent(EVENT_TOGGLE, { grpId: grpId, value: value });
+		this.bus.sendEvent(EventType.TOGGLE, { grpId: grpId, value: value });
 	},
 
 	reload: function()
 	{
-		this.bus.sendEvent(EVENT_RELOAD);
+		this.bus.sendEvent(EventType.RELOAD);
 	},
 
 	get: function(data)
@@ -124,10 +132,10 @@ Process.prototype =
 	{
 		switch (event.type)
 		{
-			case EVENT_GET:
+			case EventType.GET:
 				return this.get(event.data);
 
-			case EVENT_DOM:
+			case EventType.DOM:
 				return this.findDom(event.data);
 		}
 	}
@@ -163,7 +171,7 @@ Content.prototype =
 
 		data = Object.assign({ name: name }, data);
 
-		res = this.bus.sendSyncEvent(EVENT_GET, data);
+		res = this.bus.sendSyncEvent(EventType.GET, data);
 		if (!res)
 			return null;
 
@@ -180,7 +188,7 @@ Content.prototype =
 		data = _cache.get(hostname);
 		if (!data)
 		{
-			data = this.bus.sendSyncEvent(EVENT_DOM, { hostname: hostname });
+			data = this.bus.sendSyncEvent(EventType.DOM, { hostname: hostname });
 			if (!data || !data[0])
 				return;
 
@@ -199,11 +207,11 @@ Content.prototype =
 	{
 		switch (event.type)
 		{
-			case EVENT_TOGGLE:
+			case EventType.TOGGLE:
 				this.obs.toggle(event.data);
 				break;
 
-			case EVENT_RELOAD:
+			case EventType.RELOAD:
 				this.clear();
 				break;
 		}
