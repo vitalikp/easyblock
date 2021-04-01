@@ -402,7 +402,6 @@ var EasyBlock =
 				return;
 		}
 
-		req.loadFlags = Ci.nsICachingChannel.LOAD_ONLY_FROM_CACHE;
 		req.cancel(Cr.NS_BINDING_ABORTED);
 
 		site.onBlock();
