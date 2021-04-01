@@ -14,8 +14,6 @@ const EventType =
 	DOM: 4
 };
 
-const EVENT_DOM = 4;
-
 
 // content data
 let _cache = null;
