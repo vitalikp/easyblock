@@ -129,6 +129,113 @@ ObsHandler.prototype =
 	}
 };
 
+function PrefHandler(addon)
+{
+	let defbranch;
+
+	this.addon = addon;
+
+	defbranch = ps.getDefaultBranch(ADDON_PREF);
+
+	// init default prefs
+	defbranch.setBoolPref('disabled', addon.disabled);
+
+	this.branch = this.reg(ADDON_PREF);
+
+	// restore addon options from prefs store
+	this.addon.disabled = this.disabled;
+}
+
+PrefHandler.prototype =
+{
+	get disabled()
+	{
+		if (!this.branch)
+			return false;
+
+		return this.branch.getBoolPref('disabled');
+	},
+
+	set disabled(value)
+	{
+		if (!this.branch)
+			return;
+
+		this.branch.setBoolPref('disabled', value);
+	},
+
+	reg: function(name = "", topic = "")
+	{
+		let branch, key;
+
+		if (!name)
+			return null;
+
+		branch = ps.getBranch(name);
+		if (!branch)
+			return null;
+
+		key = branch.root;
+		if (topic)
+			key += topic;
+		else
+			key += "*";
+
+		io.log("reg '" + key + "' pref handler");
+		branch.addObserver(topic, this, false);
+
+		return branch;
+	},
+
+	unreg: function(branch, topic = "")
+	{
+		let key;
+
+		if (!branch)
+			return;
+
+		key = branch.root;
+		if (topic)
+			key += topic;
+		else
+			key += "*";
+
+		io.log("unreg '" + key + "' pref handler");
+		branch.removeObserver(topic, this);
+	},
+
+	onPref: function(prefs, name)
+	{
+		if (!prefs)
+			return;
+
+		switch (name)
+		{
+			case "disabled":
+				this.addon.disabled = prefs.getBoolPref(name);
+				break;
+		}
+	},
+
+	observe: function(subject, topic, data)
+	{
+		switch (topic)
+		{
+			case PREF_CHANGE:
+				this.onPref(subject, data);
+				break;
+		}
+	},
+
+	destroy: function()
+	{
+		this.unreg(this.branch);
+
+		this.addon = null;
+		this.branch = null;
+	}
+};
+
 var EasyBlock =
 {
 	db: {},
@@ -149,7 +256,7 @@ var EasyBlock =
 
 		this._disabled = value;
 
-		this.prefs.setBoolPref('disabled', value);
+		this.prefs.disabled = value;
 
 		this.filter.toggle(value);
 
@@ -163,7 +270,7 @@ var EasyBlock =
 
 	startup: function(addonData)
 	{
-		var windows, defprefs;
+		var windows;
 
 		if (!this.filter)
 		{
@@ -184,14 +291,7 @@ var EasyBlock =
 			this.wins.forEach((winUI) => this.loadDBWin(winUI, db));
 		});
 
-		// init default prefs
-		defprefs = ps.getDefaultBranch(ADDON_PREF);
-		defprefs.setBoolPref('disabled', false);
-
-		this.prefs = ps.getBranch(ADDON_PREF);
-
-		// restore pref options from prefs store
-		this.disabled = this.prefs.getBoolPref('disabled');
+		this.prefs = new PrefHandler(this);
 
 		windows = Services.wm.getEnumerator("navigator:browser");
 
@@ -215,6 +315,8 @@ var EasyBlock =
 		EasyBlock.observer.unreg(os, OBS_REQ);
 		EasyBlock.observer.unreg(os, OBS_RESP);
 		EasyBlock.observer.unreg(os, OBS_WIN_OPEN);
+
+		this.prefs.destroy();
 
 		this.db.close();
 
