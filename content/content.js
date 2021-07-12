@@ -127,6 +127,9 @@ ContentObserver.prototype =
 		if (!doc || doc.nodeType != doc.DOCUMENT_NODE)
 			return;
 
+		if (doc.defaultView.top != doc.defaultView.self)
+			return;
+
 		loc = doc.location;
 		if (loc.protocol != "https:" && loc.protocol != "http:")
 			return;
