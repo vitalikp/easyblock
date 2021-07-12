@@ -107,26 +107,10 @@ ContentObserver.prototype =
 			return;
 		dom = data.content;
 
-		if (data.styles && data.styles.length > 0)
-		{
-			let style, i;
-
-			this.styles = [];
-
-			i = 0;
-			while (i < data.styles.length)
-			{
-				style = '<style type="text/css">';
-				style += data.styles[i++];
-				style += '</style>';
-
-				this.styles.push(style);
-			}
-		}
-
 		this.hostname = data.hostname;
 		this.grpId = data.grpId;
 		this.enabled = this.filter.get('enabled', { grpId: data.grpId });
+		this.styles = data.styles;
 		if (dom && dom.length > 0)
 			this.dom = dom;
 		this.reg(doc.defaultView, doc.body);
@@ -185,13 +169,19 @@ ContentObserver.prototype =
 	apply: function(doc)
 	{
 		let i;
+		let style;
 
 		if (this.disabled || !doc)
 			return;
 
 		i = 0;
 		while (i < this.styles.length)
-			doc.head.innerHTML += this.styles[i++];
+		{
+			style = doc.createElement("style");
+			style.type = "text/css";
+			style.innerHTML = this.styles[i++];
+			doc.head.appendChild(style);
+		}
 
 		this.filterNode(doc.body);
 	},
