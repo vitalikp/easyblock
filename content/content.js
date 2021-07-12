@@ -276,7 +276,7 @@ function init(event)
 {
 	let obs;
 
-	removeEventListener("load", init, true);
+	removeEventListener("DOMContentLoaded", init);
 
 	if (!event)
 		return;
@@ -284,4 +284,4 @@ function init(event)
 	obs = new ContentObserver();
 	obs.filterDom(event.originalTarget);
 }
-addEventListener('load', init, true);
+addEventListener('DOMContentLoaded', init);
