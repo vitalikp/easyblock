@@ -36,6 +36,7 @@ function ContentObserver()
 	this.disabled = this.filter.get('disabled');
 
 	addEventListener("DOMContentLoaded", this);
+	addEventListener('unload', this);
 }
 
 ContentObserver.prototype =
@@ -266,6 +267,11 @@ ContentObserver.prototype =
 
 			case "beforeunload":
 				this.unreg();
+				break;
+
+			case "unload":
+				removeEventListener("unload", this);
+				this.clear();
 				break;
 		}
 	}
