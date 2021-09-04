@@ -75,7 +75,6 @@ ContentObserver.prototype =
 		this.hostname = '';
 		this.grpId = 0;
 		this.enabled = true;
-		this._disabled = false;
 		this.styles = [];
 		this.dom = null;
 	},
