@@ -107,6 +107,7 @@ ContentObserver.prototype =
 			return;
 		dom = data.content;
 
+		this.clear();
 		this.hostname = data.hostname;
 		this.grpId = data.grpId;
 		this.enabled = this.filter.get('enabled', { grpId: data.grpId });
@@ -135,15 +136,13 @@ ContentObserver.prototype =
 			return;
 
 		if (this.hostname != loc.hostname)
-			this.clear();
-
-		if (this.hostname)
 		{
-			this.reg(doc.defaultView, doc.body);
-			this.apply(doc);
-		}
-		else
 			this.filter.findDom(loc.hostname, (data) => this.onFind(doc, data));
+			return;
+		}
+
+		this.reg(doc.defaultView, doc.body);
+		this.apply(doc);
 	},
 
 	onDomEdit: function(mutList)
