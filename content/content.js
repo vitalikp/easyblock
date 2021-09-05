@@ -269,6 +269,7 @@ ContentObserver.prototype =
 				break;
 
 			case "unload":
+				removeEventListener("DOMContentLoaded", this);
 				removeEventListener("unload", this);
 				this.clear();
 				break;
