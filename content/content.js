@@ -265,6 +265,7 @@ ContentObserver.prototype =
 				break;
 
 			case "beforeunload":
+				removeEventListener("beforeunload", this);
 				this.unreg();
 				break;
 
