@@ -150,7 +150,7 @@ function Content(api, obs)
 
 Content.prototype =
 {
-	clear: function()
+	reload: function()
 	{
 		if (_cache && _cache.size > 0)
 			_cache.clear();
@@ -207,7 +207,7 @@ Content.prototype =
 				break;
 
 			case EventType.RELOAD:
-				this.clear();
+				this.reload();
 				break;
 		}
 	}
