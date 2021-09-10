@@ -16,6 +16,12 @@ const ContentAPI =
 	}
 };
 
+const MutConf =
+{
+	subtree: true,
+	childList: true
+};
+
 function ContentObserver()
 {
 	let filter = {};
@@ -87,7 +93,7 @@ ContentObserver.prototype =
 
 		this.obs = new win.MutationObserver((mutList, obs) => this.onDomEdit(mutList));
 		win.addEventListener("beforeunload", this);
-		this.obs.observe(node, this.config);
+		this.obs.observe(node, MutConf);
 	},
 
 	unreg: function()
