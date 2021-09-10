@@ -82,7 +82,6 @@ ContentObserver.prototype =
 
 	clear: function()
 	{
-		this.unreg();
 		this.hostname = '';
 		this.grpId = 0;
 		this.enabled = true;
@@ -117,7 +116,7 @@ ContentObserver.prototype =
 			return;
 		dom = data.content;
 
-		this.clear();
+		this.unreg();
 		this.hostname = data.hostname;
 		this.grpId = data.grpId;
 		this.enabled = this.filter.get('enabled', { grpId: data.grpId });
@@ -289,6 +288,7 @@ ContentObserver.prototype =
 
 	destroy: function()
 	{
+		this.unreg();
 		this.clear();
 	}
 };
