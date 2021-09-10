@@ -75,6 +75,11 @@ ContentObserver.prototype =
 		this.disabled = data.value;
 	},
 
+	reload: function()
+	{
+		this.clear();
+	},
+
 	clear: function()
 	{
 		this.unreg();
