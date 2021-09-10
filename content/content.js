@@ -26,7 +26,6 @@ function ContentObserver()
 {
 	let filter = {};
 
-	this.config = { childList: true, subtree: true };
 	this.obs = null;
 	this.hostname = '';
 	this.grpId = 0;
