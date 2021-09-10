@@ -154,7 +154,7 @@ Content.prototype =
 	{
 		if (_cache && _cache.size > 0)
 			_cache.clear();
-		this.obs.clear();
+		this.obs.reload();
 	},
 
 	get: function(name, data)
