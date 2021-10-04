@@ -250,7 +250,7 @@ ContentObserver.prototype =
 	}
 };
 
-ContentObserver.filterNodeAttrs = function(node, attrs)
+ContentObserver.filterAttrs = function(node, attrs)
 {
 	let attr, i;
 
@@ -287,7 +287,7 @@ ContentObserver.filterNodes = function(nodes, attrs)
 			if (!hasAttrs)
 				node.remove();
 			else
-				ContentObserver.filterNodeAttrs(node, attrs);
+				ContentObserver.filterAttrs(node, attrs);
 		}
 		node = null;
 	}
