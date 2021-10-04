@@ -214,32 +214,8 @@ ContentObserver.prototype =
 				continue;
 
 			nodes = node.querySelectorAll(obj.sel);
-			this.filterNodes(nodes, obj.attrs);
+			ContentObserver.filterNodes(nodes, obj.attrs);
 			nodes = null;
-		}
-	},
-
-	filterNodes: function(nodes, attrs)
-	{
-		let i, node, hasAttrs;
-
-		if (!nodes || !nodes.length)
-			return;
-
-		hasAttrs = attrs && attrs.length > 0;
-
-		i = 0;
-		while (i < nodes.length)
-		{
-			node = nodes[i++];
-			if (node)
-			{
-				if (!hasAttrs)
-					node.remove();
-				else
-					ContentObserver.filterNodeAttrs(node, attrs);
-			}
-			node = null;
 		}
 	},
 
@@ -290,6 +266,30 @@ ContentObserver.filterNodeAttrs = function(node, attrs)
 
 		if (node.hasAttribute(attr))
 			node.removeAttribute(attr);
+	}
+};
+
+ContentObserver.filterNodes = function(nodes, attrs)
+{
+	let i, node, hasAttrs;
+
+	if (!nodes || !nodes.length)
+		return;
+
+	hasAttrs = attrs && attrs.length > 0;
+
+	i = 0;
+	while (i < nodes.length)
+	{
+		node = nodes[i++];
+		if (node)
+		{
+			if (!hasAttrs)
+				node.remove();
+			else
+				ContentObserver.filterNodeAttrs(node, attrs);
+		}
+		node = null;
 	}
 };
 
