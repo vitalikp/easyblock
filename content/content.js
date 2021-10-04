@@ -219,25 +219,6 @@ ContentObserver.prototype =
 		}
 	},
 
-	filterNodeAttrs: function(node, attrs)
-	{
-		let attr, i;
-
-		if (!node || !attrs || attrs.length < 1)
-			return;
-
-		i = 0;
-		while (i < attrs.length)
-		{
-			attr = attrs[i++];
-			if (!attr)
-				continue;
-
-			if (node.hasAttribute(attr))
-				node.removeAttribute(attr);
-		}
-	},
-
 	filterNodes: function(nodes, attrs)
 	{
 		let i, node, hasAttrs;
@@ -256,7 +237,7 @@ ContentObserver.prototype =
 				if (!hasAttrs)
 					node.remove();
 				else
-					this.filterNodeAttrs(node, attrs);
+					ContentObserver.filterNodeAttrs(node, attrs);
 			}
 			node = null;
 		}
@@ -290,6 +271,25 @@ ContentObserver.prototype =
 	{
 		this.unreg();
 		this.clear();
+	}
+};
+
+ContentObserver.filterNodeAttrs = function(node, attrs)
+{
+	let attr, i;
+
+	if (!node || !attrs || attrs.length < 1)
+		return;
+
+	i = 0;
+	while (i < attrs.length)
+	{
+		attr = attrs[i++];
+		if (!attr)
+			continue;
+
+		if (node.hasAttribute(attr))
+			node.removeAttribute(attr);
 	}
 };
 
