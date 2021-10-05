@@ -668,6 +668,18 @@ blsite.prototype =
 		return styles;
 	},
 
+	get scripts()
+	{
+		let scripts, i;
+
+		scripts = [];
+		i = 0;
+		while (i < this.js.length)
+			scripts.push(this.js[i++].data);
+
+		return scripts;
+	},
+
 	addCss: function(rule)
 	{
 		if (!rule || !rule.value)
