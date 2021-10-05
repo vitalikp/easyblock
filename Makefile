@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 
 PACKAGE := easyblock
-VERSION := 0.7.3
+VERSION := 0.7.4-dev
 EXT = $(PACKAGE)-$(VERSION)
 
 
