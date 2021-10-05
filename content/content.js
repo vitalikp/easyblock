@@ -32,7 +32,6 @@ function ContentObserver()
 	this.styles = [];
 	this.scripts = [];
 	this.rules = [];
-	this.dom = null;
 	this.enabled = true;
 	this._disabled = false;
 
@@ -90,12 +89,11 @@ ContentObserver.prototype =
 		this.styles = [];
 		this.scripts = [];
 		this.rules = [];
-		this.dom = null;
 	},
 
 	reg: function(win, node)
 	{
-		if (!this.dom || this.obs || !win || !node)
+		if (this.rules.length <= 0 || this.obs || !win || !node)
 			return;
 
 		this.obs = new win.MutationObserver((mutList, obs) => this.onDomEdit(mutList));
@@ -114,11 +112,8 @@ ContentObserver.prototype =
 
 	onFind: function(doc, data)
 	{
-		let dom;
-
 		if (!doc || !data)
 			return;
-		dom = data.content;
 
 		this.unreg();
 		this.hostname = data.hostname;
@@ -127,8 +122,6 @@ ContentObserver.prototype =
 		this.styles = data.styles;
 		this.scripts = data.scripts||[];
 		this.rules = data.content||[];
-		if (dom && dom.length > 0)
-			this.dom = dom;
 		this.reg(doc.defaultView, doc.body);
 		this.apply(doc);
 	},
@@ -216,7 +209,7 @@ ContentObserver.prototype =
 	{
 		let nodes, rule, i;
 
-		if (this.disabled || !this.dom || !node || !node.parentElement || node.nodeType != node.ELEMENT_NODE)
+		if (this.disabled || this.rules.length <= 0 || !node || !node.parentElement || node.nodeType != node.ELEMENT_NODE)
 			return;
 
 		node = node.parentElement;
