@@ -490,6 +490,7 @@ function blsite(rule)
 	this.type = [];
 	this.dom = [];
 	this.css = [];
+	this.js = [];
 	this.cnt = 0;
 }
 
@@ -502,7 +503,7 @@ blsite.prototype =
 
 	get hasRules()
 	{
-		return this.ua || this.pathes.length > 0 || this.type.length > 0 || this.dom.length > 0 || this.css.length > 0;
+		return this.ua || this.pathes.length > 0 || this.type.length > 0 || this.dom.length > 0 || this.css.length > 0 || this.js.length > 0;
 	},
 
 	addRule: function(rule)
@@ -542,6 +543,10 @@ blsite.prototype =
 
 			case "css":
 				this.addCss(rule);
+				break;
+
+			case "js":
+				this.addJs(rule);
 				break;
 
 			default:
@@ -674,9 +679,20 @@ blsite.prototype =
 		this.css.push(new CssRule(rule.value));
 	},
 
+	addJs: function(rule)
+	{
+		if (!rule || !rule.value)
+			return;
+
+		if (rule.rules.length > 0)
+			throw new Error('subrules is not supported');
+
+		this.js.push(new JsRule(rule.value));
+	},
+
 	get hasDom()
 	{
-		return this.dom.length > 0 || this.css.length > 0;
+		return this.dom.length > 0 || this.css.length > 0 || this.js.length > 0;
 	},
 
 	onBlock: function(content)
@@ -765,6 +781,22 @@ blsite.prototype =
 			while (i < this.css.length)
 			{
 				rule = this.css[i++];
+				if (!rule)
+					continue;
+
+				rule.print(doc, node);
+			}
+		}
+
+		if (this.js.length > 0)
+		{
+			node = uitree.create(doc, "JS (" + this.js.length + ")", false);
+			uitree.add(vbox, node);
+
+			i = 0;
+			while (i < this.js.length)
+			{
+				rule = this.js[i++];
 				if (!rule)
 					continue;
 
