@@ -30,6 +30,7 @@ function ContentObserver()
 	this.hostname = '';
 	this.grpId = 0;
 	this.styles = [];
+	this.scripts = [];
 	this.dom = null;
 	this.enabled = true;
 	this._disabled = false;
@@ -86,6 +87,7 @@ ContentObserver.prototype =
 		this.grpId = 0;
 		this.enabled = true;
 		this.styles = [];
+		this.scripts = [];
 		this.dom = null;
 	},
 
