@@ -117,7 +117,8 @@ Process.prototype =
 			hostname: data.hostname,
 			grpId: grpId,
 			content: site.content,
-			styles: site.styles
+			styles: site.styles,
+			scripts: site.scripts
 		};
 
 		return eventData;
