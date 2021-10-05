@@ -93,7 +93,7 @@ ContentObserver.prototype =
 
 	reg: function(win, node)
 	{
-		if (this.rules.length <= 0 || this.obs || !win || !node)
+		if (this.obs || !win || !node)
 			return;
 
 		this.obs = new win.MutationObserver((mutList, obs) => this.onDomEdit(mutList));
@@ -122,8 +122,21 @@ ContentObserver.prototype =
 		this.styles = data.styles;
 		this.scripts = data.scripts||[];
 		this.rules = data.content||[];
-		this.reg(doc.defaultView, doc.body);
+
+		this.filter(doc);
+	},
+
+	filter: function(doc)
+	{
+		if (this.disabled || !doc)
+			return;
+
 		this.apply(doc);
+		if (this.rules.length > 0)
+		{
+			this.reg(doc.defaultView, doc.body);
+			this.filterNode(doc.body);
+		}
 	},
 
 	filterDom: function(doc)
@@ -149,8 +162,7 @@ ContentObserver.prototype =
 			return;
 		}
 
-		this.reg(doc.defaultView, doc.body);
-		this.apply(doc);
+		this.filter(doc);
 	},
 
 	onDomEdit: function(mutList)
@@ -181,7 +193,7 @@ ContentObserver.prototype =
 		let i;
 		let style, script;
 
-		if (this.disabled || !doc)
+		if (!doc)
 			return;
 
 		i = 0;
@@ -201,15 +213,13 @@ ContentObserver.prototype =
 			script.innerHTML = this.scripts[i++];
 			doc.head.appendChild(script);
 		}
-
-		this.filterNode(doc.body);
 	},
 
 	filterNode: function(node)
 	{
 		let nodes, rule, i;
 
-		if (this.disabled || this.rules.length <= 0 || !node || !node.parentElement || node.nodeType != node.ELEMENT_NODE)
+		if (!node || !node.parentElement || node.nodeType != node.ELEMENT_NODE)
 			return;
 
 		node = node.parentElement;
