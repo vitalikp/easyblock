@@ -123,6 +123,7 @@ ContentObserver.prototype =
 		this.grpId = data.grpId;
 		this.enabled = this.filter.get('enabled', { grpId: data.grpId });
 		this.styles = data.styles;
+		this.scripts = data.scripts||[];
 		if (dom && dom.length > 0)
 			this.dom = dom;
 		this.reg(doc.defaultView, doc.body);
@@ -182,7 +183,7 @@ ContentObserver.prototype =
 	apply: function(doc)
 	{
 		let i;
-		let style;
+		let style, script;
 
 		if (this.disabled || !doc)
 			return;
@@ -194,6 +195,15 @@ ContentObserver.prototype =
 			style.type = "text/css";
 			style.innerHTML = this.styles[i++];
 			doc.head.appendChild(style);
+		}
+
+		i = 0;
+		while (i < this.scripts.length)
+		{
+			script = doc.createElement("script");
+			script.type = "text/javascript";
+			script.innerHTML = this.scripts[i++];
+			doc.head.appendChild(script);
 		}
 
 		this.filterNode(doc.body);
