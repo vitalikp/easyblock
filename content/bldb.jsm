@@ -335,6 +335,45 @@ CssRule.prototype =
 	}
 };
 
+function JsRule(name)
+{
+	this.name = name.trim();
+	this.data = '';
+
+	this.load(this.name + '.js');
+}
+
+JsRule.prototype =
+{
+	load: function(fn)
+	{
+		io.loadText(fn, (data) =>
+		{
+			let ln;
+
+			ln = data.split('\n').length;
+
+			io.log("js: javascript " + fn + " loaded (" + ln + ' lines)');
+			this.data = data;
+		});
+	},
+
+	print: function(doc, elem)
+	{
+		let label;
+
+		label = doc.createElement("label");
+		label.setAttribute("value", this.name);
+
+		uitree.add(elem, label);
+	},
+
+	toString: function()
+	{
+		return this.name;
+	}
+};
+
 function PathRule(path)
 {
 	this.path = path;
