@@ -37,9 +37,9 @@ function ContentObserver()
 
 	// import filter API
 	Cu.import("chrome://easyblock/content/filter.js", filter);
-	this.filter = new filter.Content(ContentAPI, this);
+	this._filter = new filter.Content(ContentAPI, this);
 
-	this.disabled = this.filter.get('disabled');
+	this.disabled = this._filter.get('disabled');
 
 	addEventListener("DOMContentLoaded", this);
 	addEventListener('unload', this);
@@ -118,7 +118,7 @@ ContentObserver.prototype =
 		this.unreg();
 		this.hostname = data.hostname;
 		this.grpId = data.grpId;
-		this.enabled = this.filter.get('enabled', { grpId: data.grpId });
+		this.enabled = this._filter.get('enabled', { grpId: data.grpId });
 		this.styles = data.styles;
 		this.scripts = data.scripts||[];
 		this.rules = data.content||[];
@@ -130,7 +130,7 @@ ContentObserver.prototype =
 	{
 		let loc;
 
-		if (this.disabled || !this.filter)
+		if (this.disabled || !this._filter)
 			return;
 
 		if (!doc || doc.nodeType != doc.DOCUMENT_NODE)
@@ -145,7 +145,7 @@ ContentObserver.prototype =
 
 		if (this.hostname != loc.hostname)
 		{
-			this.filter.findDom(loc.hostname, (data) => this.onFind(doc, data));
+			this._filter.findDom(loc.hostname, (data) => this.onFind(doc, data));
 			return;
 		}
 
