@@ -52,6 +52,12 @@ example.com
 example.com
   css:example
 
+# add “example.js“ javascript with “script” tag to document content
+# write message to console (see below “Javascript example”)
+# js rule can be specified multiple times
+example.net
+  js:example
+
 # add sites to “Group1” group
 # group: Group1
 example.com
@@ -63,6 +69,13 @@ mysite1.com
 ```
 # change hyperlink color to red
 a { color: red; }
+
+```
+
+### Javascript example (example.js)
+```
+# write message to console
+console.log("example js message");
 
 ```
 
