@@ -31,6 +31,7 @@ function ContentObserver()
 	this.grpId = 0;
 	this.styles = [];
 	this.scripts = [];
+	this.rules = [];
 	this.dom = null;
 	this.enabled = true;
 	this._disabled = false;
@@ -88,6 +89,7 @@ ContentObserver.prototype =
 		this.enabled = true;
 		this.styles = [];
 		this.scripts = [];
+		this.rules = [];
 		this.dom = null;
 	},
 
@@ -124,6 +126,7 @@ ContentObserver.prototype =
 		this.enabled = this.filter.get('enabled', { grpId: data.grpId });
 		this.styles = data.styles;
 		this.scripts = data.scripts||[];
+		this.rules = data.content||[];
 		if (dom && dom.length > 0)
 			this.dom = dom;
 		this.reg(doc.defaultView, doc.body);
@@ -211,7 +214,7 @@ ContentObserver.prototype =
 
 	filterNode: function(node)
 	{
-		let nodes, obj, i;
+		let nodes, rule, i;
 
 		if (this.disabled || !this.dom || !node || !node.parentElement || node.nodeType != node.ELEMENT_NODE)
 			return;
@@ -219,14 +222,14 @@ ContentObserver.prototype =
 		node = node.parentElement;
 
 		i = 0;
-		while (i < this.dom.length)
+		while (i < this.rules.length)
 		{
-			obj = this.dom[i++];
-			if (!obj || !obj.sel)
+			rule = this.rules[i++];
+			if (!rule || !rule.sel)
 				continue;
 
-			nodes = node.querySelectorAll(obj.sel);
-			ContentObserver.filterNodes(nodes, obj.attrs);
+			nodes = node.querySelectorAll(rule.sel);
+			ContentObserver.filterNodes(nodes, rule.attrs);
 			nodes = null;
 		}
 	},
