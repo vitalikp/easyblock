@@ -26,6 +26,7 @@ const OBS_RESP = "http-on-examine-response";
 const OBS_WIN_OPEN = "domwindowopened";
 const PREF_CHANGE = "nsPref:changed";
 
+const TYPE_DOC = Ci.nsIContentPolicy.TYPE_DOCUMENT;
 
 const ProcessAPI =
 {
