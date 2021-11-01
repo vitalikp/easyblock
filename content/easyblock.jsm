@@ -276,12 +276,14 @@ var EasyBlock =
 
 	setReqUA: function(req)
 	{
-		let origin, dn, ua;
+		let type, origin, dn, ua;
 
 		if (!req || !req.URI)
 			return;
 
-		if (req.referrer)
+		type = req.loadInfo && req.loadInfo.externalContentPolicyType;
+
+		if (type != TYPE_DOC && req.referrer)
 		{
 			dn = req.referrer.host;
 
