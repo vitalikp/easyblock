@@ -22,7 +22,7 @@ const MutConf =
 	childList: true
 };
 
-function ContentObserver()
+function Site()
 {
 	let filter = {};
 
@@ -45,7 +45,7 @@ function ContentObserver()
 	addEventListener('unload', this);
 }
 
-ContentObserver.prototype =
+Site.prototype =
 {
 	get disabled()
 	{
@@ -232,7 +232,7 @@ ContentObserver.prototype =
 				continue;
 
 			nodes = node.querySelectorAll(rule.sel);
-			ContentObserver.filterNodes(nodes, rule.attrs);
+			Site.filterNodes(nodes, rule.attrs);
 			nodes = null;
 		}
 	},
@@ -268,7 +268,7 @@ ContentObserver.prototype =
 	}
 };
 
-ContentObserver.filterAttrs = function(node, attrs)
+Site.filterAttrs = function(node, attrs)
 {
 	let attr, i;
 
@@ -287,7 +287,7 @@ ContentObserver.filterAttrs = function(node, attrs)
 	}
 };
 
-ContentObserver.filterNodes = function(nodes, attrs)
+Site.filterNodes = function(nodes, attrs)
 {
 	let i, node, hasAttrs;
 
@@ -305,7 +305,7 @@ ContentObserver.filterNodes = function(nodes, attrs)
 			if (!hasAttrs)
 				node.remove();
 			else
-				ContentObserver.filterAttrs(node, attrs);
+				Site.filterAttrs(node, attrs);
 		}
 		node = null;
 	}
@@ -320,7 +320,7 @@ function init(event)
 	if (!event)
 		return;
 
-	obs = new ContentObserver();
+	obs = new Site();
 	obs.filterDom(event.originalTarget);
 }
 addEventListener('DOMContentLoaded', init);
