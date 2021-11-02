@@ -11,7 +11,6 @@
 
 		<em:iconURL>chrome://easyblock/content/easyblock.png</em:iconURL>
 		<em:icon64URL>chrome://easyblock/content/easyblock.png</em:icon64URL>
-		<em:optionsURL>chrome://easyblock/content/options.xul</em:optionsURL>
 		<em:homepageURL>https://github.com/vitalikp/easyblock</em:homepageURL>
 		<em:bootstrap>true</em:bootstrap>
 		<em:multiprocessCompatible>true</em:multiprocessCompatible>
