@@ -250,6 +250,11 @@ Site.prototype =
 				this.clear();
 				break;
 		}
+	},
+
+	toString: function()
+	{
+		return this.hostname;
 	}
 };
 
