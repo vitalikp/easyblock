@@ -93,7 +93,7 @@ Site.prototype =
 		if (this.obs || !win || !node)
 			return;
 
-		this.obs = new win.MutationObserver((mutList, obs) => this.onDomEdit(mutList));
+		this.obs = new win.MutationObserver((mutList, obs) => this.onEdit(mutList));
 		win.addEventListener("beforeunload", this);
 		this.obs.observe(node, MutConf);
 	},
@@ -162,7 +162,7 @@ Site.prototype =
 		this.filter(doc);
 	},
 
-	onDomEdit: function(mutList)
+	onEdit: function(mutList)
 	{
 		let mut, i, j;
 
