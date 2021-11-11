@@ -310,14 +310,6 @@ Site.filterNodes = function(nodes, attrs)
 
 let obs;
 
-function init(event)
-{
-	removeEventListener("DOMContentLoaded", init);
-
-	if (!event)
-		return;
-}
-
 obs = new Site();
 addEventListener("DOMContentLoaded", obs);
 addEventListener('unload', obs);
