@@ -22,12 +22,12 @@ const MutConf =
 	childList: true
 };
 
-function Site()
+function Site(hostname)
 {
 	let filter = {};
 
 	this.obs = null;
-	this.hostname = '';
+	this.hostname = hostname;
 	this.grpId = 0;
 	this.styles = [];
 	this.scripts = [];
@@ -300,6 +300,6 @@ Site.filterNodes = function(nodes, attrs)
 
 let obs;
 
-obs = new Site();
+obs = new Site("");
 addEventListener("DOMContentLoaded", obs);
 addEventListener('unload', obs);
