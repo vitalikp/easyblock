@@ -40,9 +40,6 @@ function Site()
 	this._filter = new filter.Content(ContentAPI, this);
 
 	this.disabled = this._filter.get('disabled');
-
-	addEventListener("DOMContentLoaded", this);
-	addEventListener('unload', this);
 }
 
 Site.prototype =
@@ -311,16 +308,16 @@ Site.filterNodes = function(nodes, attrs)
 	}
 };
 
+let obs;
+
 function init(event)
 {
-	let obs;
-
 	removeEventListener("DOMContentLoaded", init);
 
 	if (!event)
 		return;
-
-	obs = new Site();
-	obs.filterDom(event.originalTarget);
 }
-addEventListener('DOMContentLoaded', init);
+
+obs = new Site();
+addEventListener("DOMContentLoaded", obs);
+addEventListener('unload', obs);
