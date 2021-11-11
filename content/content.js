@@ -246,15 +246,10 @@ Site.prototype =
 			case "unload":
 				removeEventListener("DOMContentLoaded", this);
 				removeEventListener("unload", this);
-				this.destroy();
+				this.unreg();
+				this.clear();
 				break;
 		}
-	},
-
-	destroy: function()
-	{
-		this.unreg();
-		this.clear();
 	}
 };
 
