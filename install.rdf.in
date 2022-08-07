@@ -1,16 +1,16 @@
 <?xml version='1.0' encoding='utf-8'?>
 <RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
 	<Description about="urn:mozilla:install-manifest">
-		<em:id>easyblock@vitalikp</em:id>
+		<em:id>${PACKAGE}@vitalikp</em:id>
 		<em:type>2</em:type>
 		<em:name>EasyBlock</em:name>
-		<em:version>0.8-dev</em:version>
+		<em:version>${VERSION}</em:version>
 		<em:creator>vitalikp</em:creator>
 
 		<em:description>Automatically block site from blacklist.</em:description>
 
-		<em:iconURL>chrome://easyblock/content/easyblock.png</em:iconURL>
-		<em:icon64URL>chrome://easyblock/content/easyblock.png</em:icon64URL>
+		<em:iconURL>chrome://${PACKAGE}/content/easyblock.png</em:iconURL>
+		<em:icon64URL>chrome://${PACKAGE}/content/easyblock.png</em:icon64URL>
 		<em:homepageURL>https://github.com/vitalikp/easyblock</em:homepageURL>
 		<em:bootstrap>true</em:bootstrap>
 		<em:multiprocessCompatible>true</em:multiprocessCompatible>
