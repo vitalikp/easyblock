@@ -4,7 +4,7 @@ const Ci = Components.interfaces;
 const Cc = Components.classes;
 const Cu = Components.utils;
 
-var EXPORTED_SYMBOLS = ["io"];
+var EXPORTED_SYMBOLS = ["LogLevel", "io"];
 
 Cu.import("resource://gre/modules/osfile.jsm");
 Cu.import("resource://gre/modules/Task.jsm");
@@ -15,6 +15,16 @@ const ios = Cc["@mozilla.org/network/io-service;1"].getService(Ci.nsIIOService2)
 const scriptError = Cc["@mozilla.org/scripterror;1"];
 
 const ADDON_NAME = "easyblock";
+
+const LogLevel =
+{
+	NONE: 0,
+	ERROR: 1,
+	WARN: 2,
+	INFO: 3,
+	DEBUG: 4,
+	ALL: 5
+};
 
 
 var io =
