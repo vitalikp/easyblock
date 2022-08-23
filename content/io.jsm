@@ -23,17 +23,12 @@ var io =
 	{
 		let dirSrv, profPath;
 
-		if (this.console)
-			return;
-
 		dirSrv = Cc["@mozilla.org/file/directory_service;1"].getService(Ci.nsIProperties);
 
 		// db path in profile
 		profPath = dirSrv.get("ProfD", Ci.nsIFile);
 		profPath.append(ADDON_NAME);
 		this.addonPath = profPath.path;
-
-		this.console = cs;
 	},
 
 	newURI: function(url)
@@ -56,7 +51,7 @@ var io =
 
 	log: function(msg)
 	{
-		this.console.logStringMessage("[" + ADDON_NAME + "] " + msg);
+		cs.logStringMessage("[" + ADDON_NAME + "] " + msg);
 	},
 
 	logMsg: function(flags, msg)
@@ -69,7 +64,7 @@ var io =
 		errMsg = scriptError.createInstance(Ci.nsIScriptError);
 		errMsg.initWithWindowID("[" + ADDON_NAME + "] " + msg, msg.fileName, msg.lineNumber, msg.lineNumber, 0, flags, null, 0);
 
-		this.console.logMessage(errMsg);
+		cs.logMessage(errMsg);
 	},
 
 	warn: function(msg)
