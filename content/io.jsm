@@ -10,6 +10,7 @@ Cu.import("resource://gre/modules/osfile.jsm");
 Cu.import("resource://gre/modules/Task.jsm");
 
 
+const cs = Cc["@mozilla.org/consoleservice;1"].getService(Ci.nsIConsoleService);
 const ios = Cc["@mozilla.org/network/io-service;1"].getService(Ci.nsIIOService2);
 const scriptError = Cc["@mozilla.org/scripterror;1"];
 
@@ -32,7 +33,7 @@ var io =
 		profPath.append(ADDON_NAME);
 		this.addonPath = profPath.path;
 
-		this.console = Cc["@mozilla.org/consoleservice;1"].getService(Ci.nsIConsoleService);
+		this.console = cs;
 	},
 
 	newURI: function(url)
