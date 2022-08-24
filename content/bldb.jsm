@@ -153,9 +153,9 @@ BlRule.parse = function(fn, data, off, rules)
 					if (rule.level > 0)
 					{
 						if (rule.name)
-							io.error(new SyntaxError('ignore ' + rule.name + ' rule "' + rule.value + '"', fn, rule.ln));
+							log.error(new SyntaxError('ignore ' + rule.name + ' rule "' + rule.value + '"', fn, rule.ln));
 						else
-							io.error(new SyntaxError('ignore rule "' + rule.value + '"', fn, rule.ln));
+							log.error(new SyntaxError('ignore rule "' + rule.value + '"', fn, rule.ln));
 
 						continue;
 					}
@@ -166,9 +166,9 @@ BlRule.parse = function(fn, data, off, rules)
 						continue;
 
 					if (rule.name)
-						io.error(new SyntaxError(prule.value + ': ignore ' + rule.name + ' rule "' + rule.value + '"', fn, rule.ln));
+						log.error(new SyntaxError(prule.value + ': ignore ' + rule.name + ' rule "' + rule.value + '"', fn, rule.ln));
 					else
-						io.error(new SyntaxError(prule.value + ': ignore rule "' + rule.value + '"', fn, rule.ln));
+						log.error(new SyntaxError(prule.value + ': ignore rule "' + rule.value + '"', fn, rule.ln));
 
 					continue;
 				}
@@ -235,13 +235,13 @@ DomRule.prototype =
 
 				if (subrule.name != 'attr')
 				{
-					io.error(new SyntaxError(rule.name + ': ignore ' + subrule.name + ' rule "' + subrule.value + '": rule is unknown', '?', subrule.ln)); // FIXME need set filename!
+					log.error(new SyntaxError(rule.name + ': ignore ' + subrule.name + ' rule "' + subrule.value + '": rule is unknown', '?', subrule.ln)); // FIXME need set filename!
 					continue;
 				}
 
 				if (subrule.rules.length > 0)
 				{
-					io.error(new SyntaxError(rule.name + ': ignore ' + subrule.name + ' rule "' + subrule.value + '": subrules is not supported', '?', subrule.ln));// FIXME need set filename!
+					log.error(new SyntaxError(rule.name + ': ignore ' + subrule.name + ' rule "' + subrule.value + '": subrules is not supported', '?', subrule.ln));// FIXME need set filename!
 					continue;
 				}
 	
@@ -1181,7 +1181,7 @@ bldb.parse = function(db, data)
 				}
 				catch (e)
 				{
-					io.error(new SyntaxError('ignore hostname "' + rule.value + '": ' + e.message, db.fn, rule.ln));
+					log.error(new SyntaxError('ignore hostname "' + rule.value + '": ' + e.message, db.fn, rule.ln));
 					continue;
 				}
 	
@@ -1197,9 +1197,9 @@ bldb.parse = function(db, data)
 					catch (e)
 					{
 						if (subrule.name)
-							io.error(new SyntaxError(site.name + ': ignore ' + subrule.name + ' rule "' + subrule.value + '": ' + e.message, db.fn, subrule.ln));
+							log.error(new SyntaxError(site.name + ': ignore ' + subrule.name + ' rule "' + subrule.value + '": ' + e.message, db.fn, subrule.ln));
 						else
-							io.error(new SyntaxError(site.name + ': ignore rule "' + subrule.value + '": ' + e.message, db.fn, subrule.ln));
+							log.error(new SyntaxError(site.name + ': ignore rule "' + subrule.value + '": ' + e.message, db.fn, subrule.ln));
 					}
 				}
 		}
