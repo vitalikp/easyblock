@@ -126,11 +126,6 @@ var io =
 		}
 	},
 
-	log: function(msg)
-	{
-		log.info(msg);
-	},
-
 	warn: function(msg)
 	{
 		log.warn(msg);

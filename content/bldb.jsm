@@ -314,7 +314,7 @@ CssRule.prototype =
 
 			ln = data.split('\n').length;
 
-			io.log("css: style " + fn + " loaded (" + ln + ' lines)');
+			log.info("css: style " + fn + " loaded (" + ln + ' lines)');
 			this.data = data;
 		});
 	},
@@ -353,7 +353,7 @@ JsRule.prototype =
 
 			ln = data.split('\n').length;
 
-			io.log("js: javascript " + fn + " loaded (" + ln + ' lines)');
+			log.info("js: javascript " + fn + " loaded (" + ln + ' lines)');
 			this.data = data;
 		});
 	},
@@ -710,11 +710,11 @@ blsite.prototype =
 	onBlock: function(content)
 	{
 		if (content)
-			io.log("Blocking content site '" + this.name + "'");
+			log.info("Blocking content site '" + this.name + "'");
 		else
 		{
 			this.cnt++;
-			io.log("Blocking site '" + this.name + "'");
+			log.info("Blocking site '" + this.name + "'");
 		}
 	},
 
@@ -878,9 +878,9 @@ blgroup.prototype =
 
 		this.enabled = value;
 		if (value)
-			io.log("Enable '" + this.name + "' group");
+			log.info("Enable '" + this.name + "' group");
 		else
-			io.log("Disable '" + this.name + "' group");
+			log.info("Disable '" + this.name + "' group");
 
 		return true;
 	},
@@ -892,7 +892,7 @@ blgroup.prototype =
 
 		this.data.push(site);
 		site.group = this;
-//		io.log(this.name + ': add url "' + site.name + '"');
+		log.debug(this.name + ': add url "' + site.name + '"');
 	},
 
 	find: function(host)
@@ -1013,7 +1013,7 @@ bldb.prototype =
 
 		this.groups.push(group);
 		group.id = id;
-//		io.log('add group "' + group.name + '" to blacklist');
+		log.debug('add group "' + group.name + '" to blacklist');
 	},
 
 	load: function(onLoad)
@@ -1035,7 +1035,7 @@ bldb.prototype =
 			if (onLoad)
 				onLoad(db);
 
-			io.log("load blacklist sites from '" + db.fn + "' file (" + loadtime + " ms)");
+			log.info("load blacklist sites from '" + db.fn + "' file (" + loadtime + " ms)");
 		});
 	},
 

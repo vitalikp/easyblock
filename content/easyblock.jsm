@@ -58,7 +58,7 @@ ObsHandler.prototype =
 		if (!obs || !topic)
 			return;
 
-		io.log("reg '" + topic + "' observer handler");
+		log.info("reg '" + topic + "' observer handler");
 		obs.addObserver(this, topic, false);
 	},
 
@@ -67,7 +67,7 @@ ObsHandler.prototype =
 		if (!obs || !topic)
 			return;
 
-		io.log("unreg '" + topic + "' observer handler");
+		log.info("unreg '" + topic + "' observer handler");
 		obs.removeObserver(this, topic, false);
 	},
 
@@ -200,7 +200,7 @@ PrefHandler.prototype =
 		else
 			key += "*";
 
-		io.log("reg '" + key + "' pref handler");
+		log.info("reg '" + key + "' pref handler");
 		branch.addObserver(topic, this, false);
 
 		return branch;
@@ -219,7 +219,7 @@ PrefHandler.prototype =
 		else
 			key += "*";
 
-		io.log("unreg '" + key + "' pref handler");
+		log.info("unreg '" + key + "' pref handler");
 		branch.removeObserver(topic, this);
 	},
 
@@ -288,9 +288,9 @@ var EasyBlock =
 		this.wins.forEach((winUI) => winUI.updateState(this));
 
 		if (!value)
-			io.log("Enable 'EasyBlock' addon...");
+			log.info("Enable 'EasyBlock' addon...");
 		else
-			io.log("Disable 'EasyBlock' addon...");
+			log.info("Disable 'EasyBlock' addon...");
 	},
 
 	startup: function(addonData)
@@ -325,7 +325,7 @@ var EasyBlock =
 		EasyBlock.observer.reg(os, OBS_WIN_OPEN);
 
 		ui.loadCss("easyblock");
-		io.log("easyblock " + addonData.version + " started!");
+		log.info("easyblock " + addonData.version + " started!");
 	},
 
 	shutdown: function()
