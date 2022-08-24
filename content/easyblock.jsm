@@ -140,11 +140,13 @@ function PrefHandler(addon)
 
 	// init default prefs
 	defbranch.setBoolPref('disabled', addon.disabled);
+	defbranch.setIntPref('logLevel', log.level);
 
 	this.branch = this.reg(ADDON_PREF);
 
 	// restore addon options from prefs store
 	this.addon.disabled = this.disabled;
+	log.level = this.logLevel
 }
 
 PrefHandler.prototype =
@@ -163,6 +165,22 @@ PrefHandler.prototype =
 			return;
 
 		this.branch.setBoolPref('disabled', value);
+	},
+
+	get logLevel()
+	{
+		if (!this.branch)
+			return LogLevel.NONE;
+
+		return this.branch.getIntPref('logLevel');
+	},
+
+	set logLevel(value)
+	{
+		if (!this.branch)
+			return;
+
+		this.branch.setIntPref('logLevel', value);
 	},
 
 	reg: function(name = "", topic = "")
@@ -214,6 +232,12 @@ PrefHandler.prototype =
 		{
 			case "disabled":
 				this.addon.disabled = prefs.getBoolPref(name);
+				break;
+
+			case "logLevel":
+				log.level = prefs.getIntPref(name);
+				if (log.level != this.logLevel)
+					this.logLevel = log.level;
 				break;
 		}
 	},
