@@ -131,19 +131,6 @@ var io =
 		log.info(msg);
 	},
 
-	logMsg: function(flags, msg)
-	{
-		let errMsg;
-
-		if (!msg)
-			return;
-
-		errMsg = scriptError.createInstance(Ci.nsIScriptError);
-		errMsg.initWithWindowID("[" + ADDON_NAME + "] " + msg, msg.fileName, msg.lineNumber, msg.lineNumber, 0, flags, null, 0);
-
-		cs.logMessage(errMsg);
-	},
-
 	warn: function(msg)
 	{
 		log.warn(msg);
