@@ -710,7 +710,7 @@ blsite.prototype =
 	onBlock: function()
 	{
 		this.cnt++;
-		log.info("Blocking site '" + this.name + "'");
+		log.debug("Blocking site '" + this.name + "'");
 	},
 
 	print: function(doc, elem)
