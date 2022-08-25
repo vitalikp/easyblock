@@ -1152,8 +1152,6 @@ bldb.parse = function(db, data)
 			case RULE_PROP:
 				switch (rule.name)
 				{
-					case 'title':
-						log.warn(new SyntaxError(rule.value + ': "title" field for group name is deprecated, use "group" instead', db.fn, i));
 					case 'group':
 						if (!blgroup.validName(rule.value))
 							continue;
