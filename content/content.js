@@ -72,16 +72,6 @@ Site.prototype =
 		this.disabled = data.value;
 	},
 
-	clear: function()
-	{
-		this.hostname = '';
-		this.grpId = 0;
-		this.enabled = true;
-		this.styles = [];
-		this.scripts = [];
-		this.rules = [];
-	},
-
 	reg: function(win, node)
 	{
 		if (this.obs || !win || !node)
