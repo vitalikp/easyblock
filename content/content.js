@@ -32,14 +32,13 @@ function Site(hostname, grpId)
 	this.styles = [];
 	this.scripts = [];
 	this.rules = [];
+
 	this.enabled = true;
 	this._disabled = false;
 
 	// import filter API
 	Cu.import("chrome://easyblock/content/filter.js", filter);
 	this._filter = new filter.Content(ContentAPI, this);
-
-	this.disabled = this._filter.get('disabled');
 }
 
 Site.prototype =
@@ -241,20 +240,9 @@ Site.prototype =
 
 		switch (event.type)
 		{
-			case "DOMContentLoaded":
-				this.filterDom(event.originalTarget);
-				break;
-
 			case "beforeunload":
 				removeEventListener("beforeunload", this);
 				this.unreg();
-				break;
-
-			case "unload":
-				removeEventListener("DOMContentLoaded", this);
-				removeEventListener("unload", this);
-				this.unreg();
-				this.clear();
 				break;
 		}
 	},
@@ -422,6 +410,6 @@ SiteHandler.prototype =
 
 let handler;
 
-handler = new Site("", 0);
+handler = new SiteHandler();
 addEventListener("DOMContentLoaded", handler);
 addEventListener('unload', handler);
