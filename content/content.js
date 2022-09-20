@@ -24,8 +24,6 @@ const MutConf =
 
 function Site(hostname, grpId)
 {
-	let filter = {};
-
 	this.obs = null;
 	this.hostname = hostname;
 	this.grpId = grpId;
@@ -35,10 +33,6 @@ function Site(hostname, grpId)
 
 	this.enabled = true;
 	this._disabled = false;
-
-	// import filter API
-	Cu.import("chrome://easyblock/content/filter.js", filter);
-	this._filter = new filter.Content(ContentAPI, this);
 }
 
 Site.prototype =
