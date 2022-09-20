@@ -106,22 +106,6 @@ Site.prototype =
 		this.obs = null;
 	},
 
-	onFind: function(doc, data)
-	{
-		if (!doc || !data)
-			return;
-
-		this.unreg();
-		this.hostname = data.hostname;
-		this.grpId = data.grpId;
-		this.enabled = this._filter.get('enabled', { grpId: data.grpId });
-		this.styles = data.styles;
-		this.scripts = data.scripts||[];
-		this.rules = data.content||[];
-
-		this.filter(doc);
-	},
-
 	filter: function(doc)
 	{
 		if (this.disabled || !doc)
