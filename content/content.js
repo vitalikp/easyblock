@@ -308,6 +308,118 @@ Site.filterNodes = function(nodes, attrs)
 	}
 };
 
+function SiteHandler()
+{
+	let filter = {};
+
+	this._disabled = false;
+	this.site = null;
+
+	// import filter API
+	Cu.import("chrome://easyblock/content/filter.js", filter);
+	this._filter = new filter.Content(ContentAPI, this);
+
+	this._disabled = this._filter.get('disabled');
+}
+
+SiteHandler.prototype =
+{
+	toggle: function(data)
+	{
+		if (!data)
+			return;
+
+		if (this.site)
+			this.site.toggle(data);
+
+		if (data.grpId > 0)
+			return;
+
+		this._disabled = data.value;
+	},
+
+	reload: function()
+	{
+		this.site = null;
+	},
+
+	onFind: function(doc, data)
+	{
+		let site;
+
+		if (!doc || !data)
+			return;
+
+		site = new Site(data.hostname, data.grpId);
+		site.enabled = this._filter.get('enabled', { grpId: data.grpId });
+		site.disabled = this._disabled;
+		site.styles = data.styles||[];
+		site.scripts = data.scripts||[];
+		site.rules = data.content||[];
+
+		if (this.site)
+			this.site.unreg();
+		this.site = site;
+
+		site.filter(doc);
+	},
+
+	filterDom: function(doc)
+	{
+		let loc, site;
+
+		if (this._disabled || !this._filter)
+			return;
+
+		if (!doc || doc.nodeType != doc.DOCUMENT_NODE)
+			return;
+
+		if (doc.defaultView.top != doc.defaultView.self)
+			return;
+
+		loc = doc.location;
+		if (loc.protocol != "https:" && loc.protocol != "http:")
+			return;
+
+		site = this.site;
+		if (!site || site.hostname != loc.hostname)
+		{
+			this._filter.findDom(loc.hostname, (data) => this.onFind(doc, data));
+			return;
+		}
+
+		site.filter(doc);
+	},
+
+	handleEvent: function(event)
+	{
+		if (!event)
+			return;
+
+		switch (event.type)
+		{
+			case "DOMContentLoaded":
+				this.filterDom(event.originalTarget);
+				break;
+
+			case "unload":
+				removeEventListener("DOMContentLoaded", this);
+				removeEventListener("unload", this);
+				this.destroy();
+				break;
+		}
+	},
+
+	destroy: function()
+	{
+		if (this.site)
+		{
+			this.site.unreg();
+			this.site = null;
+		}
+	}
+};
+
 let handler;
 
 handler = new Site("", 0);
