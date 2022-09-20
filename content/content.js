@@ -308,8 +308,8 @@ Site.filterNodes = function(nodes, attrs)
 	}
 };
 
-let obs;
+let handler;
 
-obs = new Site("", 0);
-addEventListener("DOMContentLoaded", obs);
-addEventListener('unload', obs);
+handler = new Site("", 0);
+addEventListener("DOMContentLoaded", handler);
+addEventListener('unload', handler);
