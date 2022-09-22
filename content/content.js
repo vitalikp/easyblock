@@ -239,6 +239,7 @@ function SiteHandler()
 
 	this._disabled = false;
 	this.site = null;
+	this.frames = new Map();
 
 	// import filter API
 	Cu.import("chrome://easyblock/content/filter.js", filter);
@@ -251,11 +252,23 @@ SiteHandler.prototype =
 {
 	toggle: function(data)
 	{
+		let iter, site;
+
 		if (!data)
 			return;
 
 		if (this.site)
 			this.site.toggle(data);
+
+		iter = this.frames.values();
+		while (!(site=iter.next()).done)
+		{
+			site = site.value;
+			if (!site)
+				continue;
+
+			site.toggle(data);
+		}
 
 		if (data.grpId > 0)
 			return;
@@ -266,6 +279,7 @@ SiteHandler.prototype =
 	reload: function()
 	{
 		this.site = null;
+		this.frames.clear();
 	},
 
 	onFind: function(doc, data)
@@ -337,11 +351,24 @@ SiteHandler.prototype =
 
 	destroy: function()
 	{
+		let iter, site;
+
 		if (this.site)
 		{
 			this.site.unreg();
 			this.site = null;
 		}
+
+		iter = this.frames.values();
+		while (!(site=iter.next()).done)
+		{
+			site = site.value;
+			if (!site)
+				continue;
+
+			site.unreg();
+		}
+		this.frames.clear();
 	}
 };
 
