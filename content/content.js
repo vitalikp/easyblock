@@ -282,7 +282,7 @@ SiteHandler.prototype =
 		this.frames.clear();
 	},
 
-	onFind: function(doc, data)
+	onFind: function(doc, data, isFrame)
 	{
 		let site;
 
@@ -296,9 +296,12 @@ SiteHandler.prototype =
 		site.scripts = data.scripts||[];
 		site.rules = data.content||[];
 
-		if (this.site)
-			this.site.unreg();
-		this.site = site;
+		if (!isFrame)
+		{
+			if (this.site)
+				this.site.unreg();
+			this.site = site;
+		}
 
 		site.filter(doc);
 	},
