@@ -300,8 +300,11 @@ SiteHandler.prototype =
 		{
 			if (this.site)
 				this.site.unreg();
+			this.frames.clear();
 			this.site = site;
 		}
+		else
+			this.frames.set(data.hostname, site);
 
 		site.filter(doc);
 	},
@@ -316,9 +319,6 @@ SiteHandler.prototype =
 		if (!doc || doc.nodeType != doc.DOCUMENT_NODE)
 			return;
 
-		if (doc.defaultView.top != doc.defaultView.self)
-			return;
-
 		loc = doc.location;
 		if (loc.protocol != "https:" && loc.protocol != "http:")
 			return;
@@ -326,8 +326,18 @@ SiteHandler.prototype =
 		site = this.site;
 		if (!site || site.hostname != loc.hostname)
 		{
-			this._filter.findDom(loc.hostname, (data) => this.onFind(doc, data));
-			return;
+			if (doc.defaultView.top == doc.defaultView.self) // doc is root site
+			{
+				this._filter.findDom(loc.hostname, (data) => this.onFind(doc, data));
+				return;
+			}
+
+			site = this.frames.get(loc.hostname); // doc is frame site
+			if (!site || site.hostname != loc.hostname)
+			{
+				this._filter.findDom(loc.hostname, (data) => this.onFind(doc, data, true));
+				return;
+			}
 		}
 
 		site.filter(doc);
