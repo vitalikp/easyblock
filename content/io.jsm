@@ -7,7 +7,6 @@ const Cu = Components.utils;
 var EXPORTED_SYMBOLS = ["LogLevel", "log", "io"];
 
 Cu.import("resource://gre/modules/osfile.jsm");
-Cu.import("resource://gre/modules/Task.jsm");
 
 
 const cs = Cc["@mozilla.org/consoleservice;1"].getService(Ci.nsIConsoleService);
@@ -221,15 +220,15 @@ var io =
 				break;
 		}
 
-		Task.spawn(function*()
+		(async()=>
 		{
 			let file;
 
 			try
 			{
-				file = yield OS.File.open(path, { write: true, trunc: true });
-				yield file.write(data);
-				yield file.flush();
+				file = await OS.File.open(path, { write: true, trunc: true });
+				await file.write(data);
+				await file.flush();
 			}
 			catch(e)
 			{
@@ -238,9 +237,9 @@ var io =
 			finally
 			{
 				if (file)
-					yield file.close();
+					await file.close();
 			}
-		});
+		})();
 	},
 
 	onLoad(path, stat, callback)
