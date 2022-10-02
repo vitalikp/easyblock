@@ -87,7 +87,7 @@ function blhost(name, isrule)
 
 blhost.prototype =
 {
-	hasHost: function(host)
+	hasHost(host)
 	{
 		let i;
 
@@ -114,7 +114,7 @@ blhost.prototype =
 		return true;
 	},
 
-	toString: function()
+	toString()
 	{
 		let res = '', i;
 
