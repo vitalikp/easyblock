@@ -46,7 +46,7 @@ var log =
 		this._level = value;
 	},
 
-	_logMsg: function(flags, msg)
+	_logMsg(flags, msg)
 	{
 		let errMsg;
 
@@ -59,7 +59,7 @@ var log =
 		cs.logMessage(errMsg);
 	},
 
-	error: function(msg)
+	error(msg)
 	{
 		if (this.level < LogLevel.ERROR)
 			return;
@@ -67,7 +67,7 @@ var log =
 		return this._logMsg(Ci.nsIScriptError.errorFlag, msg);
 	},
 
-	warn: function(msg)
+	warn(msg)
 	{
 		if (this.level < LogLevel.WARN)
 			return;
@@ -75,7 +75,7 @@ var log =
 		return this._logMsg(Ci.nsIScriptError.warningFlag, msg);
 	},
 
-	info: function(msg)
+	info(msg)
 	{
 		if (this.level < LogLevel.INFO)
 			return;
@@ -83,7 +83,7 @@ var log =
 		cs.logStringMessage("[" + ADDON_NAME + "] " + msg);
 	},
 
-	debug: function(msg)
+	debug(msg)
 	{
 		if (this.level < LogLevel.DEBUG)
 			return;
@@ -95,7 +95,7 @@ var log =
 
 var io =
 {
-	init: function()
+	init()
 	{
 		let dirSrv, profPath;
 
@@ -107,7 +107,7 @@ var io =
 		this.addonPath = profPath.path;
 	},
 
-	newURI: function(url)
+	newURI(url)
 	{
 		if (!url)
 			return null;
@@ -125,7 +125,7 @@ var io =
 		}
 	},
 
-	stat: function(fn, callback)
+	stat(fn, callback)
 	{
 		let path;
 
@@ -137,7 +137,7 @@ var io =
 		});
 	},
 
-	load: function(path, callback)
+	load(path, callback)
 	{
 		if (!path || !callback)
 			return;
@@ -154,7 +154,7 @@ var io =
 		});
 	},
 
-	loadText: function(path, callback)
+	loadText(path, callback)
 	{
 		if (!path || !callback)
 			return;
@@ -182,7 +182,7 @@ var io =
 		});
 	},
 
-	loadFile: function(fn, callback)
+	loadFile(fn, callback)
 	{
 		let path;
 
@@ -204,7 +204,7 @@ var io =
 		}
 	},
 
-	saveFile: function(fn, data)
+	saveFile(fn, data)
 	{
 		let path;
 
@@ -242,7 +242,7 @@ var io =
 		})();
 	},
 
-	onLoad: function(path, stat, callback)
+	onLoad(path, stat, callback)
 	{
 		if (stat.isDir)
 			return;
