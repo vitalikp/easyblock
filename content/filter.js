@@ -28,22 +28,22 @@ function EventBus(name, api, handler)
 
 EventBus.prototype =
 {
-	regEvent: function(name)
+	regEvent(name)
 	{
 		this.api.regEvent(EVENT_TYPE + ":" + name, this);
 	},
 
-	sendEvent: function(type, data)
+	sendEvent(type, data)
 	{
 		this.api.sendEvent(this.owner, { type: type, data: data });
 	},
 
-	sendSyncEvent: function(type, data)
+	sendSyncEvent(type, data)
 	{
 		return this.api.sendSyncEvent(this.owner, { type: type, data: data });
 	},
 
-	receiveMessage: function(msg)
+	receiveMessage(msg)
 	{
 		if (!msg || this.owner == msg.name)
 			return;
@@ -64,17 +64,17 @@ function Process(api, addon)
 
 Process.prototype =
 {
-	toggle: function(value, grpId)
+	toggle(value, grpId)
 	{
 		this.bus.sendEvent(EventType.TOGGLE, { grpId: grpId, value: value });
 	},
 
-	reload: function()
+	reload()
 	{
 		this.bus.sendEvent(EventType.RELOAD);
 	},
 
-	get: function(data)
+	get(data)
 	{
 		if (!data)
 			return;
@@ -97,7 +97,7 @@ Process.prototype =
 		}
 	},
 
-	findDom: function(data)
+	findDom(data)
 	{
 		let site, eventData, grpId;
 
@@ -124,7 +124,7 @@ Process.prototype =
 		return eventData;
 	},
 
-	onEvent: function(event)
+	onEvent(event)
 	{
 		switch (event.type)
 		{
@@ -151,14 +151,14 @@ function Content(api, obs)
 
 Content.prototype =
 {
-	reload: function()
+	reload()
 	{
 		if (_cache && _cache.size > 0)
 			_cache.clear();
 		this.obs.reload();
 	},
 
-	get: function(name, data)
+	get(name, data)
 	{
 		let res;
 
@@ -174,7 +174,7 @@ Content.prototype =
 		return res[0];
 	},
 
-	findDom: function(hostname, onFind)
+	findDom(hostname, onFind)
 	{
 		let data;
 
@@ -199,7 +199,7 @@ Content.prototype =
 		onFind(data);
 	},
 
-	onEvent: function(event)
+	onEvent(event)
 	{
 		switch (event.type)
 		{
