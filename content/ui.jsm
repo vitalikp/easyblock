@@ -20,7 +20,7 @@ const BTN_ID = "easyblock-btn";
 
 const uitree =
 {
-	create: function(doc, name, expanded)
+	create(doc, name, expanded)
 	{
 		let node, label;
 
@@ -47,7 +47,7 @@ const uitree =
 		return node;
 	},
 
-	expand: function(node)
+	expand(node)
 	{
 		if (!node || !node.hasAttribute("expanded"))
 			return;
@@ -55,7 +55,7 @@ const uitree =
 		node.setAttribute("expanded", true);
 	},
 
-	collapse: function(node)
+	collapse(node)
 	{
 		if (!node || !node.hasAttribute("expanded"))
 			return;
@@ -63,7 +63,7 @@ const uitree =
 		node.setAttribute("expanded", false);
 	},
 
-	toggle: function(node)
+	toggle(node)
 	{
 		if (!node || !node.hasAttribute("expanded"))
 			return;
@@ -74,7 +74,7 @@ const uitree =
 			node.setAttribute("expanded", false);
 	},
 
-	add: function(node, item)
+	add(node, item)
 	{
 		if (!node || !item)
 			return;
@@ -135,7 +135,7 @@ MenuToggle.prototype =
 		this._toggled = value;
 	},
 
-	destroy: function()
+	destroy()
 	{
 		if (!this.elem)
 			return;
@@ -160,14 +160,14 @@ function GroupUI(group, menu, winUI)
 
 GroupUI.prototype =
 {
-	toggle: function(value)
+	toggle(value)
 	{
 		this.menuItem.toggled = value;
 
 		this.winUI.toggle(value, this.id);
 	},
 
-	destroy: function()
+	destroy()
 	{
 		if (this.menuItem)
 		{
@@ -176,7 +176,7 @@ GroupUI.prototype =
 		}
 	},
 
-	update: function(group)
+	update(group)
 	{
 		if (this.id != group.id)
 			return;
@@ -254,7 +254,7 @@ function WinUI(doc, addon)
 
 WinUI.prototype =
 {
-	toggle: function(value, grpId)
+	toggle(value, grpId)
 	{
 		if (!this.addon)
 			return;
@@ -262,7 +262,7 @@ WinUI.prototype =
 		this.addon.toggle(value, grpId);
 	},
 
-	initToolbar: function()
+	initToolbar()
 	{
 		if (!this.toolbox)
 			return;
@@ -282,7 +282,7 @@ WinUI.prototype =
 		this.moveBtn(WinUI.toolbarId, WinUI.nextItemId);
 	},
 
-	moveBtn: function(toolBarId, nextItemId)
+	moveBtn(toolBarId, nextItemId)
 	{
 		let toolbar, nextItem;
 
@@ -314,7 +314,7 @@ WinUI.prototype =
 		}
 	},
 
-	addGroup: function(group)
+	addGroup(group)
 	{
 		let grpUI;
 
@@ -326,7 +326,7 @@ WinUI.prototype =
 		this.groups.push(grpUI);
 	},
 
-	destroy: function()
+	destroy()
 	{
 		if (this.btn)
 		{
@@ -344,7 +344,7 @@ WinUI.prototype =
 		this.clearGroups();
 	},
 
-	updateState: function(addon)
+	updateState(addon)
 	{
 		if (addon.disabled)
 			this.btn.setAttribute("ebstate", "disabled");
@@ -353,13 +353,13 @@ WinUI.prototype =
 		this.menuItem.toggled = addon.disabled;
 	},
 
-	clearGroups: function()
+	clearGroups()
 	{
 		this.groups.forEach((grpUI) => grpUI.destroy());
 		this.groups = [];
 	},
 
-	loadGroups: function(groups)
+	loadGroups(groups)
 	{
 		this.clearGroups();
 		groups.forEach((group) =>
@@ -371,7 +371,7 @@ WinUI.prototype =
 		});
 	},
 
-	updateGroup: function(group)
+	updateGroup(group)
 	{
 		this.groups.forEach((grpUI) => grpUI.update(group));
 	}
@@ -402,7 +402,7 @@ WinUI.customize = function(toolbox)
 
 const Notify =
 {
-	sendUI: function(addon, type, msg)
+	sendUI(addon, type, msg)
 	{
 		let win, doc, node;
 
@@ -428,7 +428,7 @@ const Notify =
 
 var ui =
 {
-	selectToolbar: function(toolbars)
+	selectToolbar(toolbars)
 	{
 		let toolbar, currSet, items, nextItem;
 		let i, index;
@@ -457,19 +457,19 @@ var ui =
 		}
 	},
 
-	loadCss: function(style)
+	loadCss(style)
 	{
 		let styleUri = io.newURI(style + ".css");
 		sss.loadAndRegisterSheet(styleUri, sss.USER_SHEET);
 	},
 
-	unloadCss: function(style)
+	unloadCss(style)
 	{
 		let styleUri = io.newURI(style + ".css");
 		sss.unregisterSheet(styleUri, sss.USER_SHEET);
 	},
 
-	notify: function(addon, msg)
+	notify(addon, msg)
 	{
 		Notify.sendUI(addon, 'info', msg);
 	}
