@@ -5,12 +5,12 @@ const Cu = Components.utils;
 
 const ContentAPI =
 {
-	regEvent: function(event, handler)
+	regEvent(event, handler)
 	{
 		addMessageListener(event, handler);
 	},
 
-	sendSyncEvent: function(event, data)
+	sendSyncEvent(event, data)
 	{
 		return sendSyncMessage(event, data);
 	}
@@ -50,7 +50,7 @@ Site.prototype =
 		this._disabled = value;
 	},
 
-	toggle: function(data)
+	toggle(data)
 	{
 		if (!data)
 			return;
@@ -66,7 +66,7 @@ Site.prototype =
 		this.disabled = data.value;
 	},
 
-	reg: function(win, node)
+	reg(win, node)
 	{
 		if (this.obs || !win || !node)
 			return;
@@ -76,7 +76,7 @@ Site.prototype =
 		this.obs.observe(node, MutConf);
 	},
 
-	unreg: function()
+	unreg()
 	{
 		if (!this.obs)
 			return;
@@ -85,7 +85,7 @@ Site.prototype =
 		this.obs = null;
 	},
 
-	filter: function(doc)
+	filter(doc)
 	{
 		if (this.disabled || !doc)
 			return;
@@ -98,7 +98,7 @@ Site.prototype =
 		}
 	},
 
-	onEdit: function(mutList)
+	onEdit(mutList)
 	{
 		let mut, i, j;
 
@@ -121,7 +121,7 @@ Site.prototype =
 		}
 	},
 
-	apply: function(doc)
+	apply(doc)
 	{
 		let i;
 		let style, script;
@@ -148,7 +148,7 @@ Site.prototype =
 		}
 	},
 
-	filterNode: function(node)
+	filterNode(node)
 	{
 		let nodes, rule, i;
 
@@ -170,7 +170,7 @@ Site.prototype =
 		}
 	},
 
-	handleEvent: function(event)
+	handleEvent(event)
 	{
 		if (!event)
 			return;
@@ -184,7 +184,7 @@ Site.prototype =
 		}
 	},
 
-	toString: function()
+	toString()
 	{
 		return this.hostname;
 	}
@@ -250,7 +250,7 @@ function SiteHandler()
 
 SiteHandler.prototype =
 {
-	toggle: function(data)
+	toggle(data)
 	{
 		let iter, site;
 
@@ -276,13 +276,13 @@ SiteHandler.prototype =
 		this._disabled = data.value;
 	},
 
-	reload: function()
+	reload()
 	{
 		this.site = null;
 		this.frames.clear();
 	},
 
-	onFind: function(doc, data, isFrame)
+	onFind(doc, data, isFrame)
 	{
 		let site;
 
@@ -309,7 +309,7 @@ SiteHandler.prototype =
 		site.filter(doc);
 	},
 
-	filterDom: function(doc)
+	filterDom(doc)
 	{
 		let loc, site;
 
@@ -343,7 +343,7 @@ SiteHandler.prototype =
 		site.filter(doc);
 	},
 
-	handleEvent: function(event)
+	handleEvent(event)
 	{
 		if (!event)
 			return;
@@ -362,7 +362,7 @@ SiteHandler.prototype =
 		}
 	},
 
-	destroy: function()
+	destroy()
 	{
 		let iter, site;
 
