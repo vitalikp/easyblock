@@ -197,7 +197,7 @@ StrRule.prototype =
 		uitree.add(elem, node);
 
 		label = doc.createElement("label");
-		label.setAttribute("value", this.value);
+		label.textContent = this.value;
 		uitree.add(node, label);
 	},
 
@@ -279,7 +279,7 @@ DomRule.prototype =
 			while (i < this.attrs.length)
 			{
 				label = doc.createElement("label");
-				label.setAttribute("value", this.attrs[i++]);
+				label.textContent = this.attrs[i++];
 
 				uitree.add(node, label);
 			}
@@ -324,7 +324,7 @@ CssRule.prototype =
 		let label;
 
 		label = doc.createElement("label");
-		label.setAttribute("value", this.name);
+		label.textContent = this.name;
 
 		uitree.add(elem, label);
 	},
@@ -363,7 +363,7 @@ JsRule.prototype =
 		let label;
 
 		label = doc.createElement("label");
-		label.setAttribute("value", this.name);
+		label.textContent = this.name;
 
 		uitree.add(elem, label);
 	},
@@ -466,7 +466,7 @@ PathRule.prototype =
 		let label;
 
 		label = doc.createElement("label");
-		label.setAttribute("value", this.path);
+		label.textContent = this.path;
 
 		uitree.add(elem, label);
 	},
@@ -758,7 +758,7 @@ blsite.prototype =
 				rule = rule.source;
 
 				label = doc.createElement("label");
-				label.setAttribute("value", rule);
+				label.textContent = rule;
 				uitree.add(node, label);
 			}
 		}

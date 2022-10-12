@@ -28,7 +28,7 @@ const uitree =
 		node.setAttribute("class", "tree");
 
 		label = doc.createElement("label");
-		label.setAttribute("value", name);
+		label.textContent = name;
 		node.appendChild(label);
 
 		if (expanded != undefined)
@@ -106,7 +106,7 @@ function MenuToggle(obj, name, menu)
 	}, false);
 
 	label = doc.createElement("label");
-	label.setAttribute("value", name);
+	label.textContent = name;
 	elem.appendChild(label);
 
 	menu.appendChild(elem);
