@@ -319,16 +319,6 @@ CssRule.prototype =
 		});
 	},
 
-	print(doc, elem)
-	{
-		let label;
-
-		label = doc.createElement("label");
-		label.textContent = this.name;
-
-		uitree.add(elem, label);
-	},
-
 	toString()
 	{
 		return this.name;
@@ -791,7 +781,10 @@ blsite.prototype =
 				if (!rule)
 					continue;
 
-				rule.print(doc, node);
+				label = doc.createElement("label");
+				label.textContent = rule;
+
+				uitree.add(node, label);
 			}
 		}
 
