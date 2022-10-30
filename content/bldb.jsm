@@ -191,12 +191,12 @@ StrRule.prototype =
 {
 	print(doc, elem)
 	{
-		let node;
+		let tree;
 
-		node = uitree.create(doc, this.name, false);
-		uitree.add(elem, node);
+		tree = uitree.create(doc, this.name, false);
+		uitree.add(elem, tree);
 
-		uitree.addLabel(node, this);
+		uitree.addLabel(tree, this);
 	},
 
 	toString()
@@ -264,19 +264,19 @@ DomRule.prototype =
 
 	print(doc, elem)
 	{
-		let vbox, node, i;
+		let vbox, tree, i;
 
 		if (this.attrs.length > 0)
 		{
 			vbox = uitree.create(doc, this.value, false);
 
-			node = uitree.create(doc, "Attribute (" + this.attrs.length + ")", false);
-			uitree.add(vbox, node);
+			tree = uitree.create(doc, "Attribute (" + this.attrs.length + ")", false);
+			uitree.add(vbox, tree);
 
 			i = 0;
 			while (i < this.attrs.length)
 			{
-				uitree.addLabel(node, this.attrs[i++]);
+				uitree.addLabel(tree, this.attrs[i++]);
 			}
 		}
 		else
@@ -680,7 +680,7 @@ blsite.prototype =
 
 	print(doc, elem)
 	{
-		let vbox, node, rule;
+		let vbox, tree, rule;
 		let i;
 
 		if (this.hasRules)
@@ -697,8 +697,8 @@ blsite.prototype =
 
 		if (this.pathes.length > 0)
 		{
-			node = uitree.create(doc, "Path (" + this.pathes.length + ")", false);
-			uitree.add(vbox, node);
+			tree = uitree.create(doc, "Path (" + this.pathes.length + ")", false);
+			uitree.add(vbox, tree);
 
 			i = 0;
 			while (i < this.pathes.length)
@@ -707,14 +707,14 @@ blsite.prototype =
 				if (!rule)
 					continue;
 
-				uitree.addLabel(node, rule);
+				uitree.addLabel(tree, rule);
 			}
 		}
 
 		if (this.type.length > 0)
 		{
-			node = uitree.create(doc, "Type (" + this.type.length + ")", false);
-			uitree.add(vbox, node);
+			tree = uitree.create(doc, "Type (" + this.type.length + ")", false);
+			uitree.add(vbox, tree);
 
 			i = 0;
 			while (i < this.type.length)
@@ -722,14 +722,14 @@ blsite.prototype =
 				rule = this.type[i++];
 				rule = rule.source;
 
-				uitree.addLabel(node, rule);
+				uitree.addLabel(tree, rule);
 			}
 		}
 
 		if (this.dom.length > 0)
 		{
-			node = uitree.create(doc, "Content (" + this.dom.length + ")", false);
-			uitree.add(vbox, node);
+			tree = uitree.create(doc, "Content (" + this.dom.length + ")", false);
+			uitree.add(vbox, tree);
 
 			i = 0;
 			while (i < this.dom.length)
@@ -738,14 +738,14 @@ blsite.prototype =
 				if (!rule)
 					continue;
 	
-				rule.print(doc, node);
+				rule.print(doc, tree);
 			}
 		}
 
 		if (this.css.length > 0)
 		{
-			node = uitree.create(doc, "CSS (" + this.css.length + ")", false);
-			uitree.add(vbox, node);
+			tree = uitree.create(doc, "CSS (" + this.css.length + ")", false);
+			uitree.add(vbox, tree);
 
 			i = 0;
 			while (i < this.css.length)
@@ -754,14 +754,14 @@ blsite.prototype =
 				if (!rule)
 					continue;
 
-				uitree.addLabel(node, rule);
+				uitree.addLabel(tree, rule);
 			}
 		}
 
 		if (this.js.length > 0)
 		{
-			node = uitree.create(doc, "JS (" + this.js.length + ")", false);
-			uitree.add(vbox, node);
+			tree = uitree.create(doc, "JS (" + this.js.length + ")", false);
+			uitree.add(vbox, tree);
 
 			i = 0;
 			while (i < this.js.length)
@@ -770,7 +770,7 @@ blsite.prototype =
 				if (!rule)
 					continue;
 
-				uitree.addLabel(node, rule);
+				uitree.addLabel(tree, rule);
 			}
 		}
 	},
