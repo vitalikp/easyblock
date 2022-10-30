@@ -264,14 +264,14 @@ DomRule.prototype =
 
 	print(doc, elem)
 	{
-		let vbox, tree, i;
+		let node, tree, i;
 
 		if (this.attrs.length > 0)
 		{
-			vbox = uitree.create(doc, this.value, false);
+			node = uitree.create(doc, this.value, false);
 
 			tree = uitree.create(doc, "Attribute (" + this.attrs.length + ")", false);
-			uitree.add(vbox, tree);
+			uitree.add(node, tree);
 
 			i = 0;
 			while (i < this.attrs.length)
@@ -280,9 +280,9 @@ DomRule.prototype =
 			}
 		}
 		else
-			vbox = uitree.create(doc, this.value);
+			node = uitree.create(doc, this.value);
 
-		uitree.add(elem, vbox);
+		uitree.add(elem, node);
 	},
 
 	toString()
@@ -680,25 +680,25 @@ blsite.prototype =
 
 	print(doc, elem)
 	{
-		let vbox, tree, rule;
+		let node, tree, rule;
 		let i;
 
 		if (this.hasRules)
-			vbox = uitree.create(doc, this, false);
+			node = uitree.create(doc, this, false);
 		else
-			vbox = uitree.create(doc, this);
+			node = uitree.create(doc, this);
 		if (!this.enabled)
-			vbox.setAttribute("enabled", false);
+			node.setAttribute("enabled", false);
 
-		uitree.add(elem, vbox);
+		uitree.add(elem, node);
 
 		if (this.ua)
-			this.ua.print(doc, vbox);
+			this.ua.print(doc, node);
 
 		if (this.pathes.length > 0)
 		{
 			tree = uitree.create(doc, "Path (" + this.pathes.length + ")", false);
-			uitree.add(vbox, tree);
+			uitree.add(node, tree);
 
 			i = 0;
 			while (i < this.pathes.length)
@@ -714,7 +714,7 @@ blsite.prototype =
 		if (this.type.length > 0)
 		{
 			tree = uitree.create(doc, "Type (" + this.type.length + ")", false);
-			uitree.add(vbox, tree);
+			uitree.add(node, tree);
 
 			i = 0;
 			while (i < this.type.length)
@@ -729,7 +729,7 @@ blsite.prototype =
 		if (this.dom.length > 0)
 		{
 			tree = uitree.create(doc, "Content (" + this.dom.length + ")", false);
-			uitree.add(vbox, tree);
+			uitree.add(node, tree);
 
 			i = 0;
 			while (i < this.dom.length)
@@ -745,7 +745,7 @@ blsite.prototype =
 		if (this.css.length > 0)
 		{
 			tree = uitree.create(doc, "CSS (" + this.css.length + ")", false);
-			uitree.add(vbox, tree);
+			uitree.add(node, tree);
 
 			i = 0;
 			while (i < this.css.length)
@@ -761,7 +761,7 @@ blsite.prototype =
 		if (this.js.length > 0)
 		{
 			tree = uitree.create(doc, "JS (" + this.js.length + ")", false);
-			uitree.add(vbox, tree);
+			uitree.add(node, tree);
 
 			i = 0;
 			while (i < this.js.length)
