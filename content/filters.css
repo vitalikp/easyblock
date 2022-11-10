@@ -19,8 +19,7 @@ groupbox > #bl
 	margin-right: 8px;
 	padding-bottom: 8px;
 	height: 35em;
-	overflow-x: hidden;
-	overflow-y: auto;
+	overflow: auto;
 }
 
 groupbox > #bl div[enabled="false"] > label,
