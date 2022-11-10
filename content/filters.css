@@ -31,6 +31,7 @@ groupbox > #bl label[enabled="false"]
 groupbox > #bl div > label
 {
 	display: block;
+	margin: 1px 0px;
 	white-space: nowrap;
 }
 
