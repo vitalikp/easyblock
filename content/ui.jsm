@@ -15,6 +15,7 @@ Cu.import("chrome://easyblock/content/io.jsm");
 const sss = Cc["@mozilla.org/content/style-sheet-service;1"].getService(Ci.nsIStyleSheetService);
 
 
+const XHTML_NS = "http://www.w3.org/1999/xhtml";
 const BTN_ID = "easyblock-btn";
 
 
