@@ -25,7 +25,7 @@ const uitree =
 	{
 		let node, label;
 
-		node = doc.createElement("vbox");
+		node = doc.createElementNS(XHTML_NS, "div");
 		node.setAttribute("class", "tree");
 
 		label = doc.createElement("label");
@@ -82,7 +82,7 @@ const uitree =
 
 		if (!node.root)
 		{
-			node.root = node.ownerDocument.createElement("vbox");
+			node.root = node.ownerDocument.createElementNS(XHTML_NS, "div");
 			node.appendChild(node.root);
 		}
 
