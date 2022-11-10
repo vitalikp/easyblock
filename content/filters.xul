@@ -14,8 +14,8 @@
 
 	<groupbox>
 		<caption label="Filters"/>
-		<vbox id="bl">
-		</vbox>
+		<div xmlns="http://www.w3.org/1999/xhtml" id="bl">
+		</div>
 	</groupbox>
 
 </window>

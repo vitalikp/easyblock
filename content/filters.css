@@ -15,6 +15,7 @@ groupbox > caption
 
 groupbox > #bl
 {
+	box-sizing: border-box;
 	margin-right: 8px;
 	padding-bottom: 8px;
 	height: 35em;
@@ -22,43 +23,45 @@ groupbox > #bl
 	overflow-y: auto;
 }
 
-groupbox > #bl vbox[enabled="false"] > label,
+groupbox > #bl div[enabled="false"] > label,
 groupbox > #bl label[enabled="false"]
 {
 	color: #808080;
 }
 
-groupbox > #bl > vbox.tree
+groupbox > #bl div > label
 {
+	display: block;
+	white-space: nowrap;
+}
+
+groupbox > #bl > div.tree
+{
+	max-width: calc(22em - 18px);
 	padding: 2px 0px;
 }
 
-groupbox > #bl vbox.tree > vbox,
-groupbox > #bl vbox.tree > label
+groupbox > #bl div.tree > div,
+groupbox > #bl div.tree > label
 {
 	padding-left: 17px;
 }
 
-groupbox > #bl vbox.tree[expanded="false"] > label
+groupbox > #bl div.tree[expanded="false"] > label
 {
 	background-image: url("chrome://easyblock/content/ui.svg#expander_off");
 	background-repeat: no-repeat;
 	cursor: pointer;
 }
 
-groupbox > #bl vbox.tree[expanded="false"] > vbox
+groupbox > #bl div.tree[expanded="false"] > div
 {
-	visibility: collapse;
+	display: none;
 }
 
-groupbox > #bl vbox.tree[expanded="true"] > label
+groupbox > #bl div.tree[expanded="true"] > label
 {
 	background-image: url("chrome://easyblock/content/ui.svg#expander_on");
 	background-repeat: no-repeat;
 	cursor: pointer;
-}
-
-groupbox > #bl vbox.tree[expanded="true"] > vbox
-{
-	visibility: visible;
 }
