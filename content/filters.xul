@@ -12,10 +12,10 @@
 
 	<script type="application/javascript" src="chrome://easyblock/content/filters.js"/>
 
-	<groupbox>
-		<caption label="Filters"/>
-		<div xmlns="http://www.w3.org/1999/xhtml" id="bl">
+	<fieldset xmlns="http://www.w3.org/1999/xhtml">
+		<legend>Filters</legend>
+		<div id="bl">
 		</div>
-	</groupbox>
+	</fieldset>
 
 </window>
