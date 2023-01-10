@@ -42,12 +42,6 @@ BlRule.prototype =
 		if (!line || !line.length)
 			return;
 
-		if (line[0] == '#')
-		{
-			this.type = RULE_COMM;
-			line = line.substr(1);
-		}
-
 		i = 0;
 		level = 0;
 		while (line[i] == '\t' || line[i++] == ' ' && line[i] == ' ')
@@ -57,6 +51,12 @@ BlRule.prototype =
 			i = 0;
 		}
 		this.level = level;
+
+		if (line[0] == '#')
+		{
+			this.type = RULE_COMM;
+			line = line.substr(1);
+		}
 
 		if (line[0] == '!')
 		{
