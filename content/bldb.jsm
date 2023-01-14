@@ -191,14 +191,14 @@ StrRule.prototype =
 {
 	print: function(doc, elem)
 	{
-		let node, label;
+		let tree, label;
 
-		node = uitree.create(doc, this.name, false);
-		uitree.add(elem, node);
+		tree = uitree.create(doc, this.name, false);
+		uitree.add(elem, tree);
 
 		label = doc.createElement("label");
 		label.textContent = this.value;
-		uitree.add(node, label);
+		uitree.add(tree, label);
 	},
 
 	toString: function()
@@ -266,14 +266,14 @@ DomRule.prototype =
 
 	print: function(doc, elem)
 	{
-		let vbox, node, label, i;
+		let vbox, tree, label, i;
 
 		if (this.attrs.length > 0)
 		{
 			vbox = uitree.create(doc, this.value, false);
 
-			node = uitree.create(doc, "Attribute (" + this.attrs.length + ")", false);
-			uitree.add(vbox, node);
+			tree = uitree.create(doc, "Attribute (" + this.attrs.length + ")", false);
+			uitree.add(vbox, tree);
 
 			i = 0;
 			while (i < this.attrs.length)
@@ -281,7 +281,7 @@ DomRule.prototype =
 				label = doc.createElement("label");
 				label.textContent = this.attrs[i++];
 
-				uitree.add(node, label);
+				uitree.add(tree, label);
 			}
 		}
 		else
@@ -720,7 +720,7 @@ blsite.prototype =
 
 	print: function(doc, elem)
 	{
-		let vbox, node, label, rule;
+		let vbox, tree, label, rule;
 		let i;
 
 		if (this.hasRules)
@@ -737,8 +737,8 @@ blsite.prototype =
 
 		if (this.pathes.length > 0)
 		{
-			node = uitree.create(doc, "Path (" + this.pathes.length + ")", false);
-			uitree.add(vbox, node);
+			tree = uitree.create(doc, "Path (" + this.pathes.length + ")", false);
+			uitree.add(vbox, tree);
 
 			i = 0;
 			while (i < this.pathes.length)
@@ -747,14 +747,14 @@ blsite.prototype =
 				if (!rule)
 					continue;
 
-				rule.print(doc, node);
+				rule.print(doc, tree);
 			}
 		}
 
 		if (this.type.length > 0)
 		{
-			node = uitree.create(doc, "Type (" + this.type.length + ")", false);
-			uitree.add(vbox, node);
+			tree = uitree.create(doc, "Type (" + this.type.length + ")", false);
+			uitree.add(vbox, tree);
 
 			i = 0;
 			while (i < this.type.length)
@@ -764,14 +764,14 @@ blsite.prototype =
 
 				label = doc.createElement("label");
 				label.textContent = rule;
-				uitree.add(node, label);
+				uitree.add(tree, label);
 			}
 		}
 
 		if (this.dom.length > 0)
 		{
-			node = uitree.create(doc, "Content (" + this.dom.length + ")", false);
-			uitree.add(vbox, node);
+			tree = uitree.create(doc, "Content (" + this.dom.length + ")", false);
+			uitree.add(vbox, tree);
 
 			i = 0;
 			while (i < this.dom.length)
@@ -780,14 +780,14 @@ blsite.prototype =
 				if (!rule)
 					continue;
 	
-				rule.print(doc, node);
+				rule.print(doc, tree);
 			}
 		}
 
 		if (this.css.length > 0)
 		{
-			node = uitree.create(doc, "CSS (" + this.css.length + ")", false);
-			uitree.add(vbox, node);
+			tree = uitree.create(doc, "CSS (" + this.css.length + ")", false);
+			uitree.add(vbox, tree);
 
 			i = 0;
 			while (i < this.css.length)
@@ -796,14 +796,14 @@ blsite.prototype =
 				if (!rule)
 					continue;
 
-				rule.print(doc, node);
+				rule.print(doc, tree);
 			}
 		}
 
 		if (this.js.length > 0)
 		{
-			node = uitree.create(doc, "JS (" + this.js.length + ")", false);
-			uitree.add(vbox, node);
+			tree = uitree.create(doc, "JS (" + this.js.length + ")", false);
+			uitree.add(vbox, tree);
 
 			i = 0;
 			while (i < this.js.length)
@@ -812,7 +812,7 @@ blsite.prototype =
 				if (!rule)
 					continue;
 
-				rule.print(doc, node);
+				rule.print(doc, tree);
 			}
 		}
 	},
