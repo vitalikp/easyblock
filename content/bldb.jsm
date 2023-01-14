@@ -915,25 +915,25 @@ blgroup.prototype =
 
 	print: function(doc, elem)
 	{
-		let vbox, label, site;
+		let tree, label, site;
 		let i = 0;
 
 		if (!doc || !elem)
 			return;
 
 		if (this.data.length > 0)
-			vbox = uitree.create(doc, this + ':', this.data.length <= 10);
+			tree = uitree.create(doc, this + ':', this.data.length <= 10);
 		else
-			vbox = uitree.create(doc, this + ':');
+			tree = uitree.create(doc, this + ':');
 		if (!this.enabled)
-			vbox.setAttribute("enabled", false);
-		elem.appendChild(vbox);
+			tree.setAttribute("enabled", false);
+		elem.appendChild(tree);
 
 		while (i < this.data.length)
 		{
 			site = this.data[i++];
 
-			site.print(doc, vbox);
+			site.print(doc, tree);
 		}
 	},
 
