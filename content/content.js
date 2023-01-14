@@ -135,32 +135,6 @@ Site.prototype =
 		}
 	},
 
-	filterDom: function(doc)
-	{
-		let loc;
-
-		if (this.disabled || !this.filter)
-			return;
-
-		if (!doc || doc.nodeType != doc.DOCUMENT_NODE)
-			return;
-
-		if (doc.defaultView.top != doc.defaultView.self)
-			return;
-
-		loc = doc.location;
-		if (loc.protocol != "https:" && loc.protocol != "http:")
-			return;
-
-		if (this.hostname != loc.hostname)
-		{
-			this.filter.findDom(loc.hostname, (data) => this.onFind(doc, data));
-			return;
-		}
-
-		this.filter(doc);
-	},
-
 	onEdit: function(mutList)
 	{
 		let mut, i, j;
