@@ -31,11 +31,6 @@ const TYPE_DOC = Ci.nsIContentPolicy.TYPE_DOCUMENT;
 
 const ProcessAPI =
 {
-	loadScript(name)
-	{
-		gmm.loadFrameScript("chrome://easyblock/content/" + name, true);
-	},
-
 	regEvent(event, handler)
 	{
 		gmm.addMessageListener(event, handler);
@@ -297,6 +292,8 @@ var EasyBlock =
 	startup(addonData)
 	{
 		var windows;
+
+		gmm.loadFrameScript("chrome://easyblock/content/content.js", true);
 
 		if (!this.filter)
 		{
