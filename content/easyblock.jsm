@@ -17,6 +17,7 @@ Cu.import("chrome://easyblock/content/bldb.jsm");
 
 const os = Cc["@mozilla.org/observer-service;1"].getService(Ci.nsIObserverService);
 const ps = Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefService);
+const gmm = Cc["@mozilla.org/globalmessagemanager;1"].getService(Ci.nsIMessageBroadcaster);
 
 
 const ADDON_PREF = "extensions.easyblock.";
@@ -31,17 +32,17 @@ const ProcessAPI =
 {
 	loadScript(name)
 	{
-		Services.mm.loadFrameScript("chrome://easyblock/content/" + name, true);
+		gmm.loadFrameScript("chrome://easyblock/content/" + name, true);
 	},
 
 	regEvent(event, handler)
 	{
-		Services.mm.addMessageListener(event, handler);
+		gmm.addMessageListener(event, handler);
 	},
 
 	sendEvent(event, data)
 	{
-		Services.mm.broadcastAsyncMessage(event, data);
+		gmm.broadcastAsyncMessage(event, data);
 	}
 };
 
