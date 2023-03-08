@@ -2,8 +2,6 @@
 
 var EXPORTED_SYMBOLS = ["Process", "Content"];
 
-const SCRIPT_CONTENT = "content.js";
-
 const EVENT_TYPE = "EasyBlock";
 
 const EventType =
@@ -57,7 +55,7 @@ function Process(api, addon)
 	this.api = api;
 	this.addon = addon;
 
-	this.api.loadScript(SCRIPT_CONTENT);
+	this.api.loadScript("content.js");
 	this.bus = new EventBus("process", api, this);
 	this.bus.regEvent("content");
 }
