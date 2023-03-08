@@ -29,6 +29,8 @@ const PREF_CHANGE = "nsPref:changed";
 
 const TYPE_DOC = Ci.nsIContentPolicy.TYPE_DOCUMENT;
 
+const CONTENT_SCRIPT = "chrome://easyblock/content/content.js";
+
 const ProcessAPI =
 {
 	regEvent(event, handler)
@@ -293,7 +295,7 @@ var EasyBlock =
 	{
 		var windows;
 
-		gmm.loadFrameScript("chrome://easyblock/content/content.js", true);
+		gmm.loadFrameScript(CONTENT_SCRIPT, true);
 
 		if (!this.filter)
 		{
