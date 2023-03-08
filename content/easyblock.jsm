@@ -332,6 +332,8 @@ var EasyBlock =
 	{
 		let i;
 
+		gmm.removeDelayedFrameScript(CONTENT_SCRIPT);
+
 		i = 0;
 		while (i < this.wins.length)
 			this.wins[i++].destroy();
