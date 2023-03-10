@@ -290,7 +290,7 @@ SiteHandler.prototype =
 			return;
 
 		site = new Site(data.hostname, data.grpId);
-		site.enabled = this._filter.get('enabled', { grpId: data.grpId });
+		site.enabled = data.enabled;
 		site.disabled = this._disabled;
 		site.styles = data.styles||[];
 		site.scripts = data.scripts||[];
