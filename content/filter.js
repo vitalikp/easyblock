@@ -190,11 +190,13 @@ Content.prototype =
 			if (data.hostname != hostname)
 				return;
 
-			data.enabled = true;
 			_cache.set(data.hostname, data);
 		}
 		else
-			data.enabled = this.get('enabled', { grpId: data.grpId });
+		{
+			if (!this.get('enabled', { grpId: data.grpId }))
+				return;
+		}
 
 		onFind(data);
 	},
