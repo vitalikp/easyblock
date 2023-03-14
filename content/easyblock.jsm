@@ -37,6 +37,11 @@ const ProcessAPI =
 		gmm.addMessageListener(event, handler);
 	},
 
+	unregEvent(event, handler)
+	{
+		gmm.removeMessageListener(event, handler);
+	},
+
 	sendEvent(event, data)
 	{
 		gmm.broadcastAsyncMessage(event, data);
