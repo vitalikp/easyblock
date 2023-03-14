@@ -8,8 +8,6 @@ const Cr = Components.results;
 const EXPORTED_SYMBOLS = ["EasyBlock"];
 
 // import
-Cu.import("resource://gre/modules/Services.jsm");
-
 Cu.import("chrome://easyblock/content/io.jsm");
 Cu.import("chrome://easyblock/content/ui.jsm");
 Cu.import("chrome://easyblock/content/bldb.jsm");
@@ -18,6 +16,7 @@ Cu.import("chrome://easyblock/content/bldb.jsm");
 const os = Cc["@mozilla.org/observer-service;1"].getService(Ci.nsIObserverService);
 const ps = Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefService);
 const gmm = Cc["@mozilla.org/globalmessagemanager;1"].getService(Ci.nsIMessageBroadcaster);
+const wm = Cc["@mozilla.org/appshell/window-mediator;1"].getService(Ci.nsIWindowMediator);
 
 
 const ADDON_PREF = "extensions.easyblock.";
@@ -318,7 +317,7 @@ var EasyBlock =
 
 		this.prefs = new PrefHandler(this);
 
-		windows = Services.wm.getEnumerator("navigator:browser");
+		windows = wm.getEnumerator("navigator:browser");
 
 		while (windows.hasMoreElements())
 			this.loadWindow(windows.getNext().QueryInterface(Ci.nsIDOMWindow));
