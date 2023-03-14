@@ -52,6 +52,7 @@ EventBus.prototype =
 
 function Process(api, addon)
 {
+	EventBus.call(this, "process", api, this);
 	this.api = api;
 	this.addon = addon;
 
@@ -59,7 +60,8 @@ function Process(api, addon)
 	this.bus.regEvent("content");
 }
 
-Process.prototype =
+Process.prototype = Object.create(EventBus.prototype);
+Object.assign(Process.prototype,
 {
 	toggle(value, grpId)
 	{
@@ -132,7 +134,7 @@ Process.prototype =
 				return this.findDom(event.data);
 		}
 	}
-};
+});
 
 function Content(api, obs)
 {
