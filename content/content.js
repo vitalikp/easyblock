@@ -10,6 +10,11 @@ const ContentAPI =
 		addMessageListener(event, handler);
 	},
 
+	unregEvent(event, handler)
+	{
+		removeMessageListener(event, handler);
+	},
+
 	sendSyncEvent(event, data)
 	{
 		return sendSyncMessage(event, data);
