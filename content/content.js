@@ -458,6 +458,12 @@ SiteHandler.prototype =
 			site.unreg();
 		}
 		this.frames.clear();
+
+		if (this._filter)
+		{
+			this._filter.destroy();
+			this._filter = null;
+		}
 	}
 };
 
