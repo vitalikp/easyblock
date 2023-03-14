@@ -17,11 +17,10 @@ const EventType =
 let _cache = null;
 
 
-function EventBus(name, api, handler)
+function EventBus(name, api)
 {
 	this.owner = EVENT_TYPE + ":" + name;
 	this.api = api;
-	this.handler = handler;
 }
 
 EventBus.prototype =
@@ -51,13 +50,13 @@ EventBus.prototype =
 		if (!msg || this.owner == msg.name)
 			return;
 
-		return this.handler.onEvent(msg.data);
+		return this.onEvent(msg.data);
 	}
 }
 
 function Process(api, addon)
 {
-	EventBus.call(this, "process", api, this);
+	EventBus.call(this, "process", api);
 	this.api = api;
 	this.addon = addon;
 
@@ -142,7 +141,7 @@ Object.assign(Process.prototype,
 
 function Content(api, obs)
 {
-	EventBus.call(this, "content", api, this);
+	EventBus.call(this, "content", api);
 	if (!_cache)
 		_cache = new Map();
 
