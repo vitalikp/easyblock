@@ -41,6 +41,11 @@ EventBus.prototype =
 		return this.api.sendSyncEvent(this.owner, { type: type, data: data });
 	},
 
+	onEvent(event)
+	{
+		throw new Error("Method not implemented");
+	},
+
 	receiveMessage(msg)
 	{
 		if (!msg || this.owner == msg.name)
