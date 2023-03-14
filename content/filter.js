@@ -56,8 +56,7 @@ function Process(api, addon)
 	this.api = api;
 	this.addon = addon;
 
-	this.bus = new EventBus("process", api, this);
-	this.bus.regEvent("content");
+	this.regEvent("content");
 }
 
 Process.prototype = Object.create(EventBus.prototype);
@@ -65,12 +64,12 @@ Object.assign(Process.prototype,
 {
 	toggle(value, grpId)
 	{
-		this.bus.sendEvent(EventType.TOGGLE, { grpId: grpId, value: value });
+		this.sendEvent(EventType.TOGGLE, { grpId: grpId, value: value });
 	},
 
 	reload()
 	{
-		this.bus.sendEvent(EventType.RELOAD);
+		this.sendEvent(EventType.RELOAD);
 	},
 
 	get(data)
