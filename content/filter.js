@@ -138,6 +138,7 @@ Object.assign(Process.prototype,
 
 function Content(api, obs)
 {
+	EventBus.call(this, "content", api, this);
 	if (!_cache)
 		_cache = new Map();
 
@@ -148,7 +149,8 @@ function Content(api, obs)
 	this.bus.regEvent("process");
 }
 
-Content.prototype =
+Content.prototype = Object.create(EventBus.prototype);
+Object.assign(Content.prototype,
 {
 	reload()
 	{
@@ -216,4 +218,4 @@ Content.prototype =
 				break;
 		}
 	}
-};
+});
