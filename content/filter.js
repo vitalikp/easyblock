@@ -30,6 +30,11 @@ EventBus.prototype =
 		this.api.regEvent(EVENT_TYPE + ":" + name, this);
 	},
 
+	unregEvent(name)
+	{
+		this.api.unregEvent(EVENT_TYPE + ":" + name, this);
+	},
+
 	sendEvent(type, data)
 	{
 		this.api.sendEvent(this.owner, { type: type, data: data });
