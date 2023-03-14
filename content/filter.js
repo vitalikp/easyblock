@@ -229,5 +229,10 @@ Object.assign(Content.prototype,
 				this.reload();
 				break;
 		}
+	},
+
+	destroy()
+	{
+		this.unregEvent("process");
 	}
 });
