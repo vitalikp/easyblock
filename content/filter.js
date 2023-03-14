@@ -144,8 +144,7 @@ function Content(api, obs)
 	this.api = api;
 	this.obs = obs;
 
-	this.bus = new EventBus("content", api, this);
-	this.bus.regEvent("process");
+	this.regEvent("process");
 }
 
 Content.prototype = Object.create(EventBus.prototype);
@@ -167,7 +166,7 @@ Object.assign(Content.prototype,
 
 		data = Object.assign({ name: name }, data);
 
-		res = this.bus.sendSyncEvent(EventType.GET, data);
+		res = this.sendSyncEvent(EventType.GET, data);
 		if (!res)
 			return null;
 
@@ -184,7 +183,7 @@ Object.assign(Content.prototype,
 		data = _cache.get(hostname);
 		if (!data)
 		{
-			data = this.bus.sendSyncEvent(EventType.DOM, { hostname: hostname });
+			data = this.sendSyncEvent(EventType.DOM, { hostname: hostname });
 			if (!data || !data[0])
 				return;
 
