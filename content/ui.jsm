@@ -8,11 +8,10 @@ const Cc = Components.classes;
 var EXPORTED_SYMBOLS = ["ui", "uitree", "WinUI"];
 
 // import
-Cu.import("resource://gre/modules/Services.jsm");
-
 Cu.import("chrome://easyblock/content/io.jsm");
 
 const sss = Cc["@mozilla.org/content/style-sheet-service;1"].getService(Ci.nsIStyleSheetService);
+const wm = Cc["@mozilla.org/appshell/window-mediator;1"].getService(Ci.nsIWindowMediator);
 
 
 const XHTML_NS = "http://www.w3.org/1999/xhtml";
@@ -425,7 +424,7 @@ const Notify =
 		if (!type || !msg)
 			return;
 
-		win = Services.wm.getMostRecentWindow("navigator:browser");
+		win = wm.getMostRecentWindow("navigator:browser");
 		doc = win.document;
 
 		let notificationBox = win.getBrowser().getNotificationBox();
