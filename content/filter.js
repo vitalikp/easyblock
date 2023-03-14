@@ -141,6 +141,11 @@ Object.assign(Process.prototype,
 			case EventType.DOM:
 				return this.findDom(event.data);
 		}
+	},
+
+	destroy()
+	{
+		this.unregEvent("content");
 	}
 });
 
