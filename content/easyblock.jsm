@@ -352,6 +352,12 @@ var EasyBlock =
 		this.db.close();
 
 		ui.unloadCss("easyblock");
+
+		if (this.filter)
+		{
+			this.filter.destroy();
+			this.filter = null;
+		}
 	},
 
 	loadWindow(window)
