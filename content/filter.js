@@ -199,6 +199,11 @@ function Content(api, obs)
 Content.prototype = Object.create(EventBus.prototype);
 Object.assign(Content.prototype,
 {
+	_regEvent(type, handler)
+	{
+		this.api.regEvent(type, handler);
+	},
+
 	reload()
 	{
 		if (_cache && _cache.size > 0)
