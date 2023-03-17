@@ -209,6 +209,11 @@ Object.assign(Content.prototype,
 		this.api.unregEvent(type, handler);
 	},
 
+	_sendSyncEvent(type, data)
+	{
+		return this.api.sendSyncEvent(type, data);
+	},
+
 	reload()
 	{
 		if (_cache && _cache.size > 0)
