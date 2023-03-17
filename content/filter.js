@@ -17,10 +17,9 @@ const EventType =
 let _cache = null;
 
 
-function EventBus(name, api)
+function EventBus(name)
 {
 	this.owner = EVENT_TYPE + ":" + name;
-	this.api = api;
 }
 
 EventBus.prototype =
@@ -47,22 +46,22 @@ EventBus.prototype =
 
 	regEvent(name)
 	{
-		this.api.regEvent(EVENT_TYPE + ":" + name, this);
+		this._regEvent(EVENT_TYPE + ":" + name, this);
 	},
 
 	unregEvent(name)
 	{
-		this.api.unregEvent(EVENT_TYPE + ":" + name, this);
+		this._unregEvent(EVENT_TYPE + ":" + name, this);
 	},
 
 	sendEvent(type, data)
 	{
-		this.api.sendEvent(this.owner, { type: type, data: data });
+		this._sendEvent(this.owner, { type: type, data: data });
 	},
 
 	sendSyncEvent(type, data)
 	{
-		return this.api.sendSyncEvent(this.owner, { type: type, data: data });
+		return this._sendSyncEvent(this.owner, { type: type, data: data });
 	},
 
 	onEvent(event)
@@ -81,7 +80,7 @@ EventBus.prototype =
 
 function Process(api, addon)
 {
-	EventBus.call(this, "process", api);
+	EventBus.call(this, "process");
 	this.api = api;
 	this.addon = addon;
 
@@ -186,7 +185,7 @@ Object.assign(Process.prototype,
 
 function Content(api, obs)
 {
-	EventBus.call(this, "content", api);
+	EventBus.call(this, "content");
 	if (!_cache)
 		_cache = new Map();
 
