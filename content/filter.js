@@ -204,6 +204,11 @@ Object.assign(Content.prototype,
 		this.api.regEvent(type, handler);
 	},
 
+	_unregEvent(type, handler)
+	{
+		this.api.unregEvent(type, handler);
+	},
+
 	reload()
 	{
 		if (_cache && _cache.size > 0)
