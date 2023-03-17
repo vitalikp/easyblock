@@ -35,6 +35,11 @@ EventBus.prototype =
 		throw new Error("Method not implemented");
 	},
 
+	_sendEvent(type, data)
+	{
+		throw new Error("Method not implemented");
+	},
+
 	regEvent(name)
 	{
 		this.api.regEvent(EVENT_TYPE + ":" + name, this);
