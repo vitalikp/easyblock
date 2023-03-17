@@ -25,6 +25,11 @@ function EventBus(name, api)
 
 EventBus.prototype =
 {
+	_regEvent(type, handler)
+	{
+		throw new Error("Method not implemented");
+	},
+
 	regEvent(name)
 	{
 		this.api.regEvent(EVENT_TYPE + ":" + name, this);
