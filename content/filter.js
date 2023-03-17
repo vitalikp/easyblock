@@ -96,6 +96,11 @@ Object.assign(Process.prototype,
 		this.api.regEvent(type, handler);
 	},
 
+	_unregEvent(type, handler)
+	{
+		this.api.unregEvent(type, handler);
+	},
+
 	toggle(value, grpId)
 	{
 		this.sendEvent(EventType.TOGGLE, { grpId: grpId, value: value });
