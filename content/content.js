@@ -355,13 +355,17 @@ SiteHandler.prototype =
 
 	handleEvent(event)
 	{
-		if (!event)
+		let target;
+
+		if (!event || !event.target)
 			return;
+
+		target = event.target;
 
 		switch (event.type)
 		{
 			case "DOMContentLoaded":
-				this.filterDom(event.originalTarget);
+				this.filterDom(target);
 				break;
 
 			case "unload":
