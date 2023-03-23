@@ -177,13 +177,19 @@ Site.prototype =
 
 	handleEvent(event)
 	{
-		if (!event)
+		let win;
+
+		if (!event || !event.target)
+			return;
+
+		win = event.target.defaultView;
+		if (!win)
 			return;
 
 		switch (event.type)
 		{
 			case "beforeunload":
-				removeEventListener("beforeunload", this);
+				win.removeEventListener("beforeunload", this);
 				this.unreg();
 				break;
 		}
