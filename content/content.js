@@ -358,8 +358,8 @@ SiteHandler.prototype =
 				break;
 
 			case "unload":
-				removeEventListener("DOMContentLoaded", this);
-				removeEventListener("unload", this);
+				target.removeEventListener("DOMContentLoaded", this);
+				target.removeEventListener("unload", this);
 				this.destroy();
 				break;
 		}
