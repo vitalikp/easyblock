@@ -233,7 +233,7 @@ Site.filterNodes = function(nodes, attrs)
 	}
 };
 
-function SiteHandler()
+function SiteHandler(api)
 {
 	let filter = {};
 
@@ -243,7 +243,7 @@ function SiteHandler()
 
 	// import filter API
 	Cu.import("chrome://easyblock/content/filter.js", filter);
-	this._filter = new filter.Content(ContentAPI, this);
+	this._filter = new filter.Content(api, this);
 
 	this._disabled = this._filter.get('disabled');
 }
@@ -390,6 +390,6 @@ SiteHandler.prototype =
 
 let handler;
 
-handler = new SiteHandler();
+handler = new SiteHandler(ContentAPI);
 addEventListener("DOMContentLoaded", handler);
 addEventListener('unload', handler);
