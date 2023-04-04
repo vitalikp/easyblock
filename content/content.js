@@ -3,6 +3,9 @@
 const Cu = Components.utils;
 
 
+var EXPORTED_SYMBOLS = ["SiteHandler"];
+
+
 const ContentAPI =
 {
 	regEvent(event, handler)
