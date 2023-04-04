@@ -300,7 +300,7 @@ var EasyBlock =
 	{
 		var windows;
 
-		gmm.loadFrameScript(CONTENT_SCRIPT, true);
+		gmm.loadFrameScript(FRAME_SCRIPT, true);
 
 		if (!this.filter)
 		{
@@ -337,7 +337,7 @@ var EasyBlock =
 	{
 		let i;
 
-		gmm.removeDelayedFrameScript(CONTENT_SCRIPT);
+		gmm.removeDelayedFrameScript(FRAME_SCRIPT);
 
 		i = 0;
 		while (i < this.wins.length)
