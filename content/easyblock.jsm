@@ -28,7 +28,6 @@ const OBS_WIN_OPEN = "domwindowopened";
 
 const TYPE_DOC = Ci.nsIContentPolicy.TYPE_DOCUMENT;
 
-const CONTENT_SCRIPT = "chrome://easyblock/content/content.js";
 const FRAME_SCRIPT = "chrome://easyblock/content/frame.js";
 
 const ProcessAPI =
