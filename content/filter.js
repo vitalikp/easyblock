@@ -13,10 +13,6 @@ const EventType =
 };
 
 
-// content data
-let _cache = null;
-
-
 function EventBus(name)
 {
 	this.owner = EVENT_TYPE + ":" + name;
@@ -186,8 +182,6 @@ Object.assign(Process.prototype,
 function Content(api, obs)
 {
 	EventBus.call(this, "content");
-	if (!_cache)
-		_cache = new Map();
 
 	this.api = api;
 	this.obs = obs;
@@ -215,8 +209,6 @@ Object.assign(Content.prototype,
 
 	reload()
 	{
-		if (_cache && _cache.size > 0)
-			_cache.clear();
 		this.obs.reload();
 	},
 
@@ -240,30 +232,16 @@ Object.assign(Content.prototype,
 	{
 		let data;
 
-		if (!onFind)
+		data = this.sendSyncEvent(EventType.DOM, { hostname: hostname });
+		if (!data || !data[0])
 			return;
 
-		data = _cache.get(hostname);
-		if (!data)
-		{
-			data = this.sendSyncEvent(EventType.DOM, { hostname: hostname });
-			if (!data || !data[0])
-				return;
+		data = data[0];
 
-			data = data[0];
+		if (data.hostname != hostname)
+			return;
 
-			if (data.hostname != hostname)
-				return;
-
-			_cache.set(data.hostname, data);
-		}
-		else
-		{
-			if (!this.get('enabled', { grpId: data.grpId }))
-				return;
-		}
-
-		onFind(data);
+		return data;
 	},
 
 	onEvent(event)
