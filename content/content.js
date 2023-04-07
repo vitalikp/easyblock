@@ -304,6 +304,14 @@ SiteHandler.prototype =
 		site.filter(doc);
 	},
 
+	findDom(hostname, onFind)
+	{
+		if (!onFind)
+			return;
+
+		return this._filter.findDom(hostname, onFind);
+	},
+
 	filterDom(doc)
 	{
 		let loc, site;
@@ -323,14 +331,14 @@ SiteHandler.prototype =
 		{
 			if (doc.defaultView.top == doc.defaultView.self) // doc is root site
 			{
-				this._filter.findDom(loc.hostname, (data) => this.onFind(doc, data));
+				this.findDom(loc.hostname, (data) => this.onFind(doc, data));
 				return;
 			}
 
 			site = this.frames.get(loc.hostname); // doc is frame site
 			if (!site || site.hostname != loc.hostname)
 			{
-				this._filter.findDom(loc.hostname, (data) => this.onFind(doc, data, true));
+				this.findDom(loc.hostname, (data) => this.onFind(doc, data, true));
 				return;
 			}
 		}
