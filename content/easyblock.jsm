@@ -11,7 +11,7 @@ const EXPORTED_SYMBOLS = ["EasyBlock"];
 Cu.import("chrome://easyblock/content/io.jsm");
 Cu.import("chrome://easyblock/content/ui.jsm");
 Cu.import("chrome://easyblock/content/bldb.jsm");
-Cu.import("chrome://easyblock/content/filter.js");
+Cu.import("chrome://easyblock/content/eventbus.jsm");
 
 
 const os = Cc["@mozilla.org/observer-service;1"].getService(Ci.nsIObserverService);

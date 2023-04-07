@@ -5,8 +5,8 @@ const Cu = Components.utils;
 
 var EXPORTED_SYMBOLS = ["SiteHandler"];
 
-// import filter API
-Cu.import("chrome://easyblock/content/filter.js");
+// import
+Cu.import("chrome://easyblock/content/eventbus.jsm");
 
 
 let _cache = null;
