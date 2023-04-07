@@ -1,6 +1,6 @@
 "use strict";
 
-var EXPORTED_SYMBOLS = ["EventType", "Process", "Content"];
+var EXPORTED_SYMBOLS = ["EventType", "EventBus", "Process", "Content"];
 
 const EVENT_TYPE = "EasyBlock";
 
