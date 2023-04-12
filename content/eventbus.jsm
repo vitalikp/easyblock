@@ -19,7 +19,7 @@ const EventType =
 };
 
 
-function EventBus(name, mm)
+function EventBus(name, mm = cpmm)
 {
 	this.owner = EVENT_TYPE + ":" + name;
 	this.mm = mm;
@@ -29,22 +29,22 @@ EventBus.prototype =
 {
 	_regEvent(type, handler)
 	{
-		throw new Error("Method not implemented");
+		this.mm.addMessageListener(type, handler);
 	},
 
 	_unregEvent(type, handler)
 	{
-		throw new Error("Method not implemented");
+		this.mm.removeMessageListener(type, handler);
 	},
 
 	_sendEvent(type, data)
 	{
-		throw new Error("Method not implemented");
+		this.mm.sendAsyncMessage(type, data);
 	},
 
 	_sendSyncEvent(type, data)
 	{
-		throw new Error("Method not implemented");
+		return this.mm.sendSyncMessage(type, data);
 	},
 
 	regEvent(name)
