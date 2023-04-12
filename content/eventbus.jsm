@@ -19,9 +19,10 @@ const EventType =
 };
 
 
-function EventBus(name)
+function EventBus(name, mm)
 {
 	this.owner = EVENT_TYPE + ":" + name;
+	this.mm = mm;
 }
 
 EventBus.prototype =
