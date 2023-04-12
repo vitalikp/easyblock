@@ -264,10 +264,9 @@ PrefHandler.prototype =
 	}
 };
 
-function Process(api, addon)
+function Process(addon)
 {
 	EventBus.call(this, "process");
-	this.api = api;
 	this.addon = addon;
 
 	this.regEvent("content");
@@ -278,17 +277,17 @@ Object.assign(Process.prototype,
 {
 	_regEvent(type, handler)
 	{
-		this.api.regEvent(type, handler);
+		ProcessAPI.regEvent(type, handler);
 	},
 
 	_unregEvent(type, handler)
 	{
-		this.api.unregEvent(type, handler);
+		ProcessAPI.unregEvent(type, handler);
 	},
 
 	_sendEvent(type, data)
 	{
-		this.api.sendEvent(type, data);
+		ProcessAPI.sendEvent(type, data);
 	},
 
 	toggle(value, grpId)
@@ -408,7 +407,7 @@ var EasyBlock =
 		gmm.loadFrameScript(FRAME_SCRIPT, true);
 
 		if (!this.filter)
-			this.filter = new Process(ProcessAPI, this);
+			this.filter = new Process(this);
 
 		EasyBlock.observer = new ObsHandler(this);
 		EasyBlock.observer.reg(os, OBS_REQ);
