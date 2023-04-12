@@ -1,6 +1,12 @@
 "use strict";
 
+const Ci = Components.interfaces;
+const Cc = Components.classes;
+
 var EXPORTED_SYMBOLS = ["EventType", "EventBus"];
+
+const cpmm = Cc["@mozilla.org/childprocessmessagemanager;1"].getService(Ci.nsISyncMessageSender);
+
 
 const EVENT_TYPE = "EasyBlock";
 
