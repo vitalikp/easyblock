@@ -31,23 +31,6 @@ const TYPE_DOC = Ci.nsIContentPolicy.TYPE_DOCUMENT;
 
 const FRAME_SCRIPT = "chrome://easyblock/content/frame.js";
 
-const ProcessAPI =
-{
-	regEvent(event, handler)
-	{
-		gmm.addMessageListener(event, handler);
-	},
-
-	unregEvent(event, handler)
-	{
-		gmm.removeMessageListener(event, handler);
-	},
-
-	sendEvent(event, data)
-	{
-		gmm.broadcastAsyncMessage(event, data);
-	}
-};
 
 function ObsHandler(addon)
 {
@@ -277,17 +260,17 @@ Object.assign(Process.prototype,
 {
 	_regEvent(type, handler)
 	{
-		ProcessAPI.regEvent(type, handler);
+		gmm.addMessageListener(type, handler);
 	},
 
 	_unregEvent(type, handler)
 	{
-		ProcessAPI.unregEvent(type, handler);
+		gmm.removeMessageListener(type, handler);
 	},
 
 	_sendEvent(type, data)
 	{
-		ProcessAPI.sendEvent(type, data);
+		gmm.broadcastAsyncMessage(type, data);
 	},
 
 	toggle(value, grpId)
