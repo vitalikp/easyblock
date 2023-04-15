@@ -387,8 +387,6 @@ var EasyBlock =
 	{
 		var windows;
 
-		gmm.loadFrameScript(FRAME_SCRIPT, true);
-
 		if (!this.filter)
 			this.filter = new Process(this);
 
@@ -409,6 +407,8 @@ var EasyBlock =
 		while (windows.hasMoreElements())
 			this.loadWindow(windows.getNext().QueryInterface(Ci.nsIDOMWindow));
 		EasyBlock.observer.reg(os, OBS_WIN_OPEN);
+
+		gmm.loadFrameScript(FRAME_SCRIPT, true);
 
 		ui.loadCss("easyblock");
 		log.info("easyblock " + addonData.version + " started!");
