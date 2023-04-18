@@ -338,10 +338,10 @@ Object.assign(Process.prototype,
 		switch (event.type)
 		{
 			case EventType.GET:
-				return this.get(event.data);
+				break;
 
 			case EventType.DOM:
-				return this.findDom(event.data);
+				break;
 		}
 	},
 

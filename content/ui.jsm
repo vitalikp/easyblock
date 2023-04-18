@@ -249,6 +249,11 @@ function WinUI(doc, addon)
 {
 	let win, popupMenu, grpMenu, item, reloadItem;
 
+	win = doc.defaultView;
+
+	this.addon = addon;
+	this.bus = new UiBus(win.messageManager, this);
+
 	this.btn = doc.createElement("toolbarbutton");
 	this.btn.setAttribute("id", BTN_ID);
 	this.btn.setAttribute("removable", "true");
@@ -266,7 +271,6 @@ function WinUI(doc, addon)
 	this.menu = doc.createElement("menupopup");
 	this.btn.appendChild(this.menu);
 
-	win = doc.defaultView;
 
 	this.toolbox = doc.getElementById("navigator-toolbox");
 
@@ -304,7 +308,6 @@ function WinUI(doc, addon)
 
 	win.addEventListener('unload', (event) => addon.unloadWin(this));
 
-	this.addon = addon;
 	this.groups = [];
 
 	this.updateState(addon);
@@ -438,6 +441,12 @@ WinUI.prototype =
 
 	destroy()
 	{
+		if (this.bus)
+		{
+			this.bus.destroy();
+			this.bus = null;
+		}
+
 		if (this.btn)
 		{
 			if (this.btn.parentNode)
