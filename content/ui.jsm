@@ -9,6 +9,7 @@ var EXPORTED_SYMBOLS = ["ui", "uitree", "WinUI"];
 
 // import
 Cu.import("chrome://easyblock/content/io.jsm");
+Cu.import("chrome://easyblock/content/eventbus.jsm");
 
 const sss = Cc["@mozilla.org/content/style-sheet-service;1"].getService(Ci.nsIStyleSheetService);
 const wm = Cc["@mozilla.org/appshell/window-mediator;1"].getService(Ci.nsIWindowMediator);
@@ -199,6 +200,50 @@ GroupUI.prototype =
 		this.menuItem.toggled = group.enabled;
 	}
 };
+
+function UiBus(mm, winUI)
+{
+	EventBus.call(this, "ui", mm);
+
+	this.winUI = winUI;
+	this.regEvent("content");
+}
+
+UiBus.prototype = Object.create(EventBus.prototype);
+Object.assign(UiBus.prototype,
+{
+	_sendEvent(type, data)
+	{
+		this.mm.broadcastAsyncMessage(type, data);
+	},
+
+	toggle(value, grpId)
+	{
+		this.sendEvent(EventType.TOGGLE, { grpId: grpId, value: value });
+	},
+
+	reload()
+	{
+		this.sendEvent(EventType.RELOAD);
+	},
+
+	onEvent(event)
+	{
+		switch (event.type)
+		{
+			case EventType.GET:
+				return this.winUI.onGet(event.data);
+
+			case EventType.DOM:
+				return this.winUI.onDom(event.data);
+		}
+	},
+
+	destroy()
+	{
+		this.unregEvent("content");
+	}
+});
 
 function WinUI(doc, addon)
 {
