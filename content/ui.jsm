@@ -324,6 +324,13 @@ WinUI.prototype =
 		this.updateState(this.addon);
 	},
 
+	onToggle(group)
+	{
+		this.bus.toggle(group.enabled, group.id);
+
+		this.updateGroup(group);
+	},
+
 	toggle(value, grpId)
 	{
 		if (!this.addon)

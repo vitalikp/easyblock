@@ -536,7 +536,7 @@ var EasyBlock =
 			if (group.toggle(value))
 			{
 				this.filter.toggle(value, grpId);
-				this.wins.forEach((winUI) => winUI.updateGroup(group));
+				this.wins.forEach((winUI) => winUI.onToggle(group));
 			}
 
 			return;
