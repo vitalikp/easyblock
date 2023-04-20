@@ -331,6 +331,13 @@ WinUI.prototype =
 		this.groups.forEach((grpUI) => grpUI.update(group));
 	},
 
+	onReload(db)
+	{
+		this.bus.reload();
+
+		this.addon.loadDBWin(this, db);
+	},
+
 	toggle(value, grpId)
 	{
 		if (!this.addon)

@@ -567,7 +567,7 @@ var EasyBlock =
 		this.filter.reload();
 		this.db.load((db) =>
 		{
-			this.wins.forEach((winUI) => this.loadDBWin(winUI, db));
+			this.wins.forEach((winUI) => winUI.onReload(db));
 			ui.notify(this, 'Blacklist sites reloaded!');
 		});
 	},
