@@ -328,7 +328,7 @@ WinUI.prototype =
 	{
 		this.bus.toggle(group.enabled, group.id);
 
-		this.updateGroup(group);
+		this.groups.forEach((grpUI) => grpUI.update(group));
 	},
 
 	toggle(value, grpId)
@@ -502,11 +502,6 @@ WinUI.prototype =
 
 			this.addGroup(group);
 		});
-	},
-
-	updateGroup(group)
-	{
-		this.groups.forEach((grpUI) => grpUI.update(group));
 	}
 };
 
