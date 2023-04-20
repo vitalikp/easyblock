@@ -356,7 +356,6 @@ var EasyBlock =
 	db: {},
 	_disabled: false,
 	prefs: {},
-	filter: null,
 	wins: [],
 
 	get disabled()
@@ -373,8 +372,6 @@ var EasyBlock =
 
 		this.prefs.disabled = value;
 
-		this.filter.toggle(value);
-
 		this.wins.forEach((winUI) => winUI.onState(value));
 
 		if (!value)
@@ -386,9 +383,6 @@ var EasyBlock =
 	startup(addonData)
 	{
 		var windows;
-
-		if (!this.filter)
-			this.filter = new Process(this);
 
 		EasyBlock.observer = new ObsHandler(this);
 		EasyBlock.observer.reg(os, OBS_REQ);
@@ -434,12 +428,6 @@ var EasyBlock =
 		this.db.close();
 
 		ui.unloadCss("easyblock");
-
-		if (this.filter)
-		{
-			this.filter.destroy();
-			this.filter = null;
-		}
 	},
 
 	loadWindow(window)
@@ -534,10 +522,7 @@ var EasyBlock =
 				return;
 
 			if (group.toggle(value))
-			{
-				this.filter.toggle(value, grpId);
 				this.wins.forEach((winUI) => winUI.onToggle(group));
-			}
 
 			return;
 		}
@@ -564,7 +549,6 @@ var EasyBlock =
 	reload()
 	{
 		this.db.clear();
-		this.filter.reload();
 		this.db.load((db) =>
 		{
 			this.wins.forEach((winUI) => winUI.onReload(db));

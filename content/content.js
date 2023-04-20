@@ -242,7 +242,7 @@ function Content(api, obs)
 	this.api = api;
 	this.obs = obs;
 
-	this.regEvent("process");
+	this.regEvent("ui");
 }
 
 Content.prototype = Object.create(EventBus.prototype);
@@ -316,7 +316,7 @@ Object.assign(Content.prototype,
 
 	destroy()
 	{
-		this.unregEvent("process");
+		this.unregEvent("ui");
 	}
 });
 
