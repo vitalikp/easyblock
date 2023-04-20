@@ -317,6 +317,13 @@ function WinUI(doc, addon)
 
 WinUI.prototype =
 {
+	onState(state)
+	{
+		this.bus.toggle(state);
+
+		this.updateState(this.addon);
+	},
+
 	toggle(value, grpId)
 	{
 		if (!this.addon)
