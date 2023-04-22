@@ -245,11 +245,9 @@ Object.assign(UiBus.prototype,
 	}
 });
 
-function WinUI(doc, addon)
+function WinUI(win, doc, addon)
 {
-	let win, popupMenu, grpMenu, item, reloadItem;
-
-	win = doc.defaultView;
+	let popupMenu, grpMenu, item, reloadItem;
 
 	this.addon = addon;
 	this.bus = new UiBus(win.messageManager, this);
