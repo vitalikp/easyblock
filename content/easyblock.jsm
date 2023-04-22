@@ -336,7 +336,7 @@ var EasyBlock =
 		if (!window.locationbar.visible)
 			return;
 
-		winUI = new WinUI(window, window.document, this);
+		winUI = new WinUI(window, this);
 		window.addEventListener("aftercustomization", (event) =>
 		{
 			if (!event)

@@ -245,12 +245,14 @@ Object.assign(UiBus.prototype,
 	}
 });
 
-function WinUI(win, doc, addon)
+function WinUI(win, addon)
 {
-	let popupMenu, grpMenu, item, reloadItem;
+	let doc, popupMenu, grpMenu, item, reloadItem;
 
 	this.addon = addon;
 	this.bus = new UiBus(win.messageManager, this);
+
+	doc = win.document;
 
 	this.btn = doc.createElement("toolbarbutton");
 	this.btn.setAttribute("id", BTN_ID);
