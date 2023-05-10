@@ -249,6 +249,8 @@ function WinUI(win, addon)
 {
 	let doc, popupMenu, grpMenu, item, reloadItem;
 
+	this._disabled = false;
+
 	this.addon = addon;
 	this.bus = new UiBus(win.messageManager, this);
 
