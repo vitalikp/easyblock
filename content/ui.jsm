@@ -312,7 +312,6 @@ function WinUI(win, addon)
 
 	this.groups = [];
 
-	this.updateState(addon);
 	this.loadGroups(addon.db.groups);
 	this.initToolbar();
 }
@@ -341,8 +340,7 @@ WinUI.prototype =
 	onState(state)
 	{
 		this.bus.toggle(state);
-
-		this.updateState(this.addon);
+		this.disabled = state;
 	},
 
 	onToggle(group)
@@ -503,11 +501,6 @@ WinUI.prototype =
 		}
 
 		this.clearGroups();
-	},
-
-	updateState(addon)
-	{
-		this.disabled = addon.disabled;
 	},
 
 	clearGroups()

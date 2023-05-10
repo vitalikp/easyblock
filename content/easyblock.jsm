@@ -337,6 +337,7 @@ var EasyBlock =
 			return;
 
 		winUI = new WinUI(window, this);
+		winUI.disabled = this.disabled;
 		window.addEventListener("aftercustomization", (event) =>
 		{
 			if (!event)
