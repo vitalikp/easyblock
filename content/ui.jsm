@@ -319,6 +319,11 @@ function WinUI(win, addon)
 
 WinUI.prototype =
 {
+	get disabled()
+	{
+		return this._disabled;
+	},
+
 	onState(state)
 	{
 		this.bus.toggle(state);
