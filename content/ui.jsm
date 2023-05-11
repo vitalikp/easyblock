@@ -352,6 +352,7 @@ WinUI.prototype =
 	{
 		this.bus.reload();
 
+		this.clearGroups();
 		this.addon.loadDBWin(this, db);
 	},
 
@@ -526,7 +527,6 @@ WinUI.prototype =
 
 	loadGroups(groups)
 	{
-		this.clearGroups();
 		groups.forEach((group) =>
 		{
 			if (group.hidden)
