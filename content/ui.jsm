@@ -463,6 +463,7 @@ WinUI.prototype =
 	{
 		this.bus.reload();
 
+		this.clearGroups();
 		this.addon.loadDBWin(this, db);
 
 		if (this.win == wm.getMostRecentWindow("navigator:browser"))
@@ -640,7 +641,6 @@ WinUI.prototype =
 
 	loadGroups(groups)
 	{
-		this.clearGroups();
 		groups.forEach((group) =>
 		{
 			if (group.hidden)

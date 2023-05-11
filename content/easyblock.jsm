@@ -159,8 +159,6 @@ var EasyBlock =
 		if (!winUI || !db)
 			return;
 
-		winUI.clearGroups();
-
 		i = 0;
 		while (i < db.groups.length)
 		{
