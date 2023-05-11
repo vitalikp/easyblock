@@ -308,8 +308,6 @@ function WinUI(win, addon)
 	});
 	this.menu.appendChild(reloadItem);
 
-	win.addEventListener('unload', (event) => addon.unloadWin(this));
-
 	this.groups = [];
 
 	this.loadGroups(addon.db.groups);
@@ -477,6 +475,23 @@ WinUI.prototype =
 		grpUI = new GroupUI(group, this.grpMenu, this);
 
 		this.groups.push(grpUI);
+	},
+
+	handleEvent(event)
+	{
+		if (!event)
+			return;
+
+		switch (event.type)
+		{
+			case "unload":
+				this.addon.unloadWin(this);
+				break;
+
+			case "aftercustomization":
+				this.addon.customizeUI(event.target);
+				break;
+		}
 	},
 
 	destroy()
