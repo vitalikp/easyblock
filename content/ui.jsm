@@ -399,7 +399,6 @@ function WinUI(win, addon)
 
 	this.groups = [];
 
-	this.loadGroups(addon.db.groups);
 	this.initToolbar();
 }
 
@@ -637,17 +636,6 @@ WinUI.prototype =
 	{
 		this.groups.forEach((grpUI) => grpUI.destroy());
 		this.groups = [];
-	},
-
-	loadGroups(groups)
-	{
-		groups.forEach((group) =>
-		{
-			if (group.hidden)
-				return;
-
-			this.addGroup(group);
-		});
 	}
 };
 
