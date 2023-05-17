@@ -338,6 +338,7 @@ var EasyBlock =
 
 		winUI = new WinUI(window, this);
 		winUI.disabled = this.disabled;
+		this.loadDBWin(winUI, this.db);
 		window.addEventListener("unload", winUI);
 		window.addEventListener("aftercustomization", winUI);
 
