@@ -249,7 +249,7 @@ PrefHandler.prototype =
 
 var EasyBlock =
 {
-	db: {},
+	db: new bldb('blacklist.txt'),
 	_disabled: false,
 	prefs: {},
 	wins: [],
@@ -284,19 +284,18 @@ var EasyBlock =
 		EasyBlock.observer.reg(os, OBS_REQ);
 		EasyBlock.observer.reg(os, OBS_RESP);
 
-		this.db = new bldb('blacklist.txt');
+		windows = wm.getEnumerator("navigator:browser");
+
+		while (windows.hasMoreElements())
+			this.loadWindow(windows.getNext().QueryInterface(Ci.nsIDOMWindow));
+		EasyBlock.observer.reg(os, OBS_WIN_OPEN);
+
 		this.db.load((db) =>
 		{
 			this.wins.forEach((winUI) => this.loadDBWin(winUI, db));
 		});
 
 		this.prefs = new PrefHandler(this);
-
-		windows = wm.getEnumerator("navigator:browser");
-
-		while (windows.hasMoreElements())
-			this.loadWindow(windows.getNext().QueryInterface(Ci.nsIDOMWindow));
-		EasyBlock.observer.reg(os, OBS_WIN_OPEN);
 
 		gmm.loadFrameScript(FRAME_SCRIPT, true);
 
