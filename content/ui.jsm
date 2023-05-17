@@ -251,6 +251,7 @@ function WinUI(win, addon)
 
 	this._disabled = false;
 
+	this.win = win;
 	this.addon = addon;
 	this.bus = new UiBus(win.messageManager, this);
 
@@ -283,7 +284,7 @@ function WinUI(win, addon)
 		if (!event && !event.target)
 			return;
 
-		win.open('chrome://easyblock/content/filters.xul', 'EasyBlockFilters', 'chrome,titlebar,centerscreen,resizable').focus();
+		this.win.open('chrome://easyblock/content/filters.xul', 'EasyBlockFilters', 'chrome,titlebar,centerscreen,resizable').focus();
 	});
 	this.menu.appendChild(item);
 
