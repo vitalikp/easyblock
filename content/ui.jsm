@@ -376,14 +376,6 @@ WinUI.prototype =
 		this.addon.loadDBWin(this, db);
 	},
 
-	toggle(value, grpId)
-	{
-		if (!this.addon)
-			return;
-
-		this.addon.toggle(grpId);
-	},
-
 	onGet(data)
 	{
 		if (!data)
