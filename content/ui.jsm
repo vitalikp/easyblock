@@ -278,14 +278,9 @@ function WinUI(win, addon)
 	this.toolbox = doc.getElementById("navigator-toolbox");
 
 	item = doc.createElement("menuitem");
+	item.cmdId = "winFilters";
 	item.setAttribute("label", "Filters");
-	item.addEventListener("command", (event) =>
-	{
-		if (!event && !event.target)
-			return;
-
-		this.openWin("Filters", "filters.xul");
-	});
+	item.addEventListener("command", this);
 	this.menu.appendChild(item);
 
 	grpMenu = doc.createElement("menu");
@@ -299,14 +294,9 @@ function WinUI(win, addon)
 	this.menuItem = new MenuToggle(this, "Disabled", this.menu);
 
 	reloadItem = doc.createElement("menuitem");
+	reloadItem.cmdId = "reload";
 	reloadItem.setAttribute("label", "Reload");
-	reloadItem.addEventListener("command", (event) =>
-	{
-		if (!event && !event.target)
-			return;
-
-		addon.reload();
-	});
+	reloadItem.addEventListener("command", this);
 	this.menu.appendChild(reloadItem);
 
 	this.groups = [];
@@ -341,6 +331,23 @@ WinUI.prototype =
 			return;
 
 		this.win.open("chrome://easyblock/content/" + url, "EasyBlock" + name, 'chrome,titlebar,centerscreen,resizable').focus();
+	},
+
+	onCmd(node)
+	{
+		if (!node || !node.cmdId)
+			return;
+
+		switch (node.cmdId)
+		{
+			case "winFilters":
+				this.openWin("Filters", "filters.xul");
+				break;
+
+			case "reload":
+				this.addon.reload();
+				break;
+		}
 	},
 
 	onState(state)
@@ -493,6 +500,10 @@ WinUI.prototype =
 
 		switch (event.type)
 		{
+			case "command":
+				this.onCmd(event.target);
+				break;
+
 			case "unload":
 				this.addon.unloadWin(this);
 				break;
