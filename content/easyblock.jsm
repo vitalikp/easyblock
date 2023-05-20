@@ -401,7 +401,7 @@ var EasyBlock =
 		}
 	},
 
-	toggle(value, grpId)
+	toggle(grpId)
 	{
 		if (grpId > 0)
 		{
@@ -411,13 +411,13 @@ var EasyBlock =
 			if (!group)
 				return;
 
-			if (group.toggle(value))
+			if (group.toggle(!group.enabled))
 				this.wins.forEach((winUI) => winUI.onToggle(group));
 
 			return;
 		}
 
-		this.disabled = value;
+		this.disabled = !this.disabled;
 	},
 
 	getGroup(grpId)
