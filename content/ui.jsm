@@ -251,7 +251,7 @@ GroupUI.prototype =
 {
 	toggle(value)
 	{
-		this.addon.toggle(value, this.id);
+		this.addon.toggle(this.id);
 	},
 
 	destroy()
@@ -480,7 +480,7 @@ WinUI.prototype =
 		if (!this.addon)
 			return;
 
-		this.addon.toggle(value, grpId);
+		this.addon.toggle(grpId);
 	},
 
 	onGet(data)
