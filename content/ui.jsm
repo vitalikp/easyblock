@@ -171,11 +171,6 @@ function GroupUI(group, menu, addon)
 
 GroupUI.prototype =
 {
-	toggle(value)
-	{
-		this.addon.toggle(this.id);
-	},
-
 	handleEvent(event)
 	{
 		if (!event)
