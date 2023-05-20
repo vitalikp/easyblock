@@ -162,7 +162,7 @@ MenuToggle.prototype =
 	}
 };
 
-function GroupUI(group, menu, winUI)
+function GroupUI(group, menu, winUI, addon)
 {
 	let menuItem;
 
@@ -172,13 +172,14 @@ function GroupUI(group, menu, winUI)
 	this.id = group.id;
 	this.menuItem = menuItem;
 	this.winUI = winUI;
+	this.addon = addon;
 }
 
 GroupUI.prototype =
 {
 	toggle(value)
 	{
-		this.winUI.toggle(value, this.id);
+		this.addon.toggle(value, this.id);
 	},
 
 	destroy()
@@ -486,7 +487,7 @@ WinUI.prototype =
 		if (!group)
 			return;
 
-		grpUI = new GroupUI(group, this.grpMenu, this);
+		grpUI = new GroupUI(group, this.grpMenu, this, this.addon);
 
 		this.groups.push(grpUI);
 	},
