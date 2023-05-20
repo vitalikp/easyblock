@@ -178,8 +178,6 @@ GroupUI.prototype =
 {
 	toggle(value)
 	{
-		this.menuItem.toggled = value;
-
 		this.winUI.toggle(value, this.id);
 	},
 
