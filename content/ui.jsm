@@ -112,14 +112,9 @@ function MenuToggle(obj, name, menu)
 	doc = menu.ownerDocument;
 
 	elem = doc.createElement("menuitem");
+	elem.cmdId = "toggle";
 	elem.setAttribute("class", "menuToggle");
-	elem.addEventListener("command", (event) =>
-	{
-		if (!event || !event.target || !obj)
-			return;
-
-		obj.toggle(!this.toggled);
-	}, false);
+	elem.addEventListener("command", obj);
 
 	label = doc.createElement("label");
 	label.textContent = name;
@@ -179,6 +174,19 @@ GroupUI.prototype =
 	toggle(value)
 	{
 		this.addon.toggle(this.id);
+	},
+
+	handleEvent(event)
+	{
+		if (!event)
+			return;
+
+		switch (event.type)
+		{
+			case "command":
+				this.addon.toggle(this.id);
+				break;
+		}
 	},
 
 	destroy()
@@ -340,6 +348,10 @@ WinUI.prototype =
 		{
 			case "winFilters":
 				this.openWin("Filters", "filters.xul");
+				break;
+
+			case "toggle":
+				this.addon.toggle();
 				break;
 
 			case "reload":
