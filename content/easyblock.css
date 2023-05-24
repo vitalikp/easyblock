@@ -49,13 +49,13 @@ notification[type="info"].easyblock description
 
 /** menu */
 
-menuitem.menuToggle
+toolbarbutton.easyblock menuitem.menuToggle
 {
 	-moz-appearance: none !important;
 	padding: 4px 6px;
 }
 
-menuitem.menuToggle > label
+toolbarbutton.easyblock menuitem.menuToggle > label
 {
 	background-position: left center;
 	background-repeat: no-repeat;
@@ -63,7 +63,7 @@ menuitem.menuToggle > label
 	margin: 0 1px !important;
 }
 
-menuitem.menuToggle[toggled="true"] > label
+toolbarbutton.easyblock menuitem.menuToggle[toggled="true"] > label
 {
 	background-image: url("chrome://easyblock/content/ui.svg#checkbox");
 }
