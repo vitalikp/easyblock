@@ -113,7 +113,6 @@ function MenuToggle(obj, name, menu)
 
 	elem = doc.createElement("menuitem");
 	elem.cmdId = "toggle";
-	elem.setAttribute("class", "menuToggle");
 	elem.addEventListener("command", obj);
 
 	label = doc.createElement("label");
