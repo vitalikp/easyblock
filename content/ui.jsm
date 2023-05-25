@@ -285,7 +285,7 @@ Object.assign(UiBus.prototype,
 
 function WinUI(win, addon)
 {
-	let doc, popupMenu, grpMenu, item, reloadItem;
+	let doc, popupMenu, grpMenu;
 
 	this._disabled = false;
 
@@ -315,9 +315,7 @@ function WinUI(win, addon)
 
 	this.toolbox = doc.getElementById("navigator-toolbox");
 
-	item = ui.newMenuItem("Filters", this.menu);
-	item.cmdId = "winFilters";
-	item.addEventListener("command", this);
+	this.addMenuItem("winFilters", "Filters");
 
 	grpMenu = doc.createElement("menu");
 	grpMenu.setAttribute("label", "Groups");
@@ -329,9 +327,7 @@ function WinUI(win, addon)
 
 	this.menuItem = new MenuToggle(this, "Disabled", this.menu);
 
-	reloadItem = ui.newMenuItem("Reload", this.menu);
-	reloadItem.cmdId = "reload";
-	reloadItem.addEventListener("command", this);
+	this.addMenuItem("reload", "Reload");
 
 	this.groups = [];
 
@@ -482,6 +478,15 @@ WinUI.prototype =
 		};
 
 		return eventData;
+	},
+
+	addMenuItem(id, name)
+	{
+		let elem;
+
+		elem = ui.newMenuItem(name, this.menu);
+		elem.cmdId = id;
+		elem.addEventListener("command", this);
 	},
 
 	initToolbar()
