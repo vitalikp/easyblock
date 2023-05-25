@@ -333,6 +333,28 @@ WinUI.prototype =
 		this.win.open("chrome://easyblock/content/" + url, "EasyBlock" + name, 'chrome,titlebar,centerscreen,resizable').focus();
 	},
 
+	notify(msg)
+	{
+		let doc, node;
+
+		if (!this.win || !msg)
+			return;
+
+		doc = this.win.document;
+
+		let notificationBox = this.win.getBrowser().getNotificationBox();
+
+		node = doc.createElement("notification");
+		node.setAttribute("type", "info");
+		node.setAttribute("class", "easyblock");
+		node.setAttribute("label", msg);
+		if (this.disabled)
+			node.setAttribute("ebstate", "disabled");
+		else
+			node.setAttribute("ebstate", "normal");
+		notificationBox.appendChild(node);
+	},
+
 	onCmd(node)
 	{
 		if (!node || !node.cmdId)
