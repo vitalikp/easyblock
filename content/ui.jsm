@@ -414,6 +414,35 @@ WinUI.customize = function(toolbox)
 	WinUI.nextItemId = nextItemId;
 };
 
+WinUI.selectToolbar = function(toolbars)
+{
+	let toolbar, currSet, items, nextItem;
+	let i, index;
+
+	i = 0;
+	while (i < toolbars.length)
+	{
+		toolbar = toolbars[i++];
+		if (!toolbar)
+			continue;
+
+		currSet = toolbar.getAttribute("currentset");
+		if (!currSet)
+			continue;
+
+		items = currSet.split(",");
+		index = items.indexOf(BTN_ID);
+		if (index < 0)
+			continue;
+
+		if (index < items.length)
+			nextItem = items[index+1];
+		WinUI.toolbarId = toolbar._customizationTarget.id;
+		WinUI.nextItemId = nextItem;
+		break;
+	}
+};
+
 
 const Notify =
 {
@@ -445,31 +474,7 @@ var ui =
 {
 	selectToolbar(toolbars)
 	{
-		let toolbar, currSet, items, nextItem;
-		let i, index;
-
-		i = 0;
-		while (i < toolbars.length)
-		{
-			toolbar = toolbars[i++];
-			if (!toolbar)
-				continue;
-
-			currSet = toolbar.getAttribute("currentset");
-			if (!currSet)
-				continue;
-
-			items = currSet.split(",");
-			index = items.indexOf(BTN_ID);
-			if (index < 0)
-				continue;
-
-			if (index < items.length)
-				nextItem = items[index+1];
-			WinUI.toolbarId = toolbar._customizationTarget.id;
-			WinUI.nextItemId = nextItem;
-			break;
-		}
+		WinUI.selectToolbar(toolbars);
 	},
 
 	loadCss(style)
