@@ -283,10 +283,10 @@ WinUI.prototype =
 			return;
 
 		if (!WinUI.toolbarId)
-			ui.selectToolbar(this.toolbox.childNodes);
+			WinUI.selectToolbar(this.toolbox.childNodes);
 
 		if (!WinUI.toolbarId)
-			ui.selectToolbar(this.toolbox.externalToolbars);
+			WinUI.selectToolbar(this.toolbox.externalToolbars);
 
 		if (!WinUI.toolbarId)
 		{
@@ -472,11 +472,6 @@ const Notify =
 
 var ui =
 {
-	selectToolbar(toolbars)
-	{
-		WinUI.selectToolbar(toolbars);
-	},
-
 	loadCss(style)
 	{
 		let styleUri = io.newURI(style + ".css");
