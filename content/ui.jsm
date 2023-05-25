@@ -395,6 +395,9 @@ WinUI.prototype =
 
 		this.clearGroups();
 		this.addon.loadDBWin(this, db);
+
+		if (this.win == wm.getMostRecentWindow("navigator:browser"))
+			this.notify("Blacklist sites reloaded!");
 	},
 
 	onGet(data)
@@ -653,10 +656,5 @@ var ui =
 	{
 		let styleUri = io.newURI(style + ".css");
 		sss.unregisterSheet(styleUri, sss.USER_SHEET);
-	},
-
-	notify(addon, msg)
-	{
-		Notify.sendUI(addon, 'info', msg);
 	}
 };
