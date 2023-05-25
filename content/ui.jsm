@@ -19,6 +19,35 @@ const XHTML_NS = "http://www.w3.org/1999/xhtml";
 const BTN_ID = "easyblock-btn";
 
 
+const ui =
+{
+	addLabel(node, text)
+	{
+		let doc, label;
+
+		if (!node)
+			return;
+
+		doc = node.ownerDocument;
+
+		label = doc.createElement("label");
+		label.textContent = text;
+		node.appendChild(label);
+	},
+
+	loadCss(style)
+	{
+		let styleUri = io.newURI(style + ".css");
+		sss.loadAndRegisterSheet(styleUri, sss.USER_SHEET);
+	},
+
+	unloadCss(style)
+	{
+		let styleUri = io.newURI(style + ".css");
+		sss.unregisterSheet(styleUri, sss.USER_SHEET);
+	}
+};
+
 const uitree =
 {
 	create(doc, name, expanded)
@@ -107,17 +136,14 @@ const uitree =
 
 function MenuToggle(obj, name, menu)
 {
-	let doc, elem, label;
+	let doc, elem;
 
 	doc = menu.ownerDocument;
 
 	elem = doc.createElement("menuitem");
 	elem.cmdId = "toggle";
+	ui.addLabel(elem, name);
 	elem.addEventListener("command", obj);
-
-	label = doc.createElement("label");
-	label.textContent = name;
-	elem.appendChild(label);
 
 	menu.appendChild(elem);
 
@@ -279,7 +305,7 @@ function WinUI(win, addon)
 
 	item = doc.createElement("menuitem");
 	item.cmdId = "winFilters";
-	item.setAttribute("label", "Filters");
+	ui.addLabel(item, "Filters");
 	item.addEventListener("command", this);
 	this.menu.appendChild(item);
 
@@ -295,7 +321,7 @@ function WinUI(win, addon)
 
 	reloadItem = doc.createElement("menuitem");
 	reloadItem.cmdId = "reload";
-	reloadItem.setAttribute("label", "Reload");
+	ui.addLabel(reloadItem, "Reload");
 	reloadItem.addEventListener("command", this);
 	this.menu.appendChild(reloadItem);
 
@@ -614,21 +640,5 @@ WinUI.selectToolbar = function(toolbars)
 		WinUI.toolbarId = toolbar._customizationTarget.id;
 		WinUI.nextItemId = nextItem;
 		break;
-	}
-};
-
-
-var ui =
-{
-	loadCss(style)
-	{
-		let styleUri = io.newURI(style + ".css");
-		sss.loadAndRegisterSheet(styleUri, sss.USER_SHEET);
-	},
-
-	unloadCss(style)
-	{
-		let styleUri = io.newURI(style + ".css");
-		sss.unregisterSheet(styleUri, sss.USER_SHEET);
 	}
 };
