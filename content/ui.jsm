@@ -35,6 +35,26 @@ const ui =
 		node.appendChild(label);
 	},
 
+	newMenu(name, parent)
+	{
+		let doc, menu, popup;
+
+		if (!name || !parent)
+			return;
+
+		doc = parent.ownerDocument;
+
+		menu = doc.createElement("menu");
+		ui.addLabel(menu, name);
+
+		popup = doc.createElement("menupopup");
+		menu.appendChild(popup);
+
+		parent.appendChild(menu);
+
+		return popup;
+	},
+
 	newMenuItem(name, parent)
 	{
 		let doc, menuItem;
@@ -317,13 +337,7 @@ function WinUI(win, addon)
 
 	this.addMenuItem("winFilters", "Filters");
 
-	grpMenu = doc.createElement("menu");
-	grpMenu.setAttribute("label", "Groups");
-	this.menu.appendChild(grpMenu);
-
-	popupMenu = doc.createElement("menupopup");
-	grpMenu.appendChild(popupMenu);
-	this.grpMenu = popupMenu;
+	this.grpMenu = ui.newMenu("Groups", this.menu);
 
 	this.menuItem = new MenuToggle(this, "Disabled", this.menu);
 
