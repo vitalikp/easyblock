@@ -492,32 +492,6 @@ WinUI.selectToolbar = function(toolbars)
 };
 
 
-const Notify =
-{
-	sendUI(addon, type, msg)
-	{
-		let win, doc, node;
-
-		if (!type || !msg)
-			return;
-
-		win = wm.getMostRecentWindow("navigator:browser");
-		doc = win.document;
-
-		let notificationBox = win.getBrowser().getNotificationBox();
-
-		node = doc.createElement("notification");
-		node.setAttribute("type", type);
-		node.setAttribute("class", "easyblock");
-		node.setAttribute("label", msg);
-		if (addon.disabled)
-			node.setAttribute("ebstate", "disabled");
-		else
-			node.setAttribute("ebstate", "normal");
-		notificationBox.appendChild(node);
-	}
-};
-
 var ui =
 {
 	loadCss(style)
