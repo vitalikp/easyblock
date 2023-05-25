@@ -35,6 +35,23 @@ const ui =
 		node.appendChild(label);
 	},
 
+	newMenuItem(name, parent)
+	{
+		let doc, menuItem;
+
+		if (!name || !parent)
+			return;
+
+		doc = parent.ownerDocument;
+
+		menuItem = doc.createElement("menuitem");
+		ui.addLabel(menuItem, name);
+
+		parent.appendChild(menuItem);
+
+		return menuItem;
+	},
+
 	loadCss(style)
 	{
 		let styleUri = io.newURI(style + ".css");
@@ -136,16 +153,11 @@ const uitree =
 
 function MenuToggle(obj, name, menu)
 {
-	let doc, elem;
+	let elem;
 
-	doc = menu.ownerDocument;
-
-	elem = doc.createElement("menuitem");
+	elem = ui.newMenuItem(name, menu);
 	elem.cmdId = "toggle";
-	ui.addLabel(elem, name);
 	elem.addEventListener("command", obj);
-
-	menu.appendChild(elem);
 
 	this.elem = elem;
 	this._toggled = false;
@@ -303,11 +315,9 @@ function WinUI(win, addon)
 
 	this.toolbox = doc.getElementById("navigator-toolbox");
 
-	item = doc.createElement("menuitem");
+	item = ui.newMenuItem("Filters", this.menu);
 	item.cmdId = "winFilters";
-	ui.addLabel(item, "Filters");
 	item.addEventListener("command", this);
-	this.menu.appendChild(item);
 
 	grpMenu = doc.createElement("menu");
 	grpMenu.setAttribute("label", "Groups");
@@ -319,11 +329,9 @@ function WinUI(win, addon)
 
 	this.menuItem = new MenuToggle(this, "Disabled", this.menu);
 
-	reloadItem = doc.createElement("menuitem");
+	reloadItem = ui.newMenuItem("Reload", this.menu);
 	reloadItem.cmdId = "reload";
-	ui.addLabel(reloadItem, "Reload");
 	reloadItem.addEventListener("command", this);
-	this.menu.appendChild(reloadItem);
 
 	this.groups = [];
 
