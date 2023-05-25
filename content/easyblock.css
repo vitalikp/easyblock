@@ -49,18 +49,32 @@ notification[type="info"].easyblock description
 
 /** menu */
 
+toolbarbutton.easyblock menu,
 toolbarbutton.easyblock menuitem
 {
 	-moz-appearance: none !important;
 	padding: 4px 6px;
+	padding-right: 23px;
+}
+
+toolbarbutton.easyblock menu > label,
+toolbarbutton.easyblock menuitem > label
+{
+	padding-left: 20px;
+	margin: 0 1px !important;
+}
+
+toolbarbutton.easyblock menu
+{
+	background-image: url("chrome://easyblock/content/ui.svg#menu");
+	background-repeat: no-repeat;
+	background-position: right center;
 }
 
 toolbarbutton.easyblock menuitem > label
 {
 	background-position: left center;
 	background-repeat: no-repeat;
-	padding-left: 20px;
-	margin: 0 1px !important;
 }
 
 toolbarbutton.easyblock menuitem[toggled="true"] > label
