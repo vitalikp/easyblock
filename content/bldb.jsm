@@ -52,16 +52,17 @@ BlRule.prototype =
 		}
 		this.level = level;
 
-		if (line[0] == '#')
+		switch (line[0])
 		{
-			this.type = RULE_COMM;
-			line = line.substr(1);
-		}
+			case '#':
+				this.type = RULE_COMM;
+				line = line.substr(1);
+				break;
 
-		if (line[0] == '!')
-		{
-			this.disabled = true;
-			line = line.substr(1);
+			case '!':
+				this.disabled = true;
+				line = line.substr(1);
+				break;
 		}
 
 		i = line.indexOf(':');
