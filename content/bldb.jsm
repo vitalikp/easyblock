@@ -459,6 +459,7 @@ function blsite(rule)
 	this.name = rule.value;
 	this.host = new blhost(rule.value, true);
 	this.ua = null;
+	this.aliases = [];
 	this.pathes = [];
 	this.type = [];
 	this.dom = [];
@@ -477,6 +478,16 @@ blsite.prototype =
 	get hasRules()
 	{
 		return this.ua || this.pathes.length > 0 || this.type.length > 0 || this.dom.length > 0 || this.css.length > 0 || this.js.length > 0;
+	},
+
+	addAlias(hostname)
+	{
+		let host = new blhost(hostname, true);
+
+		if (this.hasHost(host))
+			return;
+
+		this.aliases.push(host);
 	},
 
 	addRule(rule)
@@ -506,6 +517,10 @@ blsite.prototype =
 				this.ua = new StrRule("User-Agent", rule.value);
 				break;
 
+			case "cn":
+				this.addAlias(rule.value);
+				break;
+
 			case "type":
 				this.addType(rule);
 				break;
@@ -529,10 +544,22 @@ blsite.prototype =
 
 	hasHost(host)
 	{
+		let i;
+
 		if (!this.enabled || !host || !this.host)
 			return false;
 
-		return this.host.hasHost(host);
+		if (this.host.hasHost(host))
+			return true;
+
+		i = 0;
+		while (i < this.aliases.length)
+		{
+			if (this.aliases[i++].hasHost(host))
+				return true;
+		}
+
+		return false;
 	},
 
 	addPath(rule)
@@ -707,6 +734,22 @@ blsite.prototype =
 
 		if (this.ua)
 			this.ua.print(doc, node);
+
+		if (this.aliases.length > 0)
+		{
+			tree = uitree.create(doc, "Alias (" + this.aliases.length + ")", false);
+			uitree.add(node, tree);
+
+			i = 0;
+			while (i < this.aliases.length)
+			{
+				rule = this.aliases[i++];
+				if (!rule)
+					continue;
+
+				uitree.addLabel(tree, rule);
+			}
+		}
 
 		if (this.pathes.length > 0)
 		{
