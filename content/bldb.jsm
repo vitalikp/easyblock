@@ -218,6 +218,17 @@ function DomRule(rule)
 
 DomRule.prototype =
 {
+	_parseAttr(rule)
+	{
+		if (rule.name != 'attr')
+			throw new Error('ignore ' + rule.name + ' rule "' + rule.value + '": rule is unknown');
+
+		if (rule.rules.length > 0)
+			throw new Error('ignore ' + rule.name + ' rule "' + rule.value + '": subrules is not supported');
+
+		this.attrs.push(rule.value);
+	},
+
 	_parse(rule)
 	{
 		let subrule, i;
@@ -234,19 +245,15 @@ DomRule.prototype =
 				if (!subrule || subrule.type != RULE_NONE)
 					continue;
 
-				if (subrule.name != 'attr')
+				try
 				{
-					log.error(new SyntaxError(rule.name + ': ignore ' + subrule.name + ' rule "' + subrule.value + '": rule is unknown', '?', subrule.ln)); // FIXME need set filename!
+					this._parseAttr(subrule);
+				}
+				catch (e)
+				{
+					log.error(new SyntaxError(rule.name + ': ' + e.message, '?', subrule.ln)); // FIXME need set filename!
 					continue;
 				}
-
-				if (subrule.rules.length > 0)
-				{
-					log.error(new SyntaxError(rule.name + ': ignore ' + subrule.name + ' rule "' + subrule.value + '": subrules is not supported', '?', subrule.ln));// FIXME need set filename!
-					continue;
-				}
-	
-				this.attrs.push(subrule.value);
 			}
 	
 			if (this.attrs.length < 1)
