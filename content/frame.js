@@ -30,4 +30,4 @@ let handler;
 
 handler = new SiteHandler(ContentAPI);
 addEventListener("DOMContentLoaded", handler);
-addEventListener('unload', handler);
+addEventListener("unload", handler); // once is ignored here

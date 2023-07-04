@@ -68,7 +68,7 @@ Site.prototype =
 			return;
 
 		this.obs = new win.MutationObserver((mutList, obs) => this.onEdit(mutList));
-		win.addEventListener("beforeunload", this);
+		win.addEventListener("beforeunload", this, { once: true });
 		this.obs.observe(node, MutConf);
 	},
 
@@ -168,19 +168,12 @@ Site.prototype =
 
 	handleEvent(event)
 	{
-		let win;
-
-		if (!event || !event.target)
-			return;
-
-		win = event.target.defaultView;
-		if (!win)
+		if (!event)
 			return;
 
 		switch (event.type)
 		{
 			case "beforeunload":
-				win.removeEventListener("beforeunload", this);
 				this.unreg();
 				break;
 		}

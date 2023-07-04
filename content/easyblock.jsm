@@ -91,10 +91,9 @@ ObsHandler.prototype =
 
 		listener = (event) =>
 		{
-			win.removeEventListener("load", listener, false);
 			this.addon.loadWindow(win);
 		};
-		win.addEventListener("load", listener, false);
+		win.addEventListener("load", listener, { once: true });
 	},
 
 	observe(subject, topic, data)
