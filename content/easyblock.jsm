@@ -84,16 +84,10 @@ ObsHandler.prototype =
 
 	onWinOpen(win)
 	{
-		let listener;
-
 		if (!win)
 			return;
 
-		listener = (event) =>
-		{
-			this.addon.loadWindow(win);
-		};
-		win.addEventListener("load", listener, { once: true });
+		win.addEventListener("load", this.addon, { once: true });
 	},
 
 	observe(subject, topic, data)
@@ -509,5 +503,22 @@ var EasyBlock =
 	print(doc, elem)
 	{
 		this.db.print(doc, elem);
+	},
+
+	handleEvent(event)
+	{
+		let target;
+
+		if (!event || !event.target)
+			return;
+
+		target = event.target;
+
+		switch (event.type)
+		{
+			case "load":
+				this.loadWindow(target.defaultView);
+				break;
+		}
 	}
 };
