@@ -288,23 +288,26 @@ var EasyBlock =
 
 		type = req.loadInfo && req.loadInfo.externalContentPolicyType;
 
-		if (type != TYPE_DOC && req.referrer)
-		{
-			dn = req.referrer.host;
+		dn = req.URI.host;
 
-			try
+		if (type != TYPE_DOC)
+		{
+			if (req.referrer)
+				dn = req.referrer.host;
+			else
 			{
-				origin = req.getRequestHeader("Origin");
-				if (origin)
-					dn = io.newURI(origin).host;
-			}
-			catch (e)
-			{
-				
+				try
+				{
+					origin = req.getRequestHeader("Origin");
+					if (origin)
+						dn = io.newURI(origin).host;
+				}
+				catch (e)
+				{
+					
+				}
 			}
 		}
-		else
-			dn = req.URI.host;
 
 		ua = this.db.findUA(dn);
 		if (!ua)
