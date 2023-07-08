@@ -77,7 +77,8 @@ Site.prototype =
 		if (!this.obs)
 			return;
 
-		this.obs.disconnect();
+		if (!Cu.isDeadWrapper(this.obs))
+			this.obs.disconnect();
 		this.obs = null;
 	},
 
