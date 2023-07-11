@@ -72,7 +72,7 @@ Site.prototype =
 			return;
 
 		this.obs = new win.MutationObserver((mutList, obs) => this.onEdit(mutList));
-		win.addEventListener("beforeunload", this, { once: true });
+		win.addEventListener("unload", this, { once: true });
 		this.obs.observe(node, MutConf);
 	},
 
@@ -177,7 +177,7 @@ Site.prototype =
 
 		switch (event.type)
 		{
-			case "beforeunload":
+			case "unload":
 				this.unreg();
 				break;
 		}
