@@ -96,7 +96,7 @@ var log =
 
 var io =
 {
-	init: function()
+	init()
 	{
 		let dirSrv, profPath;
 
@@ -108,7 +108,7 @@ var io =
 		this.addonPath = profPath.path;
 	},
 
-	newURI: function(url)
+	newURI(url)
 	{
 		if (!url)
 			return null;
@@ -126,7 +126,7 @@ var io =
 		}
 	},
 
-	stat: function(fn, callback)
+	stat(fn, callback)
 	{
 		let path;
 
@@ -138,7 +138,7 @@ var io =
 		});
 	},
 
-	load: function(path, callback)
+	load(path, callback)
 	{
 		if (!path || !callback)
 			return;
@@ -155,7 +155,7 @@ var io =
 		});
 	},
 
-	loadText: function(path, callback)
+	loadText(path, callback)
 	{
 		if (!path || !callback)
 			return;
@@ -183,7 +183,7 @@ var io =
 		});
 	},
 
-	loadFile: function(fn, callback)
+	loadFile(fn, callback)
 	{
 		let path;
 
@@ -205,7 +205,7 @@ var io =
 		}
 	},
 
-	saveFile: function(fn, data)
+	saveFile(fn, data)
 	{
 		let path;
 
@@ -243,7 +243,7 @@ var io =
 		});
 	},
 
-	onLoad: function(path, stat, callback)
+	onLoad(path, stat, callback)
 	{
 		if (stat.isDir)
 			return;
