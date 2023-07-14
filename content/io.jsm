@@ -126,11 +126,6 @@ var io =
 		}
 	},
 
-	error: function(msg)
-	{
-		log.error(msg);
-	},
-
 	stat: function(fn, callback)
 	{
 		let path;
@@ -183,7 +178,7 @@ var io =
 			}
 			catch (e)
 			{
-				io.error('fail to read ' + path + ' file: ' + e);
+				log.error('fail to read ' + path + ' file: ' + e);
 			}
 		});
 	},
@@ -206,7 +201,7 @@ var io =
 		}
 		catch(e)
 		{
-			io.error('fail to load ' + fn + ' file: ' + e);
+			log.error('fail to load ' + fn + ' file: ' + e);
 		}
 	},
 
@@ -238,7 +233,7 @@ var io =
 			}
 			catch(e)
 			{
-				io.error('fail to save ' + fn + ' file: ' + e);
+				log.error('fail to save ' + fn + ' file: ' + e);
 			}
 			finally
 			{
@@ -265,7 +260,7 @@ var io =
 		}
 		catch(e)
 		{
-			io.error('fail to read ' + path + ' file: ' + e);
+			log.error('fail to read ' + path + ' file: ' + e);
 		}
 	}
 };
