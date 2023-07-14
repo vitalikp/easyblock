@@ -35,7 +35,7 @@ function BlRule(ln)
 
 BlRule.prototype = 
 {
-	parse: function(line)
+	parse(line)
 	{
 		let level, i;
 
@@ -76,7 +76,7 @@ BlRule.prototype =
 		this.value = line.trim();
 	},
 
-	add: function(rule)
+	add(rule)
 	{
 		if (!rule)
 			return false;
@@ -94,7 +94,7 @@ BlRule.prototype =
 		return true;
 	},
 
-	toString: function()
+	toString()
 	{
 		let res = '';
 
@@ -189,7 +189,7 @@ function StrRule(name, value)
 
 StrRule.prototype =
 {
-	print: function(doc, elem)
+	print(doc, elem)
 	{
 		let tree, label;
 
@@ -201,7 +201,7 @@ StrRule.prototype =
 		uitree.add(tree, label);
 	},
 
-	toString: function()
+	toString()
 	{
 		return this.value;
 	}
@@ -217,7 +217,7 @@ function DomRule(rule)
 
 DomRule.prototype =
 {
-	_parse: function(rule)
+	_parse(rule)
 	{
 		let subrule, i;
 
@@ -264,7 +264,7 @@ DomRule.prototype =
 		this.value = rule.value;
 	},
 
-	print: function(doc, elem)
+	print(doc, elem)
 	{
 		let node, tree, label, i;
 
@@ -290,7 +290,7 @@ DomRule.prototype =
 		uitree.add(elem, node);
 	},
 
-	toString: function()
+	toString()
 	{
 		return this.value;
 	}
@@ -306,7 +306,7 @@ function CssRule(name)
 
 CssRule.prototype =
 {
-	load: function(fn)
+	load(fn)
 	{
 		io.loadText(fn, (data) =>
 		{
@@ -319,7 +319,7 @@ CssRule.prototype =
 		});
 	},
 
-	print: function(doc, elem)
+	print(doc, elem)
 	{
 		let label;
 
@@ -329,7 +329,7 @@ CssRule.prototype =
 		uitree.add(elem, label);
 	},
 
-	toString: function()
+	toString()
 	{
 		return this.name;
 	}
@@ -345,7 +345,7 @@ function JsRule(name)
 
 JsRule.prototype =
 {
-	load: function(fn)
+	load(fn)
 	{
 		io.loadText(fn, (data) =>
 		{
@@ -358,7 +358,7 @@ JsRule.prototype =
 		});
 	},
 
-	print: function(doc, elem)
+	print(doc, elem)
 	{
 		let label;
 
@@ -368,7 +368,7 @@ JsRule.prototype =
 		uitree.add(elem, label);
 	},
 
-	toString: function()
+	toString()
 	{
 		return this.name;
 	}
@@ -395,7 +395,7 @@ PathRule.cmp = function(val1, val2)
 
 PathRule.prototype =
 {
-	_parse: function()
+	_parse()
 	{
 		let data, val, i;
 
@@ -414,7 +414,7 @@ PathRule.prototype =
 		this.data = data;
 	},
 
-	hasPath: function(path)
+	hasPath(path)
 	{
 		let data, len, dlen, i, j;
 
@@ -461,7 +461,7 @@ PathRule.prototype =
 		return true;
 	},
 
-	print: function(doc, elem)
+	print(doc, elem)
 	{
 		let label;
 
@@ -471,7 +471,7 @@ PathRule.prototype =
 		uitree.add(elem, label);
 	},
 
-	toString: function()
+	toString()
 	{
 		return this.path;
 	}
@@ -506,7 +506,7 @@ blsite.prototype =
 		return this.ua || this.pathes.length > 0 || this.type.length > 0 || this.dom.length > 0 || this.css.length > 0 || this.js.length > 0;
 	},
 
-	addRule: function(rule)
+	addRule(rule)
 	{
 		if (!rule || rule.level < 1)
 			return;
@@ -554,7 +554,7 @@ blsite.prototype =
 		}
 	},
 
-	hasHost: function(host)
+	hasHost(host)
 	{
 		if (!this.enabled || !host || !this.host)
 			return false;
@@ -562,7 +562,7 @@ blsite.prototype =
 		return this.host.hasHost(host);
 	},
 
-	addPath: function(rule)
+	addPath(rule)
 	{
 		if (!rule || !rule.value)
 			return;
@@ -573,7 +573,7 @@ blsite.prototype =
 		this.pathes.push(new PathRule(rule.value));
 	},
 
-	hasPath: function(path)
+	hasPath(path)
 	{
 		let i;
 
@@ -594,7 +594,7 @@ blsite.prototype =
 		return false;
 	},
 
-	addType: function(rule)
+	addType(rule)
 	{
 		let line;
 
@@ -610,7 +610,7 @@ blsite.prototype =
 		this.type.push(new RegExp(line));
 	},
 
-	hasType: function(type)
+	hasType(type)
 	{
 		let i;
 
@@ -651,7 +651,7 @@ blsite.prototype =
 		return content;
 	},
 
-	addDom: function(rule)
+	addDom(rule)
 	{
 		this.dom.push(new DomRule(rule));
 	},
@@ -680,7 +680,7 @@ blsite.prototype =
 		return scripts;
 	},
 
-	addCss: function(rule)
+	addCss(rule)
 	{
 		if (!rule || !rule.value)
 			return;
@@ -691,7 +691,7 @@ blsite.prototype =
 		this.css.push(new CssRule(rule.value));
 	},
 
-	addJs: function(rule)
+	addJs(rule)
 	{
 		if (!rule || !rule.value)
 			return;
@@ -707,7 +707,7 @@ blsite.prototype =
 		return this.dom.length > 0 || this.css.length > 0 || this.js.length > 0;
 	},
 
-	onBlock: function(content)
+	onBlock(content)
 	{
 		if (content)
 			log.info("Blocking content site '" + this.name + "'");
@@ -718,7 +718,7 @@ blsite.prototype =
 		}
 	},
 
-	print: function(doc, elem)
+	print(doc, elem)
 	{
 		let node, tree, label, rule;
 		let i;
@@ -817,7 +817,7 @@ blsite.prototype =
 		}
 	},
 
-	toString: function()
+	toString()
 	{
 		let res;
 
@@ -842,7 +842,7 @@ function blgroup(name)
 
 blgroup.prototype =
 {
-	setFlags: function(val)
+	setFlags(val)
 	{
 		let flags, i;
 
@@ -871,7 +871,7 @@ blgroup.prototype =
 		}
 	},
 
-	toggle: function(value)
+	toggle(value)
 	{
 		if (this.enabled == value)
 			return false;
@@ -885,7 +885,7 @@ blgroup.prototype =
 		return true;
 	},
 
-	add: function(site)
+	add(site)
 	{
 		if (!site || site.group)
 			return;
@@ -895,7 +895,7 @@ blgroup.prototype =
 //		log.info(this.name + ': add url "' + site.name + '"');
 	},
 
-	find: function(host)
+	find(host)
 	{
 		let site;
 		let i = 0;
@@ -913,7 +913,7 @@ blgroup.prototype =
 		return null;
 	},
 
-	print: function(doc, elem)
+	print(doc, elem)
 	{
 		let tree, label, site;
 		let i = 0;
@@ -937,7 +937,7 @@ blgroup.prototype =
 		}
 	},
 
-	toString: function()
+	toString()
 	{
 		let res;
 
@@ -981,17 +981,17 @@ function bldb(fn)
 
 bldb.prototype =
 {
-	clear: function()
+	clear()
 	{
 		this.groups = [];
 	},
 
-	close: function()
+	close()
 	{
 		this.clear();
 	},
 
-	get: function(grpId)
+	get(grpId)
 	{
 		if (!grpId || grpId <= 0)
 			return null;
@@ -999,7 +999,7 @@ bldb.prototype =
 		return this.groups[grpId - 1];
 	},
 
-	add: function(group)
+	add(group)
 	{
 		let id;
 
@@ -1016,7 +1016,7 @@ bldb.prototype =
 //		log.info('add group "' + group.name + '" to blacklist');
 	},
 
-	load: function(onLoad)
+	load(onLoad)
 	{
 		let db, loadtime;
 
@@ -1039,7 +1039,7 @@ bldb.prototype =
 		});
 	},
 
-	find: function(hostname, path)
+	find(hostname, path)
 	{
 		let group, site, host;
 		let i = 0;
@@ -1075,7 +1075,7 @@ bldb.prototype =
 		return null;
 	},
 
-	findUA: function(dn)
+	findUA(dn)
 	{
 		let group, site, host, ua;
 		let i;
@@ -1108,7 +1108,7 @@ bldb.prototype =
 		return ua;
 	},
 
-	print: function(doc, elem)
+	print(doc, elem)
 	{
 		let group;
 		let i = 0;
