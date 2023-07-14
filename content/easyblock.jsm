@@ -29,17 +29,17 @@ const TYPE_DOC = Ci.nsIContentPolicy.TYPE_DOCUMENT;
 
 const ProcessAPI =
 {
-	loadScript: function(name)
+	loadScript(name)
 	{
 		Services.mm.loadFrameScript("chrome://easyblock/content/" + name, true);
 	},
 
-	regEvent: function(event, handler)
+	regEvent(event, handler)
 	{
 		Services.mm.addMessageListener(event, handler);
 	},
 
-	sendEvent: function(event, data)
+	sendEvent(event, data)
 	{
 		Services.mm.broadcastAsyncMessage(event, data);
 	}
@@ -77,7 +77,7 @@ var EasyBlock =
 			log.info("Disable 'EasyBlock' addon...");
 	},
 
-	startup: function(addonData)
+	startup(addonData)
 	{
 		var windows, defprefs;
 
@@ -118,7 +118,7 @@ var EasyBlock =
 		log.info("easyblock " + addonData.version + " started!");
 	},
 
-	shutdown: function()
+	shutdown()
 	{
 		let i;
 
@@ -136,7 +136,7 @@ var EasyBlock =
 		ui.unloadCss("easyblock");
 	},
 
-	loadWindow: function(window)
+	loadWindow(window)
 	{
 		let winUI;
 
@@ -158,7 +158,7 @@ var EasyBlock =
 		this.wins.push(winUI);
 	},
 
-	watchWindow: function(window)
+	watchWindow(window)
 	{
 		let listener;
 
@@ -170,7 +170,7 @@ var EasyBlock =
 		window.addEventListener("load", listener, false);
 	},
 
-	customizeUI: function(toolbox)
+	customizeUI(toolbox)
 	{
 		let winUI, i;
 
@@ -187,7 +187,7 @@ var EasyBlock =
 		}
 	},
 
-	loadDBWin: function(winUI, db)
+	loadDBWin(winUI, db)
 	{
 		let group, grp, i;
 
@@ -214,7 +214,7 @@ var EasyBlock =
 		}
 	},
 
-	unloadWin: function(winUI)
+	unloadWin(winUI)
 	{
 		let i;
 
@@ -229,7 +229,7 @@ var EasyBlock =
 		}
 	},
 
-	toggle: function(value, grpId)
+	toggle(value, grpId)
 	{
 		if (grpId > 0)
 		{
@@ -251,7 +251,7 @@ var EasyBlock =
 		this.disabled = value;
 	},
 
-	getGroup: function(grpId)
+	getGroup(grpId)
 	{
 		if (!this.db)
 			return;
@@ -259,7 +259,7 @@ var EasyBlock =
 		return this.db.get(grpId);
 	},
 
-	findSite: function(hostname, path)
+	findSite(hostname, path)
 	{
 		if (!hostname || !this.db)
 			return;
@@ -267,7 +267,7 @@ var EasyBlock =
 		return this.db.find(hostname, path);
 	},
 
-	reload: function()
+	reload()
 	{
 		this.db.clear();
 		this.filter.reload();
@@ -278,7 +278,7 @@ var EasyBlock =
 		});
 	},
 
-	setReqUA: function(req)
+	setReqUA(req)
 	{
 		let type, origin, dn, ua;
 
@@ -312,7 +312,7 @@ var EasyBlock =
 		req.setRequestHeader("User-Agent", ua, false);
 	},
 
-	blockHttp: function(req, isResp)
+	blockHttp(req, isResp)
 	{
 		let type, site;
 
@@ -344,14 +344,14 @@ var EasyBlock =
 		site.onBlock();
 	},
 
-	print: function(doc, elem)
+	print(doc, elem)
 	{
 		this.db.print(doc, elem);
 	},
 
 	observer:
 	{
-		reg: function(obs, topic)
+		reg(obs, topic)
 		{
 			if (!obs || !topic)
 				return;
@@ -360,7 +360,7 @@ var EasyBlock =
 			obs.addObserver(this, topic, false);
 		},
 
-		unreg: function(obs, topic)
+		unreg(obs, topic)
 		{
 			if (!obs || !topic)
 				return;
@@ -369,7 +369,7 @@ var EasyBlock =
 			obs.removeObserver(this, topic, false);
 		},
 
-		observe: function(subject, topic, data)
+		observe(subject, topic, data)
 		{
 			switch (topic)
 			{
