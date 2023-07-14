@@ -416,6 +416,28 @@ SiteHandler.prototype =
 		onFind(data);
 	},
 
+	onCreate(doc)
+	{
+		let loc, site, isFrame;
+
+		if (!doc)
+			return;
+
+		loc = doc.location;
+		if (loc.protocol != "https:" && loc.protocol != "http:")
+			return;
+
+		isFrame = doc.defaultView.top != doc.defaultView.self;
+
+		if (!isFrame)
+			site = this.site; // doc is root site
+		else
+			site = this.frames.get(loc.hostname); // doc is frame site
+
+		if (!site || site.hostname != loc.hostname)
+			this.findDom(loc.hostname, (data) => this.onFind(doc, data, isFrame));
+	},
+
 	filterDom(doc)
 	{
 		let loc, site;
