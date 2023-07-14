@@ -126,11 +126,6 @@ var io =
 		}
 	},
 
-	warn: function(msg)
-	{
-		log.warn(msg);
-	},
-
 	error: function(msg)
 	{
 		log.error(msg);
@@ -144,7 +139,7 @@ var io =
 
 		OS.File.stat(path).then(callback, (res) =>
 		{
-			io.warn('file not found: ' + fn + ' ' + res);
+			log.warn('file not found: ' + fn + ' ' + res);
 		});
 	},
 
