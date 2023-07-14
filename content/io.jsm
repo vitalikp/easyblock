@@ -4,7 +4,7 @@ const Ci = Components.interfaces;
 const Cc = Components.classes;
 const Cu = Components.utils;
 
-var EXPORTED_SYMBOLS = ["LogLevel", "io"];
+var EXPORTED_SYMBOLS = ["LogLevel", "log", "io"];
 
 Cu.import("resource://gre/modules/osfile.jsm");
 Cu.import("resource://gre/modules/Task.jsm");
@@ -26,6 +26,73 @@ const LogLevel =
 	ALL: 5
 };
 
+
+var log =
+{
+	_level: LogLevel.INFO,
+
+	get level()
+	{
+		return this._level;
+	},
+
+	set level(value)
+	{
+		if (value < LogLevel.NONE || value > LogLevel.ALL)
+			return;
+
+		if (this._level == value)
+			return;
+
+		this._level = value;
+	},
+
+	_logMsg(flags, msg)
+	{
+		let errMsg;
+
+		if (!msg)
+			return;
+
+		errMsg = scriptError.createInstance(Ci.nsIScriptError);
+		errMsg.initWithWindowID("[" + ADDON_NAME + "] " + msg, msg.fileName, msg.lineNumber, msg.lineNumber, 0, flags, null, 0);
+
+		cs.logMessage(errMsg);
+	},
+
+	error(msg)
+	{
+		if (this.level < LogLevel.ERROR)
+			return;
+
+		return this._logMsg(Ci.nsIScriptError.errorFlag, msg);
+	},
+
+	warn(msg)
+	{
+		if (this.level < LogLevel.WARN)
+			return;
+
+		return this._logMsg(Ci.nsIScriptError.warningFlag, msg);
+	},
+
+	info(msg)
+	{
+		if (this.level < LogLevel.INFO)
+			return;
+
+		cs.logStringMessage("[" + ADDON_NAME + "] " + msg);
+	},
+
+	debug(msg)
+	{
+		if (this.level < LogLevel.DEBUG)
+			return;
+
+		dump(msg + "\n");
+		cs.logStringMessage("[" + ADDON_NAME + "] " + msg);
+	}
+};
 
 var io =
 {
@@ -61,7 +128,7 @@ var io =
 
 	log: function(msg)
 	{
-		cs.logStringMessage("[" + ADDON_NAME + "] " + msg);
+		log.info(msg);
 	},
 
 	logMsg: function(flags, msg)
@@ -79,12 +146,12 @@ var io =
 
 	warn: function(msg)
 	{
-		return this.logMsg(Ci.nsIScriptError.warningFlag, msg);
+		log.warn(msg);
 	},
 
 	error: function(msg)
 	{
-		return this.logMsg(Ci.nsIScriptError.errorFlag, msg);
+		log.error(msg);
 	},
 
 	stat: function(fn, callback)
