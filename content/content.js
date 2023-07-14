@@ -387,8 +387,6 @@ SiteHandler.prototype =
 		}
 		else
 			this.frames.set(data.hostname, site);
-
-		site.filter(doc);
 	},
 
 	findDom(hostname, onFind)
@@ -452,22 +450,13 @@ SiteHandler.prototype =
 		if (loc.protocol != "https:" && loc.protocol != "http:")
 			return;
 
-		site = this.site;
-		if (!site || site.hostname != loc.hostname)
-		{
-			if (doc.defaultView.top == doc.defaultView.self) // doc is root site
-			{
-				this.findDom(loc.hostname, (data) => this.onFind(doc, data));
-				return;
-			}
-
+		if (doc.defaultView.top == doc.defaultView.self) // doc is root site
+			site = this.site;
+		else
 			site = this.frames.get(loc.hostname); // doc is frame site
-			if (!site || site.hostname != loc.hostname)
-			{
-				this.findDom(loc.hostname, (data) => this.onFind(doc, data, true));
-				return;
-			}
-		}
+
+		if (!site)
+			return;
 
 		site.filter(doc);
 	},
@@ -483,11 +472,16 @@ SiteHandler.prototype =
 
 		switch (event.type)
 		{
+			case "DOMWindowCreated":
+				this.onCreate(target);
+				break;
+
 			case "DOMContentLoaded":
 				this.filterDom(target);
 				break;
 
 			case "unload":
+				target.removeEventListener("DOMWindowCreated", this);
 				target.removeEventListener("DOMContentLoaded", this);
 				target.removeEventListener("unload", this);
 				this.destroy();

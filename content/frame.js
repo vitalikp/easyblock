@@ -29,5 +29,6 @@ const ContentAPI =
 let handler;
 
 handler = new SiteHandler(ContentAPI);
+addEventListener("DOMWindowCreated", handler);
 addEventListener("DOMContentLoaded", handler);
 addEventListener("unload", handler); // once is ignored here
