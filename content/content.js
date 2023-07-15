@@ -72,7 +72,7 @@ Site.prototype =
 			return;
 
 		this.obs = new win.MutationObserver((mutList, obs) => this.onEdit(mutList));
-		win.addEventListener("beforeunload", this);
+		win.addEventListener("beforeunload", this, { once: true });
 		this.obs.observe(node, MutConf);
 	},
 
@@ -178,7 +178,6 @@ Site.prototype =
 		switch (event.type)
 		{
 			case "beforeunload":
-				removeEventListener("beforeunload", this);
 				this.unreg();
 				break;
 		}
@@ -400,4 +399,4 @@ let handler;
 
 handler = new SiteHandler(ContentAPI);
 addEventListener("DOMContentLoaded", handler);
-addEventListener('unload', handler);
+addEventListener('unload', handler); // once is ignored here

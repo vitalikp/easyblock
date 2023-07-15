@@ -165,10 +165,9 @@ var EasyBlock =
 
 		listener = (event) =>
 		{
-			window.removeEventListener("load", listener, false);
 			this.loadWindow(window);
 		};
-		window.addEventListener("load", listener, false);
+		window.addEventListener("load", listener, { once: true });
 	},
 
 	customizeUI(toolbox)
