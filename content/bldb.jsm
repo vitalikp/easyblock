@@ -449,16 +449,6 @@ PathRule.prototype =
 		return true;
 	},
 
-	print(doc, elem)
-	{
-		let label;
-
-		label = doc.createElement("label");
-		label.textContent = this.path;
-
-		uitree.add(elem, label);
-	},
-
 	toString()
 	{
 		return this.path;
@@ -735,7 +725,9 @@ blsite.prototype =
 				if (!rule)
 					continue;
 
-				rule.print(doc, tree);
+				label = doc.createElement("label");
+				label.textContent = rule;
+				uitree.add(tree, label);
 			}
 		}
 
