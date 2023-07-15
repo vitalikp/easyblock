@@ -86,6 +86,21 @@ const uitree =
 		}
 
 		node.root.appendChild(item);
+	},
+
+	addLabel(node, text)
+	{
+		let doc, label;
+
+		if (!node)
+			return;
+
+		doc = node.ownerDocument;
+
+		label = doc.createElement("label");
+		label.textContent = text;
+
+		uitree.add(node, label);
 	}
 };
 

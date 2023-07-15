@@ -192,14 +192,12 @@ StrRule.prototype =
 {
 	print(doc, elem)
 	{
-		let tree, label;
+		let tree;
 
 		tree = uitree.create(doc, this.name, false);
 		uitree.add(elem, tree);
 
-		label = doc.createElement("label");
-		label.textContent = this.value;
-		uitree.add(tree, label);
+		uitree.addLabel(tree, this);
 	},
 
 	toString()
@@ -274,7 +272,7 @@ DomRule.prototype =
 
 	print(doc, elem)
 	{
-		let node, tree, label, i;
+		let node, tree, i;
 
 		if (this.attrs.length > 0)
 		{
@@ -286,10 +284,7 @@ DomRule.prototype =
 			i = 0;
 			while (i < this.attrs.length)
 			{
-				label = doc.createElement("label");
-				label.textContent = this.attrs[i++];
-
-				uitree.add(tree, label);
+				uitree.addLabel(tree, this.attrs[i++]);
 			}
 		}
 		else
@@ -698,7 +693,7 @@ blsite.prototype =
 
 	print(doc, elem)
 	{
-		let node, tree, label, rule;
+		let node, tree, rule;
 		let i;
 
 		if (this.hasRules)
@@ -725,9 +720,7 @@ blsite.prototype =
 				if (!rule)
 					continue;
 
-				label = doc.createElement("label");
-				label.textContent = rule;
-				uitree.add(tree, label);
+				uitree.addLabel(tree, rule);
 			}
 		}
 
@@ -742,9 +735,7 @@ blsite.prototype =
 				rule = this.type[i++];
 				rule = rule.source;
 
-				label = doc.createElement("label");
-				label.textContent = rule;
-				uitree.add(tree, label);
+				uitree.addLabel(tree, rule);
 			}
 		}
 
@@ -776,10 +767,7 @@ blsite.prototype =
 				if (!rule)
 					continue;
 
-				label = doc.createElement("label");
-				label.textContent = rule;
-
-				uitree.add(tree, label);
+				uitree.addLabel(tree, rule);
 			}
 		}
 
@@ -795,10 +783,7 @@ blsite.prototype =
 				if (!rule)
 					continue;
 
-				label = doc.createElement("label");
-				label.textContent = rule;
-
-				uitree.add(tree, label);
+				uitree.addLabel(tree, rule);
 			}
 		}
 	},
