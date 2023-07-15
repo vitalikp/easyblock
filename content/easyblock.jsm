@@ -110,7 +110,7 @@ var EasyBlock =
 		windows = wm.getEnumerator("navigator:browser");
 
 		while (windows.hasMoreElements())
-			this.loadWindow(windows.getNext().QueryInterface(Ci.nsIDOMWindow));
+			this.loadWindow(windows.getNext());
 		EasyBlock.observer.reg(os, OBS_WIN_OPEN);
 
 		ui.loadCss("easyblock");
