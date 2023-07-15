@@ -124,7 +124,7 @@ Site.prototype =
 	apply(doc)
 	{
 		let i;
-		let style, script;
+		let style, script, nonce;
 
 		if (!doc)
 			return;
@@ -138,11 +138,15 @@ Site.prototype =
 			doc.head.appendChild(style);
 		}
 
+		nonce = Site.getCspNonce(doc);
+
 		i = 0;
 		while (i < this.scripts.length)
 		{
 			script = doc.createElement("script");
 			script.type = "text/javascript";
+			if (nonce)
+				script.setAttribute("nonce", nonce);
 			script.innerHTML = this.scripts[i++];
 			doc.head.appendChild(script);
 		}
