@@ -232,6 +232,47 @@ Site.filterNodes = function(nodes, attrs)
 	}
 };
 
+Site.getCspNonce = function(doc)
+{
+	let csp, src, val, i, j;
+
+	if (!doc || !doc.nodePrincipal)
+		return null;
+
+	csp = doc.nodePrincipal.cspJSON;
+	if (!csp)
+		return null;
+
+	try
+	{
+		csp = JSON.parse(csp.toString());
+		csp = csp["csp-policies"];
+		if (Array.isArray(csp))
+		{
+			i = 0;
+			while (i < csp.length)
+			{
+				src = csp[i++]["script-src"];
+				if (Array.isArray(src))
+				{
+					j = 0;
+					while (j < src.length)
+					{
+						val = src[j++];
+						if (val.startsWith("'nonce-"))
+							return val.slice(7,-1);
+					}
+				}
+			}
+		}
+	}
+	catch(e)
+	{
+	}
+
+	return null;
+}
+
 function SiteHandler(api)
 {
 	let filter = {};
