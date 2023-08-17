@@ -114,6 +114,19 @@ BlRule.prototype =
 	}
 };
 
+BlRule.parseFlags = function(val)
+{
+	if (!val || val.length < 3)
+		return [];
+
+	if (val[0] != '(' && val[val.length-1] != ')')
+		return [];
+
+	val = val.slice(1,-1);
+
+	return val.split('|');
+};
+
 BlRule.parse = function(fn, data, off, rules)
 {
 	let prule, rule;
@@ -855,14 +868,7 @@ blgroup.prototype =
 	{
 		let flags, i;
 
-		if (!val || val.length < 3)
-			return;
-
-		if (val[0] != '(' && val[val.length-1] != ')')
-			return;
-		val = val.slice(1,-1);
-
-		flags = val.split('|');
+		flags = BlRule.parseFlags(val);
 
 		i = 0;
 		while (i < flags.length)
