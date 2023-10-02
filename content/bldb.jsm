@@ -136,7 +136,7 @@ BlRule.parse = function(fn, data, off, rules)
 		return;
 
 	begin = off;
-	ln = 1;
+	ln = 0;
 	while (off < data.length)
 	{
 		ch = data[off++];
@@ -147,44 +147,46 @@ BlRule.parse = function(fn, data, off, rules)
 		{
 			rule = null;
 			line = data.substr(begin, off - begin - 1);
+			begin = off;
+			ln++;
+
 			if (line)
 			{
 				rule = new BlRule(ln);
 				rule.parse(line);
 			}
-
-			begin = off;
-			ln++;
-
-			if (rule)
+			else
 			{
-				if (!prule || prule.level >= rule.level)
-				{
-					if (rule.level > 0)
-					{
-						if (rule.name)
-							log.error(new SyntaxError('ignore ' + rule.name + ' rule "' + rule.value + '"', fn, rule.ln));
-						else
-							log.error(new SyntaxError('ignore rule "' + rule.value + '"', fn, rule.ln));
+				prule = null;
+				continue;
+			}
 
-						continue;
-					}
-				}
-				else
+			if (!prule || prule.level >= rule.level)
+			{
+				if (rule.level > 0)
 				{
-					if (prule.add(rule))
-						continue;
-
 					if (rule.name)
-						log.error(new SyntaxError(prule.value + ': ignore ' + rule.name + ' rule "' + rule.value + '"', fn, rule.ln));
+						log.error(new SyntaxError('ignore ' + rule.name + ' rule "' + rule.value + '"', fn, rule.ln));
 					else
-						log.error(new SyntaxError(prule.value + ': ignore rule "' + rule.value + '"', fn, rule.ln));
+						log.error(new SyntaxError('ignore rule "' + rule.value + '"', fn, rule.ln));
 
 					continue;
 				}
 			}
+			else
+			{
+				if (prule.add(rule))
+					continue;
 
-			if (!rule || rule.type != RULE_COMM)
+				if (rule.name)
+					log.error(new SyntaxError(prule.value + ': ignore ' + rule.name + ' rule "' + rule.value + '"', fn, rule.ln));
+				else
+					log.error(new SyntaxError(prule.value + ': ignore rule "' + rule.value + '"', fn, rule.ln));
+
+				continue;
+			}
+
+			if (rule.type != RULE_COMM)
 				prule = rule;
 			rules.push(rule);
 		}
