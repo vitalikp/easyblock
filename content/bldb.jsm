@@ -25,6 +25,7 @@ const RULE_PROP = 2;
 function BlRule(ln)
 {
 	this.ln = ln;
+	this.parent = null;
 	this.level = 0;
 	this.disabled = false;
 	this.type = RULE_NONE;
@@ -90,6 +91,7 @@ BlRule.prototype =
 			return this.rules[this.rules.length-1].add(rule);
 		}
 
+		rule.parent = this;
 		this.rules.push(rule);
 
 		return true;
