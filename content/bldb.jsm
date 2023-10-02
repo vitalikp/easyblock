@@ -495,7 +495,7 @@ function blsite(rule)
 	this.ua = null;
 	this.aliases = [];
 	this.pathes = [];
-	this.type = [];
+	this.mtypes = [];
 	this.dom = [];
 	this.css = [];
 	this.js = [];
@@ -511,7 +511,7 @@ blsite.prototype =
 
 	get hasRules()
 	{
-		return this.ua || this.pathes.length > 0 || this.type.length > 0 || this.dom.length > 0 || this.css.length > 0 || this.js.length > 0;
+		return this.ua || this.pathes.length > 0 || this.mtypes.length > 0 || this.dom.length > 0 || this.css.length > 0 || this.js.length > 0;
 	},
 
 	addAlias(hostname)
@@ -643,20 +643,20 @@ blsite.prototype =
 		line = rule.value;
 		line = line.replace('*', '.*');
 
-		this.type.push(new RegExp(line));
+		this.mtypes.push(new RegExp(line));
 	},
 
 	hasType(type)
 	{
 		let i;
 
-		if (!type || !this.type.length)
+		if (!type || !this.mtypes.length)
 			return false;
 
 		i = 0;
-		while (i < this.type.length)
+		while (i < this.mtypes.length)
 		{
-			if (this.type[i++].test(type))
+			if (this.mtypes[i++].test(type))
 				return true;
 		}
 
@@ -798,15 +798,15 @@ blsite.prototype =
 			}
 		}
 
-		if (this.type.length > 0)
+		if (this.mtypes.length > 0)
 		{
-			tree = uitree.create(doc, "Type (" + this.type.length + ")", false);
+			tree = uitree.create(doc, "Type (" + this.mtypes.length + ")", false);
 			uitree.add(node, tree);
 
 			i = 0;
-			while (i < this.type.length)
+			while (i < this.mtypes.length)
 			{
-				rule = this.type[i++];
+				rule = this.mtypes[i++];
 				rule = rule.source;
 
 				uitree.addLabel(tree, rule);
