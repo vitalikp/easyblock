@@ -37,6 +37,17 @@ function BlRule(ln)
 
 BlRule.prototype = 
 {
+	get fn()
+	{
+		if (this.parent)
+			return this.parent.fn;
+
+		if (!this._fn)
+			return "?";
+
+		return this._fn;
+	},
+
 	parse(line)
 	{
 		let level, i;
@@ -263,7 +274,7 @@ DomRule.prototype =
 				}
 				catch (e)
 				{
-					log.error(new SyntaxError(rule.name + ': ' + e.message, '?', subrule.ln)); // FIXME need set filename!
+					log.error(new SyntaxError(rule.name + ': ' + e.message, subrule.fn, subrule.ln)); // FIXME need set filename!
 					continue;
 				}
 			}
