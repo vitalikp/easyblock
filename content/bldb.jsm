@@ -24,6 +24,7 @@ const RULE_PROP = 2;
 
 function BlRule(ln)
 {
+	this._fn = null;
 	this.ln = ln;
 	this.parent = null;
 	this.level = 0;
