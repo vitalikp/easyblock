@@ -556,6 +556,7 @@ blsite.prototype =
 				break;
 
 			case "type":
+				log.warn(new SyntaxError(this.name + ': type rule "' + rule.value + '": "type" rule is deprecated, use "mtype" instead', rule.fn, rule.ln));
 			case "mtype":
 				this.addType(rule);
 				break;
