@@ -25,7 +25,7 @@ example.net
   /img/logo.png
 # by MIME type in response
 # example.net/img/test.jpg
-  type:image/jpeg
+  mtype:image/jpeg
 
 # block “a.example.org” host
 # by level domain
