@@ -48,6 +48,14 @@ BlRule.prototype =
 		return this._fn;
 	},
 
+	set fn(value)
+	{
+		if (this._fn == value)
+			return;
+
+		this._fn = value;
+	},
+
 	parse(line)
 	{
 		let level, i;
@@ -202,6 +210,7 @@ BlRule.parse = function(fn, data, off, rules)
 
 			if (rule.type != RULE_COMM)
 				prule = rule;
+			rule.fn = fn;
 			rules.push(rule);
 		}
 	}
@@ -274,7 +283,7 @@ DomRule.prototype =
 				}
 				catch (e)
 				{
-					log.error(new SyntaxError(rule.name + ': ' + e.message, subrule.fn, subrule.ln)); // FIXME need set filename!
+					log.error(new SyntaxError(rule.name + ': ' + e.message, subrule.fn, subrule.ln));
 					continue;
 				}
 			}
