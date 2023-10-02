@@ -140,8 +140,10 @@ BlRule.parse = function(fn, data, off, rules)
 	while (off < data.length)
 	{
 		ch = data[off++];
+		if (ch == '\r')
+			continue;
 
-		if (ch == '\n' || ch == '\r')
+		if (ch == '\n')
 		{
 			rule = null;
 			line = data.substr(begin, off - begin - 1);
@@ -150,13 +152,7 @@ BlRule.parse = function(fn, data, off, rules)
 				rule = new BlRule(ln);
 				rule.parse(line);
 			}
-		}
 
-		if (ch == '\r')
-			ch = data[off++];
-
-		if (ch == '\n')
-		{
 			begin = off;
 			ln++;
 
