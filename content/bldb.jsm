@@ -556,6 +556,7 @@ blsite.prototype =
 				break;
 
 			case "type":
+			case "mtype":
 				this.addType(rule);
 				break;
 
