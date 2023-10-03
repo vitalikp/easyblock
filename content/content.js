@@ -394,11 +394,11 @@ SiteHandler.prototype =
 		this.frames.clear();
 	},
 
-	onFind(doc, data, isFrame)
+	onFind(data, isFrame)
 	{
 		let site;
 
-		if (!doc || !data)
+		if (!data)
 			return;
 
 		site = new Site(data.hostname, data.grpId);
@@ -462,7 +462,7 @@ SiteHandler.prototype =
 			site = this.frames.get(loc.hostname); // doc is frame site
 
 		if (!site || site.hostname != loc.hostname)
-			this.findDom(loc.hostname, (data) => this.onFind(doc, data, isFrame));
+			this.findDom(loc.hostname, (data) => this.onFind(data, isFrame));
 	},
 
 	filterDom(doc)
