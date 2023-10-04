@@ -359,7 +359,7 @@ Object.assign(Content.prototype,
 	}
 });
 
-function SiteHandler(api)
+function SiteHandler(api, global)
 {
 	this._disabled = false;
 	this.site = null;
