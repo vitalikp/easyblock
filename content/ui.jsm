@@ -386,7 +386,7 @@ WinUI.prototype =
 
 		doc = this.win.document;
 
-		let notificationBox = this.win.getBrowser().getNotificationBox();
+		let notificationBox = this.win.gBrowser.getNotificationBox();
 
 		node = doc.createElement("notification");
 		node.setAttribute("type", "info");
