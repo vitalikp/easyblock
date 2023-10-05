@@ -343,7 +343,7 @@ Object.assign(ContentBus.prototype,
 	}
 });
 
-function SiteHandler(api, global)
+function SiteHandler(global)
 {
 	this._disabled = false;
 	this.site = null;
