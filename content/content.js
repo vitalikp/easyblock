@@ -287,11 +287,6 @@ function ContentBus(api, mm, obs)
 ContentBus.prototype = Object.create(EventBus.prototype);
 Object.assign(ContentBus.prototype,
 {
-	_regEvent(type, handler)
-	{
-		this.api.regEvent(type, handler);
-	},
-
 	_unregEvent(type, handler)
 	{
 		this.api.unregEvent(type, handler);
