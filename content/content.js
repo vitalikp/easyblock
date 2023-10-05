@@ -287,11 +287,6 @@ function ContentBus(api, mm, obs)
 ContentBus.prototype = Object.create(EventBus.prototype);
 Object.assign(ContentBus.prototype,
 {
-	_sendSyncEvent(type, data)
-	{
-		return this.api.sendSyncEvent(type, data);
-	},
-
 	reload()
 	{
 		this.obs.reload();
