@@ -274,7 +274,7 @@ Site.getCspNonce = function(doc)
 	return null;
 }
 
-function Content(api, obs)
+function ContentBus(api, obs)
 {
 	EventBus.call(this, "content");
 
@@ -284,8 +284,8 @@ function Content(api, obs)
 	this.regEvent("ui");
 }
 
-Content.prototype = Object.create(EventBus.prototype);
-Object.assign(Content.prototype,
+ContentBus.prototype = Object.create(EventBus.prototype);
+Object.assign(ContentBus.prototype,
 {
 	_regEvent(type, handler)
 	{
@@ -368,7 +368,7 @@ function SiteHandler(api, global)
 	if (!_cache)
 		_cache = new Map();
 
-	this._filter = new Content(api, this);
+	this._filter = new ContentBus(api, this);
 
 	this._disabled = this._filter.get('disabled');
 }
