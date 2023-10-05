@@ -274,9 +274,9 @@ Site.getCspNonce = function(doc)
 	return null;
 }
 
-function ContentBus(api, obs)
+function ContentBus(api, mm, obs)
 {
-	EventBus.call(this, "content");
+	EventBus.call(this, "content", mm);
 
 	this.api = api;
 	this.obs = obs;
@@ -368,7 +368,7 @@ function SiteHandler(api, global)
 	if (!_cache)
 		_cache = new Map();
 
-	this.bus = new ContentBus(api, this);
+	this.bus = new ContentBus(api, global, this);
 
 	this._disabled = this.bus.get('disabled');
 }
