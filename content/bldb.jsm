@@ -1028,7 +1028,7 @@ bldb.prototype =
 
 		this.groups.push(group);
 		group.id = id;
-//		log.info('add group "' + group.name + '" to blacklist');
+		log.debug('add group "' + group.name + '" to blacklist');
 	},
 
 	load(onLoad)
