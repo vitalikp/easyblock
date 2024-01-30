@@ -907,7 +907,7 @@ blgroup.prototype =
 
 		this.data.push(site);
 		site.group = this;
-//		log.info(this.name + ': add url "' + site.name + '"');
+		log.debug(this.name + ': add url "' + site.name + '"');
 	},
 
 	find(host)
