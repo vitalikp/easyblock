@@ -707,11 +707,8 @@ blsite.prototype =
 		return this.dom.length > 0 || this.css.length > 0 || this.js.length > 0;
 	},
 
-	onBlock(content)
+	onBlock()
 	{
-		if (!content)
-			return;
-
 		this.cnt++;
 		log.info("Blocking site '" + this.name + "'");
 	},
