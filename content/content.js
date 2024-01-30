@@ -282,7 +282,7 @@ Site.getCspNonce = function(doc)
 	return null;
 }
 
-function SiteHandler(api)
+function SiteHandler(api, global)
 {
 	let filter = {};
 
@@ -469,7 +469,7 @@ SiteHandler.prototype =
 
 let handler;
 
-handler = new SiteHandler(ContentAPI);
+handler = new SiteHandler(ContentAPI, this);
 addEventListener("DOMWindowCreated", handler);
 addEventListener("DOMContentLoaded", handler);
 addEventListener('unload', handler); // once is ignored here
