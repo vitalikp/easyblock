@@ -1,6 +1,6 @@
 "use strict";
 
-var EXPORTED_SYMBOLS = ["EventType", "EventBus", "Process", "Content"];
+var EXPORTED_SYMBOLS = ["EventType", "EventBus", "Content"];
 
 const EVENT_TYPE = "EasyBlock";
 
@@ -63,101 +63,6 @@ EventBus.prototype =
 		return this.onEvent(msg.data);
 	}
 }
-
-function Process(api, addon)
-{
-	EventBus.call(this, "process", api);
-	this.api = api;
-	this.addon = addon;
-
-	this.regEvent("content");
-}
-
-Process.prototype = Object.create(EventBus.prototype);
-Object.assign(Process.prototype,
-{
-	_sendEvent(type, data)
-	{
-		this.api.sendEvent(type, data);
-	},
-
-	toggle(value, grpId)
-	{
-		this.sendEvent(EventType.TOGGLE, { grpId: grpId, value: value });
-	},
-
-	reload()
-	{
-		this.sendEvent(EventType.RELOAD);
-	},
-
-	get(data)
-	{
-		if (!data)
-			return;
-
-		switch (data.name)
-		{
-			case 'enabled':
-				{
-					let group;
-
-					group = this.addon.getGroup(data.grpId);
-					if (!group)
-						return null;
-
-					return group.enabled;
-				}
-
-			case 'disabled':
-				return this.addon.disabled;
-		}
-	},
-
-	findDom(data)
-	{
-		let site, eventData, grpId;
-
-		if (!data)
-			return;
-
-		site = this.addon.findSite(data.hostname);
-		if (!site || !site.hasDom)
-			return;
-
-		grpId = -1;
-		if (site.group)
-			grpId = site.group.id;
-
-		eventData =
-		{
-			hostname: data.hostname,
-			grpId: grpId,
-			content: site.content,
-			styles: site.styles,
-			scripts: site.scripts
-		};
-
-		return eventData;
-	},
-
-	onEvent(event)
-	{
-		switch (event.type)
-		{
-			case EventType.GET:
-				return this.get(event.data);
-
-			case EventType.DOM:
-				return this.findDom(event.data);
-		}
-	},
-
-	destroy()
-	{
-		this.unregEvent("content");
-	}
-});
 
 function Content(api, obs)
 {
