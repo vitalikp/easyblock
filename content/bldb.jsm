@@ -709,13 +709,11 @@ blsite.prototype =
 
 	onBlock(content)
 	{
-		if (content)
-			log.info("Blocking content site '" + this.name + "'");
-		else
-		{
-			this.cnt++;
-			log.info("Blocking site '" + this.name + "'");
-		}
+		if (!content)
+			return;
+
+		this.cnt++;
+		log.info("Blocking site '" + this.name + "'");
 	},
 
 	print(doc, elem)
