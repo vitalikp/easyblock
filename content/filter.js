@@ -76,6 +76,11 @@ function Process(api, addon)
 Process.prototype = Object.create(EventBus.prototype);
 Object.assign(Process.prototype,
 {
+	_sendEvent(type, data)
+	{
+		this.api.sendEvent(type, data);
+	},
+
 	toggle(value, grpId)
 	{
 		this.sendEvent(EventType.TOGGLE, { grpId: grpId, value: value });
