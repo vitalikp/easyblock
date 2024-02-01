@@ -5,6 +5,12 @@ const Cu = Components.utils;
 
 var EXPORTED_SYMBOLS = ["SiteHandler"];
 
+// import filter API
+Cu.import("chrome://easyblock/content/filter.js");
+
+
+let _cache = null;
+
 
 const MutConf =
 {
@@ -269,15 +275,14 @@ Site.getCspNonce = function(doc)
 
 function SiteHandler(api, global)
 {
-	let filter = {};
-
 	this._disabled = false;
 	this.site = null;
 	this.frames = new Map();
 
-	// import filter API
-	Cu.import("chrome://easyblock/content/filter.js", filter);
-	this._filter = new filter.Content(api, this);
+	if (!_cache)
+		_cache = new Map();
+
+	this._filter = new Content(api, this);
 
 	this._disabled = this._filter.get('disabled');
 }
@@ -312,6 +317,9 @@ SiteHandler.prototype =
 
 	reload()
 	{
+		if (_cache && _cache.size > 0)
+			_cache.clear();
+
 		this.site = null;
 		this.frames.clear();
 	},
@@ -342,10 +350,27 @@ SiteHandler.prototype =
 
 	findDom(hostname, onFind)
 	{
+		let data;
+
 		if (!onFind)
 			return;
 
-		return this._filter.findDom(hostname, onFind);
+		data = _cache.get(hostname);
+		if (!data)
+		{
+			data = this._filter.findDom(hostname);
+			if (!data)
+				return;
+
+			_cache.set(hostname, data);
+		}
+		else
+		{
+			if (!this._filter.get('enabled', { grpId: data.grpId }))
+				return;
+		}
+
+		onFind(data);
 	},
 
 	onCreate(doc)
