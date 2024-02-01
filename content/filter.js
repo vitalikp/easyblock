@@ -1,6 +1,6 @@
 "use strict";
 
-var EXPORTED_SYMBOLS = ["EventType", "EventBus", "Content"];
+var EXPORTED_SYMBOLS = ["EventType", "EventBus"];
 
 const EVENT_TYPE = "EasyBlock";
 
@@ -59,73 +59,3 @@ EventBus.prototype =
 		return this.onEvent(msg.data);
 	}
 }
-
-function Content(api, obs)
-{
-	EventBus.call(this, "content", api);
-
-	this.api = api;
-	this.obs = obs;
-
-	this.regEvent("process");
-}
-
-Content.prototype = Object.create(EventBus.prototype);
-Object.assign(Content.prototype,
-{
-	reload()
-	{
-		this.obs.reload();
-	},
-
-	get(name, data)
-	{
-		let res;
-
-		if (!name)
-			return;
-
-		data = Object.assign({ name: name }, data);
-
-		res = this.sendSyncEvent(EventType.GET, data);
-		if (!res)
-			return null;
-
-		return res[0];
-	},
-
-	findDom(hostname, onFind)
-	{
-		let data;
-
-		data = this.sendSyncEvent(EventType.DOM, { hostname: hostname });
-		if (!data || !data[0])
-			return;
-
-		data = data[0];
-
-		if (data.hostname != hostname)
-			return;
-
-		return data;
-	},
-
-	onEvent(event)
-	{
-		switch (event.type)
-		{
-			case EventType.TOGGLE:
-				this.obs.toggle(event.data);
-				break;
-
-			case EventType.RELOAD:
-				this.reload();
-				break;
-		}
-	},
-
-	destroy()
-	{
-		this.unregEvent("process");
-	}
-});
