@@ -180,7 +180,7 @@ var EasyBlock =
 	{
 		var windows, defprefs;
 
-		gmm.loadFrameScript(CONTENT_SCRIPT, true);
+		gmm.loadFrameScript(FRAME_SCRIPT, true);
 
 		if (!this.filter)
 			this.filter = new Process(ProcessAPI, this);
@@ -217,7 +217,7 @@ var EasyBlock =
 	{
 		let i;
 
-		gmm.removeDelayedFrameScript(CONTENT_SCRIPT);
+		gmm.removeDelayedFrameScript(FRAME_SCRIPT);
 
 		i = 0;
 		while (i < this.wins.length)

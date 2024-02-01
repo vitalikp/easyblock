@@ -6,24 +6,6 @@ const Cu = Components.utils;
 var EXPORTED_SYMBOLS = ["SiteHandler"];
 
 
-const ContentAPI =
-{
-	regEvent(event, handler)
-	{
-		addMessageListener(event, handler);
-	},
-
-	unregEvent(event, handler)
-	{
-		removeMessageListener(event, handler);
-	},
-
-	sendSyncEvent(event, data)
-	{
-		return sendSyncMessage(event, data);
-	}
-};
-
 const MutConf =
 {
 	subtree: true,
@@ -469,10 +451,3 @@ SiteHandler.prototype =
 		}
 	}
 };
-
-let handler;
-
-handler = new SiteHandler(ContentAPI, this);
-addEventListener("DOMWindowCreated", handler);
-addEventListener("DOMContentLoaded", handler);
-addEventListener('unload', handler); // once is ignored here
