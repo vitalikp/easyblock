@@ -19,7 +19,7 @@ const EventType =
 };
 
 
-function EventBus(name, mm)
+function EventBus(name, mm = cpmm)
 {
 	this.owner = EVENT_TYPE + ":" + name;
 	this.mm = mm;
