@@ -13,10 +13,11 @@ const EventType =
 };
 
 
-function EventBus(name, api)
+function EventBus(name, api, mm)
 {
 	this.owner = EVENT_TYPE + ":" + name;
 	this.api = api;
+	this.mm = mm;
 }
 
 EventBus.prototype =

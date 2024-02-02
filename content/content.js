@@ -275,7 +275,7 @@ Site.getCspNonce = function(doc)
 
 function Content(api, mm, obs)
 {
-	EventBus.call(this, "content", api);
+	EventBus.call(this, "content", api, mm);
 
 	this.api = api;
 	this.obs = obs;
