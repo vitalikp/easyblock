@@ -273,11 +273,10 @@ Site.getCspNonce = function(doc)
 	return null;
 }
 
-function Content(api, mm, obs)
+function Content(mm, obs)
 {
 	EventBus.call(this, "content", mm);
 
-	this.api = api;
 	this.obs = obs;
 
 	this.regEvent("process");
@@ -352,7 +351,7 @@ function SiteHandler(api, global)
 	if (!_cache)
 		_cache = new Map();
 
-	this._filter = new Content(api, global, this);
+	this._filter = new Content(global, this);
 
 	this._disabled = this._filter.get('disabled');
 }
