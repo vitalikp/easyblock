@@ -50,7 +50,7 @@ const ProcessAPI =
 
 function Process(addon)
 {
-	EventBus.call(this, "process", ProcessAPI, gmm);
+	EventBus.call(this, "process", gmm);
 	this.addon = addon;
 
 	this.regEvent("content");

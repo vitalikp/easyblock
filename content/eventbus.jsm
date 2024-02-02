@@ -13,10 +13,9 @@ const EventType =
 };
 
 
-function EventBus(name, api, mm)
+function EventBus(name, mm)
 {
 	this.owner = EVENT_TYPE + ":" + name;
-	this.api = api;
 	this.mm = mm;
 }
 
@@ -24,27 +23,27 @@ EventBus.prototype =
 {
 	_sendEvent(type, data)
 	{
-		throw new Error("Method not implemented");
+		this.mm.sendAsyncMessage(type, data);
 	},
 
 	regEvent(name)
 	{
-		this.api.regEvent(EVENT_TYPE + ":" + name, this);
+		this.mm.addMessageListener(EVENT_TYPE + ":" + name, this);
 	},
 
 	unregEvent(name)
 	{
-		this.api.unregEvent(EVENT_TYPE + ":" + name, this);
+		this.mm.removeMessageListener(EVENT_TYPE + ":" + name, this);
 	},
 
 	sendEvent(type, data)
 	{
-		this.api.sendEvent(this.owner, { type: type, data: data });
+		this._sendEvent(this.owner, { type, data });
 	},
 
 	sendSyncEvent(type, data)
 	{
-		return this.api.sendSyncEvent(this.owner, { type: type, data: data });
+		return this.mm.sendSyncMessage(this.owner, { type, data });
 	},
 
 	onEvent(event)
