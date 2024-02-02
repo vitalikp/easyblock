@@ -30,23 +30,6 @@ const TYPE_DOC = Ci.nsIContentPolicy.TYPE_DOCUMENT;
 
 const FRAME_SCRIPT = "chrome://easyblock/content/frame.js";
 
-const ProcessAPI =
-{
-	regEvent(event, handler)
-	{
-		gmm.addMessageListener(event, handler);
-	},
-
-	unregEvent(event, handler)
-	{
-		gmm.removeMessageListener(event, handler);
-	},
-
-	sendEvent(event, data)
-	{
-		gmm.broadcastAsyncMessage(event, data);
-	}
-};
 
 function Process(addon)
 {
@@ -61,7 +44,7 @@ Object.assign(Process.prototype,
 {
 	_sendEvent(type, data)
 	{
-		ProcessAPI.sendEvent(type, data);
+		gmm.broadcastAsyncMessage(type, data);
 	},
 
 	toggle(value, grpId)
