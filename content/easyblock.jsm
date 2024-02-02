@@ -48,10 +48,9 @@ const ProcessAPI =
 	}
 };
 
-function Process(api, addon)
+function Process(addon)
 {
-	EventBus.call(this, "process", api);
-	this.api = api;
+	EventBus.call(this, "process", ProcessAPI);
 	this.addon = addon;
 
 	this.regEvent("content");
@@ -62,7 +61,7 @@ Object.assign(Process.prototype,
 {
 	_sendEvent(type, data)
 	{
-		this.api.sendEvent(type, data);
+		ProcessAPI.sendEvent(type, data);
 	},
 
 	toggle(value, grpId)
@@ -182,7 +181,7 @@ var EasyBlock =
 		gmm.loadFrameScript(FRAME_SCRIPT, true);
 
 		if (!this.filter)
-			this.filter = new Process(ProcessAPI, this);
+			this.filter = new Process(this);
 
 		EasyBlock.observer.reg(os, OBS_REQ);
 		EasyBlock.observer.reg(os, OBS_RESP);
