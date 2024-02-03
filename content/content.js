@@ -351,9 +351,9 @@ function SiteHandler(global)
 	if (!_cache)
 		_cache = new Map();
 
-	this._filter = new ContentBus(global, this);
+	this.bus = new ContentBus(global, this);
 
-	this._disabled = this._filter.get('disabled');
+	this._disabled = this.bus.get('disabled');
 }
 
 SiteHandler.prototype =
@@ -427,7 +427,7 @@ SiteHandler.prototype =
 		data = _cache.get(hostname);
 		if (!data)
 		{
-			data = this._filter.findDom(hostname);
+			data = this.bus.findDom(hostname);
 			if (!data)
 				return;
 
@@ -435,7 +435,7 @@ SiteHandler.prototype =
 		}
 		else
 		{
-			if (!this._filter.get('enabled', { grpId: data.grpId }))
+			if (!this.bus.get("enabled", { grpId: data.grpId }))
 				return;
 		}
 
@@ -468,7 +468,7 @@ SiteHandler.prototype =
 	{
 		let loc, site;
 
-		if (this._disabled || !this._filter)
+		if (this._disabled || !this.bus)
 			return;
 
 		if (!doc || doc.nodeType != doc.DOCUMENT_NODE)
@@ -538,10 +538,10 @@ SiteHandler.prototype =
 		}
 		this.frames.clear();
 
-		if (this._filter)
+		if (this.bus)
 		{
-			this._filter.destroy();
-			this._filter = null;
+			this.bus.destroy();
+			this.bus = null;
 		}
 	}
 };
