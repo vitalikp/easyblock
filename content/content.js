@@ -273,7 +273,7 @@ Site.getCspNonce = function(doc)
 	return null;
 }
 
-function Content(mm, obs)
+function ContentBus(mm, obs)
 {
 	EventBus.call(this, "content", mm);
 
@@ -282,8 +282,8 @@ function Content(mm, obs)
 	this.regEvent("process");
 }
 
-Content.prototype = Object.create(EventBus.prototype);
-Object.assign(Content.prototype,
+ContentBus.prototype = Object.create(EventBus.prototype);
+Object.assign(ContentBus.prototype,
 {
 	reload()
 	{
@@ -351,7 +351,7 @@ function SiteHandler(global)
 	if (!_cache)
 		_cache = new Map();
 
-	this._filter = new Content(global, this);
+	this._filter = new ContentBus(global, this);
 
 	this._disabled = this._filter.get('disabled');
 }
