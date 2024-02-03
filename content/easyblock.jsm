@@ -31,7 +31,7 @@ const TYPE_DOC = Ci.nsIContentPolicy.TYPE_DOCUMENT;
 const FRAME_SCRIPT = "chrome://easyblock/content/frame.js";
 
 
-function Process(addon)
+function ProcessBus(addon)
 {
 	EventBus.call(this, "process", gmm);
 	this.addon = addon;
@@ -39,8 +39,8 @@ function Process(addon)
 	this.regEvent("content");
 }
 
-Process.prototype = Object.create(EventBus.prototype);
-Object.assign(Process.prototype,
+ProcessBus.prototype = Object.create(EventBus.prototype);
+Object.assign(ProcessBus.prototype,
 {
 	_sendEvent(type, data)
 	{
@@ -164,7 +164,7 @@ var EasyBlock =
 		gmm.loadFrameScript(FRAME_SCRIPT, true);
 
 		if (!this.filter)
-			this.filter = new Process(this);
+			this.filter = new ProcessBus(this);
 
 		EasyBlock.observer.reg(os, OBS_REQ);
 		EasyBlock.observer.reg(os, OBS_RESP);
