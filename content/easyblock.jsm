@@ -130,7 +130,7 @@ var EasyBlock =
 	db: {},
 	_disabled: false,
 	prefs: {},
-	filter: null,
+	bus: null,
 	wins: [],
 
 	get disabled()
@@ -147,7 +147,7 @@ var EasyBlock =
 
 		this.prefs.setBoolPref('disabled', value);
 
-		this.filter.toggle(value);
+		this.bus.toggle(value);
 
 		this.wins.forEach((winUI) => winUI.updateState(this));
 
@@ -163,8 +163,8 @@ var EasyBlock =
 
 		gmm.loadFrameScript(FRAME_SCRIPT, true);
 
-		if (!this.filter)
-			this.filter = new ProcessBus(this);
+		if (!this.bus)
+			this.bus = new ProcessBus(this);
 
 		EasyBlock.observer.reg(os, OBS_REQ);
 		EasyBlock.observer.reg(os, OBS_RESP);
@@ -213,10 +213,10 @@ var EasyBlock =
 
 		ui.unloadCss("easyblock");
 
-		if (this.filter)
+		if (this.bus)
 		{
-			this.filter.destroy();
-			this.filter = null;
+			this.bus.destroy();
+			this.bus = null;
 		}
 	},
 
@@ -324,7 +324,7 @@ var EasyBlock =
 
 			if (group.toggle(value))
 			{
-				this.filter.toggle(value, grpId);
+				this.bus.toggle(value, grpId);
 				this.wins.forEach((winUI) => winUI.updateGroup(group));
 			}
 
@@ -353,7 +353,7 @@ var EasyBlock =
 	reload()
 	{
 		this.db.clear();
-		this.filter.reload();
+		this.bus.reload();
 		this.db.load((db) =>
 		{
 			this.wins.forEach((winUI) => this.loadDBWin(winUI, db));
