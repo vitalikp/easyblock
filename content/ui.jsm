@@ -269,6 +269,11 @@ function WinUI(doc, addon)
 
 WinUI.prototype =
 {
+	onToggle(group)
+	{
+		this.groups.forEach((grpUI) => grpUI.update(group));
+	},
+
 	toggle(value, grpId)
 	{
 		if (!this.addon)
@@ -384,11 +389,6 @@ WinUI.prototype =
 
 			this.addGroup(group);
 		});
-	},
-
-	updateGroup(group)
-	{
-		this.groups.forEach((grpUI) => grpUI.update(group));
 	}
 };
 
