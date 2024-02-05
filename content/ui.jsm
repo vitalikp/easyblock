@@ -323,6 +323,14 @@ WinUI.prototype =
 		this.groups.forEach((grpUI) => grpUI.update(group));
 	},
 
+	onReload(db)
+	{
+		this.addon.loadDBWin(this, db);
+
+		if (this.win == wm.getMostRecentWindow("navigator:browser"))
+			ui.notify(this.addon, "Blacklist sites reloaded!");
+	},
+
 	toggle(value, grpId)
 	{
 		if (!this.addon)
