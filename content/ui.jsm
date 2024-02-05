@@ -272,6 +272,11 @@ function WinUI(doc, addon)
 
 WinUI.prototype =
 {
+	get disabled()
+	{
+		return this._disabled;
+	},
+
 	onToggle(group)
 	{
 		this.groups.forEach((grpUI) => grpUI.update(group));
