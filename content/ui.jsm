@@ -204,6 +204,10 @@ function WinUI(doc, addon)
 {
 	let win, popupMenu, grpMenu, item, reloadItem;
 
+	this._disabled = false;
+
+	this.addon = addon;
+
 	this.btn = doc.createElement("toolbarbutton");
 	this.btn.setAttribute("id", BTN_ID);
 	this.btn.setAttribute("removable", "true");
@@ -259,7 +263,6 @@ function WinUI(doc, addon)
 
 	win.addEventListener('unload', (event) => addon.unloadWin(this));
 
-	this.addon = addon;
 	this.groups = [];
 
 	this.updateState(addon);
