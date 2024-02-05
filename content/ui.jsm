@@ -265,7 +265,6 @@ function WinUI(doc, addon)
 
 	this.groups = [];
 
-	this.updateState(addon);
 	this.loadGroups(addon.db.groups);
 	this.initToolbar();
 }
@@ -275,6 +274,20 @@ WinUI.prototype =
 	get disabled()
 	{
 		return this._disabled;
+	},
+
+	set disabled(value)
+	{
+		if (this._disabled == value)
+			return;
+
+		if (value)
+			this.btn.setAttribute("ebstate", "disabled");
+		else
+			this.btn.setAttribute("ebstate", "normal");
+		this.menuItem.toggled = value;
+
+		this._disabled = value;
 	},
 
 	onToggle(group)
@@ -374,11 +387,7 @@ WinUI.prototype =
 
 	updateState(addon)
 	{
-		if (addon.disabled)
-			this.btn.setAttribute("ebstate", "disabled");
-		else
-			this.btn.setAttribute("ebstate", "normal");
-		this.menuItem.toggled = addon.disabled;
+		this.disabled = addon.disabled;
 	},
 
 	clearGroups()
