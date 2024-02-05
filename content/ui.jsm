@@ -291,6 +291,28 @@ WinUI.prototype =
 		this._disabled = value;
 	},
 
+	notify(msg)
+	{
+		let doc, node;
+
+		if (!this.win || !msg)
+			return;
+
+		doc = this.win.document;
+
+		let notificationBox = this.win.gBrowser.getNotificationBox();
+
+		node = doc.createElement("notification");
+		node.setAttribute("type", "info");
+		node.setAttribute("class", "easyblock");
+		node.setAttribute("label", msg);
+		if (this.disabled)
+			node.setAttribute("ebstate", "disabled");
+		else
+			node.setAttribute("ebstate", "normal");
+		notificationBox.appendChild(node);
+	},
+
 	onState(state)
 	{
 		this.disabled = state;
