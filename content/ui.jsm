@@ -292,7 +292,7 @@ WinUI.prototype =
 
 	onState(state)
 	{
-		this.updateState(this.addon);
+		this.disabled = state;
 	},
 
 	onToggle(group)
@@ -388,11 +388,6 @@ WinUI.prototype =
 		}
 
 		this.clearGroups();
-	},
-
-	updateState(addon)
-	{
-		this.disabled = addon.disabled;
 	},
 
 	clearGroups()
