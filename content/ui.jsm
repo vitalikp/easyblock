@@ -200,9 +200,9 @@ GroupUI.prototype =
 	}
 };
 
-function WinUI(doc, addon)
+function WinUI(win, doc, addon)
 {
-	let win, popupMenu, grpMenu, item, reloadItem;
+	let popupMenu, grpMenu, item, reloadItem;
 
 	this._disabled = false;
 
@@ -224,8 +224,6 @@ function WinUI(doc, addon)
 
 	this.menu = doc.createElement("menupopup");
 	this.btn.appendChild(this.menu);
-
-	win = doc.defaultView;
 
 	this.toolbox = doc.getElementById("navigator-toolbox");
 
