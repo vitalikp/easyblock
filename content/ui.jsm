@@ -290,6 +290,11 @@ WinUI.prototype =
 		this._disabled = value;
 	},
 
+	onState(state)
+	{
+		this.updateState(this.addon);
+	},
+
 	onToggle(group)
 	{
 		this.groups.forEach((grpUI) => grpUI.update(group));

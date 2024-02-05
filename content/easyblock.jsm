@@ -149,7 +149,7 @@ var EasyBlock =
 
 		this.bus.toggle(value);
 
-		this.wins.forEach((winUI) => winUI.updateState(this));
+		this.wins.forEach((winUI) => winUI.onState(value));
 
 		if (!value)
 			log.info("Enable 'EasyBlock' addon...");
