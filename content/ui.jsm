@@ -200,13 +200,15 @@ GroupUI.prototype =
 	}
 };
 
-function WinUI(win, doc, addon)
+function WinUI(win, addon)
 {
-	let popupMenu, grpMenu, item, reloadItem;
+	let doc, popupMenu, grpMenu, item, reloadItem;
 
 	this._disabled = false;
 
 	this.addon = addon;
+
+	doc = win.document;
 
 	this.btn = doc.createElement("toolbarbutton");
 	this.btn.setAttribute("id", BTN_ID);
