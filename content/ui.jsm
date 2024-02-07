@@ -18,6 +18,35 @@ const XHTML_NS = "http://www.w3.org/1999/xhtml";
 const BTN_ID = "easyblock-btn";
 
 
+const ui =
+{
+	addLabel(node, text)
+	{
+		let doc, label;
+
+		if (!node)
+			return;
+
+		doc = node.ownerDocument;
+
+		label = doc.createElement("label");
+		label.textContent = text;
+		node.appendChild(label);
+	},
+
+	loadCss(style)
+	{
+		let styleUri = io.newURI(style + ".css");
+		sss.loadAndRegisterSheet(styleUri, sss.USER_SHEET);
+	},
+
+	unloadCss(style)
+	{
+		let styleUri = io.newURI(style + ".css");
+		sss.unregisterSheet(styleUri, sss.USER_SHEET);
+	}
+};
+
 const uitree =
 {
 	create(doc, name, expanded)
@@ -106,12 +135,13 @@ const uitree =
 
 function MenuToggle(obj, name, menu)
 {
-	let doc, elem, label;
+	let doc, elem;
 
 	doc = menu.ownerDocument;
 
 	elem = doc.createElement("menuitem");
 	elem.setAttribute("class", "menuToggle");
+	ui.addLabel(elem, name);
 	elem.addEventListener("command", (event) =>
 	{
 		if (!event || !event.target || !obj)
@@ -119,10 +149,6 @@ function MenuToggle(obj, name, menu)
 
 		obj.toggle(!this.toggled);
 	}, false);
-
-	label = doc.createElement("label");
-	label.textContent = name;
-	elem.appendChild(label);
 
 	menu.appendChild(elem);
 
@@ -231,7 +257,7 @@ function WinUI(win, addon)
 	this.toolbox = doc.getElementById("navigator-toolbox");
 
 	item = doc.createElement("menuitem");
-	item.setAttribute("label", "Filters");
+	ui.addLabel(item, "Filters");
 	item.addEventListener("command", (event) =>
 	{
 		if (!event && !event.target)
@@ -242,7 +268,7 @@ function WinUI(win, addon)
 	this.menu.appendChild(item);
 
 	grpMenu = doc.createElement("menu");
-	grpMenu.setAttribute("label", "Groups");
+	ui.addLabel(grpMenu, "Groups");
 	this.menu.appendChild(grpMenu);
 
 	popupMenu = doc.createElement("menupopup");
@@ -252,7 +278,7 @@ function WinUI(win, addon)
 	this.menuItem = new MenuToggle(this, "Disabled", this.menu);
 
 	reloadItem = doc.createElement("menuitem");
-	reloadItem.setAttribute("label", "Reload");
+	ui.addLabel(reloadItem, "Reload");
 	reloadItem.addEventListener("command", (event) =>
 	{
 		if (!event && !event.target)
@@ -488,21 +514,5 @@ WinUI.selectToolbar = function(toolbars)
 		WinUI.toolbarId = toolbar._customizationTarget.id;
 		WinUI.nextItemId = nextItem;
 		break;
-	}
-};
-
-
-var ui =
-{
-	loadCss(style)
-	{
-		let styleUri = io.newURI(style + ".css");
-		sss.loadAndRegisterSheet(styleUri, sss.USER_SHEET);
-	},
-
-	unloadCss(style)
-	{
-		let styleUri = io.newURI(style + ".css");
-		sss.unregisterSheet(styleUri, sss.USER_SHEET);
 	}
 };
