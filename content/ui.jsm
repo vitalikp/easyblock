@@ -34,6 +34,23 @@ const ui =
 		node.appendChild(label);
 	},
 
+	newMenuItem(name, parent)
+	{
+		let doc, menuItem;
+
+		if (!name || !parent)
+			return;
+
+		doc = parent.ownerDocument;
+
+		menuItem = doc.createElement("menuitem");
+		ui.addLabel(menuItem, name);
+
+		parent.appendChild(menuItem);
+
+		return menuItem;
+	},
+
 	loadCss(style)
 	{
 		let styleUri = io.newURI(style + ".css");
@@ -139,9 +156,8 @@ function MenuToggle(obj, name, menu)
 
 	doc = menu.ownerDocument;
 
-	elem = doc.createElement("menuitem");
+	elem = ui.newMenuItem(name, menu);
 	elem.setAttribute("class", "menuToggle");
-	ui.addLabel(elem, name);
 	elem.addEventListener("command", (event) =>
 	{
 		if (!event || !event.target || !obj)
@@ -149,8 +165,6 @@ function MenuToggle(obj, name, menu)
 
 		obj.toggle(!this.toggled);
 	}, false);
-
-	menu.appendChild(elem);
 
 	this.elem = elem;
 	this._toggled = false;
@@ -256,8 +270,7 @@ function WinUI(win, addon)
 
 	this.toolbox = doc.getElementById("navigator-toolbox");
 
-	item = doc.createElement("menuitem");
-	ui.addLabel(item, "Filters");
+	item = ui.newMenuItem("Filters", this.menu);
 	item.addEventListener("command", (event) =>
 	{
 		if (!event && !event.target)
@@ -265,7 +278,6 @@ function WinUI(win, addon)
 
 		this.win.open('chrome://easyblock/content/filters.xul', 'EasyBlockFilters', 'chrome,titlebar,centerscreen,resizable').focus();
 	});
-	this.menu.appendChild(item);
 
 	grpMenu = doc.createElement("menu");
 	ui.addLabel(grpMenu, "Groups");
@@ -277,8 +289,7 @@ function WinUI(win, addon)
 
 	this.menuItem = new MenuToggle(this, "Disabled", this.menu);
 
-	reloadItem = doc.createElement("menuitem");
-	ui.addLabel(reloadItem, "Reload");
+	reloadItem = ui.newMenuItem("Reload", this.menu);
 	reloadItem.addEventListener("command", (event) =>
 	{
 		if (!event && !event.target)
@@ -286,7 +297,6 @@ function WinUI(win, addon)
 
 		addon.reload();
 	});
-	this.menu.appendChild(reloadItem);
 
 	this.groups = [];
 
