@@ -177,7 +177,6 @@ function MenuToggle(obj, name, menu)
 	doc = menu.ownerDocument;
 
 	elem = ui.newMenuItem(name, menu);
-	elem.setAttribute("class", "menuToggle");
 	elem.addEventListener("command", (event) =>
 	{
 		if (!event || !event.target || !obj)
