@@ -27,11 +27,6 @@ function EventBus(name, mm = cpmm)
 
 EventBus.prototype =
 {
-	_regEvent(type, handler)
-	{
-		this.mm.addMessageListener(type, handler);
-	},
-
 	_unregEvent(type, handler)
 	{
 		this.mm.removeMessageListener(type, handler);
@@ -49,7 +44,7 @@ EventBus.prototype =
 
 	regEvent(name)
 	{
-		this._regEvent(EVENT_TYPE + ":" + name, this);
+		this.mm.addMessageListener(EVENT_TYPE + ":" + name, this);
 	},
 
 	unregEvent(name)
