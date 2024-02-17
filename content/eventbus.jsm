@@ -32,11 +32,6 @@ EventBus.prototype =
 		this.mm.sendAsyncMessage(type, data);
 	},
 
-	_sendSyncEvent(type, data)
-	{
-		return this.mm.sendSyncMessage(type, data);
-	},
-
 	regEvent(name)
 	{
 		this.mm.addMessageListener(EVENT_TYPE + ":" + name, this);
@@ -54,7 +49,7 @@ EventBus.prototype =
 
 	sendSyncEvent(type, data)
 	{
-		return this._sendSyncEvent(this.owner, { type: type, data: data });
+		return this.mm.sendSyncMessage(this.owner, { type, data });
 	},
 
 	onEvent(event)
