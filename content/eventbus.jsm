@@ -27,11 +27,6 @@ function EventBus(name, mm = cpmm)
 
 EventBus.prototype =
 {
-	_unregEvent(type, handler)
-	{
-		this.mm.removeMessageListener(type, handler);
-	},
-
 	_sendEvent(type, data)
 	{
 		this.mm.sendAsyncMessage(type, data);
@@ -49,7 +44,7 @@ EventBus.prototype =
 
 	unregEvent(name)
 	{
-		this._unregEvent(EVENT_TYPE + ":" + name, this);
+		this.mm.removeMessageListener(EVENT_TYPE + ":" + name, this);
 	},
 
 	sendEvent(type, data)
