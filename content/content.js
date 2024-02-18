@@ -345,7 +345,7 @@ Object.assign(ContentBus.prototype,
 function SiteHandler(global)
 {
 	this._disabled = false;
-	this.site = null;
+
 	this.sites = new Map();
 
 	if (!_cache)
@@ -364,9 +364,6 @@ SiteHandler.prototype =
 
 		if (!data)
 			return;
-
-		if (this.site)
-			this.site.toggle(data);
 
 		iter = this.sites.values();
 		while (!(site=iter.next()).done)
@@ -389,7 +386,6 @@ SiteHandler.prototype =
 		if (_cache && _cache.size > 0)
 			_cache.clear();
 
-		this.site = null;
 		this.sites.clear();
 	},
 
@@ -406,10 +402,7 @@ SiteHandler.prototype =
 		site.scripts = data.scripts||[];
 		site.rules = data.content||[];
 
-		if (!isFrame)
-			this.site = site;
-		else
-			this.sites.set(data.hostname, site);
+		this.sites.set(data.hostname, site);
 	},
 
 	findDom(hostname, onFind)
@@ -450,12 +443,9 @@ SiteHandler.prototype =
 
 		isFrame = doc.defaultView.top != doc.defaultView.self;
 
-		if (!isFrame)
-			site = this.site; // doc is root site
-		else
-			site = this.sites.get(loc.hostname); // doc is frame site
+		site = this.sites.get(loc.hostname);
 
-		if (!site || site.hostname != loc.hostname)
+		if (!site)
 			this.findDom(loc.hostname, (data) => this.onFind(data, isFrame));
 	},
 
@@ -473,10 +463,7 @@ SiteHandler.prototype =
 		if (loc.protocol != "https:" && loc.protocol != "http:")
 			return;
 
-		if (doc.defaultView.top == doc.defaultView.self) // doc is root site
-			site = this.site;
-		else
-			site = this.sites.get(loc.hostname); // doc is frame site
+		site = this.sites.get(loc.hostname);
 
 		if (!site)
 			return;
@@ -515,12 +502,6 @@ SiteHandler.prototype =
 	destroy()
 	{
 		let iter, site;
-
-		if (this.site)
-		{
-			this.site.unreg();
-			this.site = null;
-		}
 
 		iter = this.sites.values();
 		while (!(site=iter.next()).done)
