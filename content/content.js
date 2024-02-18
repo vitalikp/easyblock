@@ -347,7 +347,7 @@ function SiteHandler(global)
 {
 	this._disabled = false;
 	this.site = null;
-	this.frames = new Map();
+	this.sites = new Map();
 
 	if (!_cache)
 		_cache = new Map();
@@ -369,7 +369,7 @@ SiteHandler.prototype =
 		if (this.site)
 			this.site.toggle(data);
 
-		iter = this.frames.values();
+		iter = this.sites.values();
 		while (!(site=iter.next()).done)
 		{
 			site = site.value;
@@ -391,7 +391,7 @@ SiteHandler.prototype =
 			_cache.clear();
 
 		this.site = null;
-		this.frames.clear();
+		this.sites.clear();
 	},
 
 	onFind(data, isFrame)
@@ -410,7 +410,7 @@ SiteHandler.prototype =
 		if (!isFrame)
 			this.site = site;
 		else
-			this.frames.set(data.hostname, site);
+			this.sites.set(data.hostname, site);
 	},
 
 	findDom(hostname, onFind)
@@ -454,7 +454,7 @@ SiteHandler.prototype =
 		if (!isFrame)
 			site = this.site; // doc is root site
 		else
-			site = this.frames.get(loc.hostname); // doc is frame site
+			site = this.sites.get(loc.hostname); // doc is frame site
 
 		if (!site || site.hostname != loc.hostname)
 			this.findDom(loc.hostname, (data) => this.onFind(data, isFrame));
@@ -477,7 +477,7 @@ SiteHandler.prototype =
 		if (doc.defaultView.top == doc.defaultView.self) // doc is root site
 			site = this.site;
 		else
-			site = this.frames.get(loc.hostname); // doc is frame site
+			site = this.sites.get(loc.hostname); // doc is frame site
 
 		if (!site)
 			return;
@@ -523,7 +523,7 @@ SiteHandler.prototype =
 			this.site = null;
 		}
 
-		iter = this.frames.values();
+		iter = this.sites.values();
 		while (!(site=iter.next()).done)
 		{
 			site = site.value;
@@ -532,7 +532,7 @@ SiteHandler.prototype =
 
 			site.unreg();
 		}
-		this.frames.clear();
+		this.sites.clear();
 
 		if (this.bus)
 		{
