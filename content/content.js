@@ -407,11 +407,7 @@ SiteHandler.prototype =
 		site.rules = data.content||[];
 
 		if (!isFrame)
-		{
-			if (this.site)
-				this.site.unreg();
 			this.site = site;
-		}
 		else
 			this.frames.set(data.hostname, site);
 	},
