@@ -411,7 +411,6 @@ SiteHandler.prototype =
 		{
 			if (this.site)
 				this.site.unreg();
-			this.frames.clear();
 			this.site = site;
 		}
 		else
