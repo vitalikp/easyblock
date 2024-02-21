@@ -405,12 +405,9 @@ SiteHandler.prototype =
 		this.sites.set(data.hostname, site);
 	},
 
-	findDom(hostname, onFind)
+	findDom(hostname)
 	{
 		let data;
-
-		if (!onFind)
-			return;
 
 		data = _cache.get(hostname);
 		if (!data)
@@ -427,7 +424,7 @@ SiteHandler.prototype =
 				return;
 		}
 
-		onFind(data);
+		this.onFind(data);
 	},
 
 	onCreate(doc)
@@ -444,7 +441,7 @@ SiteHandler.prototype =
 		site = this.sites.get(loc.hostname);
 
 		if (!site)
-			this.findDom(loc.hostname, (data) => this.onFind(data));
+			this.findDom(loc.hostname);
 	},
 
 	filterDom(doc)
