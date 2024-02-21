@@ -389,7 +389,7 @@ SiteHandler.prototype =
 		this.sites.clear();
 	},
 
-	onFind(data, isFrame)
+	onFind(data)
 	{
 		let site;
 
@@ -432,7 +432,7 @@ SiteHandler.prototype =
 
 	onCreate(doc)
 	{
-		let loc, site, isFrame;
+		let loc, site;
 
 		if (!doc)
 			return;
@@ -441,12 +441,10 @@ SiteHandler.prototype =
 		if (loc.protocol != "https:" && loc.protocol != "http:")
 			return;
 
-		isFrame = doc.defaultView.top != doc.defaultView.self;
-
 		site = this.sites.get(loc.hostname);
 
 		if (!site)
-			this.findDom(loc.hostname, (data) => this.onFind(data, isFrame));
+			this.findDom(loc.hostname, (data) => this.onFind(data));
 	},
 
 	filterDom(doc)
