@@ -307,7 +307,7 @@ Object.assign(ContentBus.prototype,
 		return res[0];
 	},
 
-	findDom(hostname, onFind)
+	findDom(hostname)
 	{
 		let data;
 
