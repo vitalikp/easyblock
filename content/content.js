@@ -306,7 +306,7 @@ Object.assign(ContentBus.prototype,
 		return res[0];
 	},
 
-	findDom(hostname)
+	dom(hostname)
 	{
 		let data;
 
@@ -412,7 +412,7 @@ SiteHandler.prototype =
 		data = _cache.get(hostname);
 		if (!data)
 		{
-			data = this.bus.findDom(hostname);
+			data = this.bus.dom(hostname);
 			if (!data)
 				return;
 
