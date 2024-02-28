@@ -321,6 +321,7 @@ function WinUI(win, addon)
 {
 	let doc, popupMenu, grpMenu;
 
+	this.id = ui.getWinId(win);
 	this._disabled = false;
 
 	this.win = win;
