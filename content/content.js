@@ -346,6 +346,7 @@ Object.assign(ContentBus.prototype,
 
 function SiteHandler(global)
 {
+	this.tabId = SiteHandler.getWinId(global.content);
 	this._disabled = false;
 
 	this.sites = new Map();
