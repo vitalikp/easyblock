@@ -82,6 +82,20 @@ const ui =
 	{
 		let styleUri = io.newURI(style + ".css");
 		sss.unregisterSheet(styleUri, sss.USER_SHEET);
+	},
+
+	getWinId(win)
+	{
+		let utils;
+
+		if (!win)
+			return -1;
+
+		utils = win.getInterface(Ci.nsIDOMWindowUtils);
+		if (!utils)
+			return -1;
+
+		return utils.outerWindowID;
 	}
 };
 
