@@ -43,6 +43,251 @@ const OFlags =
 };
 
 
+function File(path, parent)
+{
+	let file;
+
+	if (parent)
+	{
+		file = new LocalFile(parent);
+		file.append(path);
+	}
+	else
+		file = new LocalFile(path);
+
+	this.file = file;
+	this.is = null;
+	this.os = null;
+
+	this.size = 0;
+	this.sz = 0;
+}
+
+File.prototype =
+{
+	creat(mode = 0o640)
+	{
+		return this.open(OFlags.WRONLY|OFlags.CREAT|OFlags.TRUNC, mode);
+	},
+
+	open(oflags = OFlags.RDONLY, mode = 0)
+	{
+		let fs;
+
+		if (this.is || this.os)
+		{
+			log.warn('file "' + this.file.path + '" already open?!');
+			return false;
+		}
+
+		if (!this.file.exists() || !this.file.isFile())
+		{
+			if ((oflags & OFlags.CREAT) != OFlags.CREAT)
+			{
+				log.warn('file "' + this.file.path + '" not found!');
+				return false;
+			}
+		}
+
+		try
+		{
+			fs = new FileStream(this.file, oflags, mode, 0);
+
+			if ((oflags & (OFlags.RDONLY|OFlags.RDWR)) != 0)
+			{
+				this.is = new BinaryInputStream(fs);
+				this.size = this.file.fileSizeOfLink;
+			}
+
+			if ((oflags & (OFlags.WRONLY|OFlags.RDWR)) != 0)
+				this.os = new BinaryOutputStream(fs);
+		}
+		catch (e)
+		{
+			log.error('fail to open "' + this.file.path + '" file: ' + e);
+		}
+
+		return this.is||this.os;
+	},
+
+	readInt(size)
+	{
+		if (!this.file || !this.is)
+			return null;
+
+		try
+		{
+			switch (size)
+			{
+				case 4:
+					return this.is.read32();
+
+				case 2:
+					return this.is.read16();
+
+				case 1:
+					return this.is.read8();
+
+				default:
+					return null;
+			}
+		}
+		catch (e)
+		{
+			log.error('fail to read from "' + this.file.path + '" file: ' + e);
+		}
+	},
+
+	readStr(size = -1)
+	{
+		let dec, data;
+
+		data = this.read(size);
+		if (!data)
+			return null;
+
+		dec = new TextDecoder();
+
+		try
+		{
+			return dec.decode(new Uint8Array(data));
+		}
+		catch (e)
+		{
+			log.error('fail to read from "' + this.file.path + '" file: ' + e);
+		}
+	},
+
+	read(size = -1)
+	{
+		if (!this.file || !this.is)
+			return null;
+
+		try
+		{
+			if (size < 0)
+				size = this.is.available();
+
+			return this.is.readByteArray(size);
+		}
+		catch (e)
+		{
+			log.error('fail to read from "' + this.file.path + '" file: ' + e);
+		}
+	},
+
+	writeInt(val, size)
+	{
+		if (Number.isInteger(val))
+			return -1;
+
+		if (!this.file || !this.os)
+			return -1;
+
+		try
+		{
+			switch (size)
+			{
+				case 4:
+					this.os.write32(val);
+					break;
+
+				case 2:
+					this.os.write16(val);
+					break;
+
+				case 1:
+					this.os.write8(val);
+					break;
+
+				default:
+					return -1;
+			}
+
+			this.sz += size;
+
+			return size;
+		}
+		catch (e)
+		{
+			log.error('fail write to "' + this.file.path + '" file: ' + e);
+		}
+	},
+
+	writeStr(data)
+	{
+		let enc;
+
+		if (typeof data != "string")
+			return -1;
+
+		enc = new TextEncoder();
+
+		try
+		{
+			data = enc.encode(data);
+			return this.write(Array.from(data));
+		}
+		catch (e)
+		{
+			log.error('fail write to "' + this.file.path + '" file: ' + e);
+		}
+	},
+
+	write(data)
+	{
+		let len;
+
+		if (!Array.isArray(data))
+			return -1;
+
+		if (!this.file || !this.os)
+			return -1;
+
+		try
+		{
+			this.os.writeByteArray(data, data.length);
+			this.sz += data.length;
+
+			return data.length;
+		}
+		catch (e)
+		{
+			log.error('fail write to "' + this.file.path + '" file: ' + e);
+		}
+	},
+
+	flush()
+	{
+		if (!this.os || this.sz < 1)
+			return;
+
+		this.os.flush();
+		this.sz = 0;
+	},
+
+	close()
+	{
+		this.flush();
+		if (this.is)
+		{
+			this.is.close();
+			this.is = null;
+		}
+		if (this.os)
+		{
+			this.os.close();
+			this.os = null;
+		}
+	},
+
+	destroy()
+	{
+		this.file = null;
+		this.close();
+	}
+}
+
 var log =
 {
 	_level: LogLevel.INFO,
