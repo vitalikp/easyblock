@@ -25,6 +25,18 @@ const LogLevel =
 	ALL: 5
 };
 
+/** open flags */
+const OFlags =
+{
+	NONE: -1,
+	RDONLY: 0x01,
+	WRONLY: 0x02,
+	RDWR: 0x04,
+	CREAT: 0x08,
+	APPEND: 0x10,
+	TRUNC: 0x20
+};
+
 
 var log =
 {
