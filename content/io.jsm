@@ -4,7 +4,7 @@ const Ci = Components.interfaces;
 const Cc = Components.classes;
 const Cu = Components.utils;
 
-var EXPORTED_SYMBOLS = ["LogLevel", "log", "io"];
+var EXPORTED_SYMBOLS = ["LogLevel", "OFlags", "log", "io"];
 
 Cu.import("resource://gre/modules/osfile.jsm");
 
