@@ -7,8 +7,6 @@ const CC = Components.Constructor;
 
 var EXPORTED_SYMBOLS = ["LogLevel", "OFlags", "log", "io"];
 
-Cu.import("resource://gre/modules/osfile.jsm");
-
 
 const cs = Cc["@mozilla.org/consoleservice;1"].getService(Ci.nsIConsoleService);
 const ios = Cc["@mozilla.org/network/io-service;1"].getService(Ci.nsIIOService2);
@@ -385,18 +383,6 @@ var io =
 		{
 			return null;
 		}
-	},
-
-	stat(fn, callback)
-	{
-		let path;
-
-		path = OS.Path.join(this.addonPath, fn);
-
-		OS.File.stat(path).then(callback, (res) =>
-		{
-			log.warn('file not found: ' + fn + ' ' + res);
-		});
 	},
 
 	load(path, callback)
