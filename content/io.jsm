@@ -482,27 +482,6 @@ var io =
 					await file.close();
 			}
 		})();
-	},
-
-	onLoad(path, stat, callback)
-	{
-		if (stat.isDir)
-			return;
-
-		try
-		{
-			OS.File.read(path).then((data) =>
-			{
-				if (!data || !data.byteLength)
-					return;
-
-				callback(data);
-			});
-		}
-		catch(e)
-		{
-			log.error('fail to read ' + path + ' file: ' + e);
-		}
 	}
 };
 io.init();
