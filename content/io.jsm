@@ -427,42 +427,22 @@ var io =
 			return;
 		}
 
-		this.loadFile(path, (data) =>
-		{
-			let dec;
-
-			dec = new TextDecoder();
-
-			try
-			{
-				callback(dec.decode(data));
-			}
-			catch (e)
-			{
-				log.error('fail to read ' + path + ' file: ' + e);
-			}
-		});
+		this.loadFile(path, callback);
 	},
 
 	loadFile(fn, callback)
 	{
-		let path;
+		let file;
 
 		if (!fn || !callback)
 			return;
 
-		path = OS.Path.join(this.addonPath, fn);
+		file = new File(fn, this.addonPath);
 
-		try
+		if (file.open())
 		{
-			this.stat(fn, (stat) =>
-			{
-				this.onLoad(path, stat, callback);
-			});
-		}
-		catch(e)
-		{
-			log.error('fail to load ' + fn + ' file: ' + e);
+			callback(file.readStr());
+			file.close();
 		}
 	},
 
