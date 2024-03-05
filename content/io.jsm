@@ -448,40 +448,17 @@ var io =
 
 	saveFile(fn, data)
 	{
-		let path;
+		let file;
 
 		if (!fn || !data)
 			return;
 
-		path = OS.Path.join(this.addonPath, fn);
-
-		switch (typeof(data))
+		file = new File(fn, this.addonPath);
+		if (file.creat())
 		{
-			case 'string':
-				data = new TextEncoder().encode(data);
-				break;
+			file.writeStr(data);
+			file.close();
 		}
-
-		(async()=>
-		{
-			let file;
-
-			try
-			{
-				file = await OS.File.open(path, { write: true, trunc: true });
-				await file.write(data);
-				await file.flush();
-			}
-			catch(e)
-			{
-				log.error('fail to save ' + fn + ' file: ' + e);
-			}
-			finally
-			{
-				if (file)
-					await file.close();
-			}
-		})();
 	}
 };
 io.init();
