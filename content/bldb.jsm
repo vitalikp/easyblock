@@ -345,7 +345,7 @@ CssRule.prototype =
 {
 	load(fn)
 	{
-		io.loadText(fn, (data) =>
+		io.loadFile(fn, (data) =>
 		{
 			let ln;
 
@@ -374,7 +374,7 @@ JsRule.prototype =
 {
 	load(fn)
 	{
-		io.loadText(fn, (data) =>
+		io.loadFile(fn, (data) =>
 		{
 			let ln;
 
@@ -1061,7 +1061,7 @@ bldb.prototype =
 		db = this;
 
 		loadtime = new Date();
-		io.loadText(this.fn, (data) =>
+		io.loadFile(this.fn, (data) =>
 		{
 			if (!data)
 				return;
