@@ -1050,7 +1050,7 @@ bldb.prototype =
 			if (onLoad)
 				onLoad(db);
 
-			log.info("load blacklist sites from '" + db.fn + "' file (" + loadtime + " ms)");
+			log.info("blacklist sites from '" + db.fn + "' file loaded (" + loadtime + " ms)");
 		});
 	},
 
