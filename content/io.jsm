@@ -385,23 +385,6 @@ var io =
 		}
 	},
 
-	load(path, callback)
-	{
-		if (!path || !callback)
-			return;
-
-		if (path.startsWith("chrome://"))
-		{
-			netutil.loadHttp(path, "arraybuffer", callback);
-			return;
-		}
-
-		this.loadFile(path, (data) =>
-		{
-			callback(data.buffer);
-		});
-	},
-
 	loadText(path, callback)
 	{
 		if (!path || !callback)
