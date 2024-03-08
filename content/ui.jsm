@@ -679,7 +679,10 @@ WinUI.selectToolbar = function(toolbars)
 
 		if (index < items.length)
 			nextItem = items[index+1];
-		WinUI.toolbarId = toolbar._customizationTarget.id;
+		if (toolbar.hasAttribute("customizationtarget"))
+			WinUI.toolbarId = toolbar.getAttribute("customizationtarget");
+		else
+			WinUI.toolbarId = toolbar.id;
 		WinUI.nextItemId = nextItem;
 		break;
 	}
