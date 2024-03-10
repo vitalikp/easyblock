@@ -59,9 +59,18 @@ EventBus.prototype =
 
 	receiveMessage(msg)
 	{
+		let data;
+
 		if (!msg || this.owner == msg.name)
 			return;
 
-		return this.onEvent(msg.data);
+		data =
+		{
+			type: msg.data.type,
+			target: msg.target,
+			data: msg.data.data
+		};
+
+		return this.onEvent(data);
 	}
 }
