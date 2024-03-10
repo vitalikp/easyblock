@@ -317,6 +317,13 @@ Object.assign(UiBus.prototype,
 	}
 });
 
+function TabUI(mm, id)
+{
+	EventBus.call(this, "ui", mm);
+
+	this.id = id;
+}
+
 function WinUI(win, addon)
 {
 	let doc, popupMenu, grpMenu;
