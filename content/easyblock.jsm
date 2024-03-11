@@ -106,6 +106,10 @@ ObsHandler.prototype =
 			case OBS_WIN_OPEN:
 				this.onWinOpen(subject);
 				return;
+
+			case OBS_MM_CLOSE:
+				this.addon.onCloseMM(subject);
+				return;
 		}
 	}
 };
@@ -283,6 +287,7 @@ var EasyBlock =
 		while (windows.hasMoreElements())
 			this.loadWindow(windows.getNext());
 		EasyBlock.observer.reg(os, OBS_WIN_OPEN);
+		EasyBlock.observer.reg(os, OBS_MM_CLOSE);
 
 		this.db.load((db) =>
 		{
@@ -311,6 +316,7 @@ var EasyBlock =
 		EasyBlock.observer.unreg(os, OBS_REQ);
 		EasyBlock.observer.unreg(os, OBS_RESP);
 		EasyBlock.observer.unreg(os, OBS_WIN_OPEN);
+		EasyBlock.observer.unreg(os, OBS_MM_CLOSE);
 
 		this.prefs.destroy();
 
