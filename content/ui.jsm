@@ -469,6 +469,24 @@ WinUI.prototype =
 			this.notify("Blacklist sites reloaded!");
 	},
 
+	onFrame(data, target)
+	{
+		let tabUI, mm;
+
+		if (!data || !target)
+			return;
+
+		mm = target.messageManager;
+		tabUI = this.tabs.get(mm);
+		if (tabUI)
+			return;
+
+		tabUI = new TabUI(mm, data.tabId);
+
+		this.tabs.set(tabUI.id, tabUI);
+		this.tabs.set(mm, tabUI);
+	},
+
 	onGet(data)
 	{
 		if (!data)
