@@ -491,6 +491,18 @@ WinUI.prototype =
 		this.tabs.set(mm, tabUI);
 	},
 
+	onClose(mm)
+	{
+		let tabUI;
+
+		tabUI = this.tabs.get(mm);
+		if (!tabUI)
+			return;
+
+		this.tabs.delete(mm);
+		this.tabs.delete(tabUI.id);
+	},
+
 	onGet(data)
 	{
 		if (!data)
