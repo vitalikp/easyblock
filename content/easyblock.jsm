@@ -439,6 +439,24 @@ var EasyBlock =
 		});
 	},
 
+	onCloseMM(mm)
+	{
+		let winUI, i;
+
+		if (!mm)
+			return;
+
+		i = 0;
+		while (i < this.wins.length)
+		{
+			winUI = this.wins[i++];
+			if (!winUI)
+				continue;
+
+			winUI.onClose(mm);
+		}
+	},
+
 	setReqUA(req)
 	{
 		let type, origin, dn, ua;
