@@ -333,6 +333,9 @@ function WinUI(win, addon)
 
 	this.win = win;
 	this.addon = addon;
+
+	this.tabs = new Map();
+
 	this.bus = new UiBus(win.messageManager, this);
 
 	doc = win.document;
@@ -617,6 +620,8 @@ WinUI.prototype =
 			this.bus.destroy();
 			this.bus = null;
 		}
+
+		this.tabs.clear();
 
 		if (this.btn)
 		{
