@@ -287,6 +287,14 @@ function ContentBus(mm, obs)
 ContentBus.prototype = Object.create(EventBus.prototype);
 Object.assign(ContentBus.prototype,
 {
+	frame(tabId)
+	{
+		if (!tabId)
+			return;
+
+		this.sendEvent(EventType.FRAME, { tabId });
+	},
+
 	reload()
 	{
 		this.obs.reload();
