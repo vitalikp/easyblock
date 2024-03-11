@@ -303,6 +303,10 @@ Object.assign(UiBus.prototype,
 	{
 		switch (event.type)
 		{
+			case EventType.FRAME:
+				this.winUI.onFrame(event.data, event.target);
+				break;
+
 			case EventType.GET:
 				return this.winUI.onGet(event.data);
 
