@@ -287,6 +287,10 @@ function ContentBus(mm, handler)
 ContentBus.prototype = Object.create(EventBus.prototype);
 Object.assign(ContentBus.prototype,
 {
+	onInit(data, target)
+	{
+	},
+
 	frame(tabId)
 	{
 		if (!tabId)
