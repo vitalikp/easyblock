@@ -15,8 +15,9 @@ const EventType =
 	TOGGLE: 1,
 	RELOAD: 2,
 	FRAME: 3,
-	GET: 4,
-	DOM: 5
+	INIT: 4,
+	GET: 5,
+	DOM: 6
 };
 
 
