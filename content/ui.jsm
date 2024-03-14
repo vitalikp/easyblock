@@ -509,6 +509,8 @@ WinUI.prototype =
 
 		this.tabs.set(tabUI.id, tabUI);
 		this.tabs.set(mm, tabUI);
+
+		tabUI.init({ disabled: this.disabled });
 	},
 
 	onGet(data)
