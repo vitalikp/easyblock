@@ -328,6 +328,18 @@ function TabUI(mm, id)
 	this.id = id;
 }
 
+TabUI.prototype = Object.create(EventBus.prototype);
+Object.assign(TabUI.prototype,
+{
+	init(data)
+	{
+		if (!data)
+			return;
+
+		this.sendEvent(EventType.INIT, data);
+	}
+});
+
 function WinUI(win, addon)
 {
 	let doc, popupMenu, grpMenu;
