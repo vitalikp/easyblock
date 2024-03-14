@@ -275,11 +275,11 @@ Site.getCspNonce = function(doc)
 	return null;
 }
 
-function ContentBus(mm, obs)
+function ContentBus(mm, handler)
 {
 	EventBus.call(this, "content", mm);
 
-	this.obs = obs;
+	this.handler = handler;
 
 	this.regEvent("ui");
 }
@@ -297,7 +297,7 @@ Object.assign(ContentBus.prototype,
 
 	reload()
 	{
-		this.obs.reload();
+		this.handler.reload();
 	},
 
 	get(name, data)
@@ -337,7 +337,7 @@ Object.assign(ContentBus.prototype,
 		switch (event.type)
 		{
 			case EventType.TOGGLE:
-				this.obs.toggle(event.data);
+				this.handler.toggle(event.data);
 				break;
 
 			case EventType.RELOAD:
