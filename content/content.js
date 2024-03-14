@@ -289,6 +289,14 @@ Object.assign(ContentBus.prototype,
 {
 	onInit(data, target)
 	{
+		if (!data || !target)
+			return;
+
+		this.handler.disabled = data.disabled;
+
+		target.addEventListener("DOMWindowCreated", this.handler);
+		target.addEventListener("DOMContentLoaded", this.handler);
+		target.addEventListener("unload", this.handler); // once is ignored here
 	},
 
 	frame(tabId)
@@ -372,8 +380,6 @@ function SiteHandler(global)
 
 	this.bus = new ContentBus(global, this);
 	this.bus.frame(this.tabId);
-
-	this.disabled = this.bus.get('disabled');
 }
 
 SiteHandler.prototype =
