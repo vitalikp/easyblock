@@ -311,7 +311,7 @@ Object.assign(UiBus.prototype,
 				return this.winUI.onGet(event.data);
 
 			case EventType.DOM:
-				return this.winUI.onDom(event.data, event.target);
+				this.winUI.onDom(event.data, event.target);
 		}
 	},
 
@@ -546,9 +546,14 @@ WinUI.prototype =
 
 	onDom(data, target)
 	{
-		let site, eventData, grpId;
+		let tabUI, mm, site, eventData, grpId;
 
 		if (!data || !target)
+			return;
+
+		mm = target.messageManager;
+		tabUI = this.tabs.get(mm);
+		if (!tabUI)
 			return;
 
 		site = this.addon.findSite(data.hostname);
@@ -568,7 +573,7 @@ WinUI.prototype =
 			scripts: site.scripts
 		};
 
-		return eventData;
+		tabUI.site(eventData);
 	},
 
 	addMenuItem(id, name)
