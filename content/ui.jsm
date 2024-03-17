@@ -311,7 +311,7 @@ Object.assign(UiBus.prototype,
 				return this.winUI.onGet(event.data);
 
 			case EventType.DOM:
-				return this.winUI.onDom(event.data);
+				return this.winUI.onDom(event.data, event.target);
 		}
 	},
 
@@ -544,11 +544,11 @@ WinUI.prototype =
 		}
 	},
 
-	onDom(data)
+	onDom(data, target)
 	{
 		let site, eventData, grpId;
 
-		if (!data)
+		if (!data || !target)
 			return;
 
 		site = this.addon.findSite(data.hostname);
