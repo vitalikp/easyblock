@@ -337,6 +337,14 @@ Object.assign(TabUI.prototype,
 			return;
 
 		this.sendEvent(EventType.INIT, data);
+	},
+
+	site(data)
+	{
+		if (!data)
+			return;
+
+		this.sendEvent(EventType.SITE, data);
 	}
 });
 
