@@ -369,6 +369,10 @@ Object.assign(ContentBus.prototype,
 			case EventType.RELOAD:
 				this.reload();
 				break;
+
+			case EventType.SITE:
+				this.onSite(event.data);
+				break;
 		}
 	},
 
