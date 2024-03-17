@@ -17,7 +17,8 @@ const EventType =
 	FRAME: 3,
 	INIT: 4,
 	GET: 5,
-	DOM: 6
+	DOM: 6,
+	SITE: 7
 };
 
 
