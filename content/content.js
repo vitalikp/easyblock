@@ -348,7 +348,6 @@ Object.assign(ContentBus.prototype,
 			grpId = data.grpId;
 			if (this.get('enabled', { grpId }))
 				this.obs.onFind(data);
-			return;
 		}
 
 		this.sendEvent(EventType.DOM, { hostname, grpId });
@@ -447,7 +446,7 @@ SiteHandler.prototype =
 
 	onCreate(doc)
 	{
-		let loc, site;
+		let loc;
 
 		if (!doc)
 			return;
@@ -456,10 +455,7 @@ SiteHandler.prototype =
 		if (loc.protocol != "https:" && loc.protocol != "http:")
 			return;
 
-		site = this.sites.get(loc.hostname);
-
-		if (!site)
-			this.bus.dom(loc.hostname);
+		this.bus.dom(loc.hostname);
 	},
 
 	filterDom(doc)

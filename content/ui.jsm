@@ -555,6 +555,9 @@ WinUI.prototype =
 		if (!data || !target)
 			return;
 
+		if (data.grpId > 0)
+			return;
+
 		mm = target.messageManager;
 		tabUI = this.tabs.get(mm);
 		if (!tabUI)
