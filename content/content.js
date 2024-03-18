@@ -340,7 +340,18 @@ Object.assign(ContentBus.prototype,
 
 	dom(hostname)
 	{
-		this.sendEvent(EventType.DOM, { hostname });
+		let data, grpId = -1;
+
+		data = _cache.get(hostname);
+		if (data)
+		{
+			grpId = data.grpId;
+			if (this.get('enabled', { grpId }))
+				this.obs.onFind(data);
+			return;
+		}
+
+		this.sendEvent(EventType.DOM, { hostname, grpId });
 	},
 
 	onEvent(event)
@@ -436,17 +447,7 @@ SiteHandler.prototype =
 
 	findDom(hostname)
 	{
-		let data;
-
-		data = _cache.get(hostname);
-		if (!data)
-		{
-			this.bus.dom(hostname);
-			return;
-		}
-
-		if (this.bus.get('enabled', { grpId: data.grpId }))
-			this.onFind(data);
+		this.bus.dom(hostname);
 	},
 
 	onCreate(doc)
