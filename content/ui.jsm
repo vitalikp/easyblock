@@ -551,13 +551,22 @@ WinUI.prototype =
 		if (!data || !target)
 			return;
 
-		if (data.grpId > 0)
-			return;
-
 		mm = target.messageManager;
 		tabUI = this.tabs.get(mm);
 		if (!tabUI)
 			return;
+
+		if (data.grpId > 0)
+		{
+			let group;
+
+			group = this.addon.getGroup(data.grpId);
+			if (!group || !group.enabled)
+				return;
+
+			tabUI.site({ hostname: data.hostname });
+			return;
+		}
 
 		site = this.addon.findSite(data.hostname);
 		if (!site || !site.hasDom)
