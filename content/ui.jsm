@@ -518,29 +518,6 @@ WinUI.prototype =
 		tabUI.init({ disabled: this.disabled });
 	},
 
-	onGet(data)
-	{
-		if (!data)
-			return;
-
-		switch (data.name)
-		{
-			case 'enabled':
-				{
-					let group;
-
-					group = this.addon.getGroup(data.grpId);
-					if (!group)
-						return null;
-
-					return group.enabled;
-				}
-
-			case 'disabled':
-				return this.addon.disabled;
-		}
-	},
-
 	onDom(data, target)
 	{
 		let tabUI, mm, site, eventData, grpId;
