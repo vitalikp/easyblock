@@ -307,9 +307,6 @@ Object.assign(UiBus.prototype,
 				this.winUI.onFrame(event.data, event.target);
 				break;
 
-			case EventType.GET:
-				return this.winUI.onGet(event.data);
-
 			case EventType.DOM:
 				this.winUI.onDom(event.data, event.target);
 		}
