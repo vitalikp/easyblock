@@ -325,22 +325,6 @@ Object.assign(ContentBus.prototype,
 		this.handler.reload();
 	},
 
-	get(name, data)
-	{
-		let res;
-
-		if (!name)
-			return;
-
-		data = Object.assign({ name: name }, data);
-
-		res = this.sendSyncEvent(EventType.GET, data);
-		if (!res)
-			return null;
-
-		return res[0];
-	},
-
 	dom(hostname)
 	{
 		let data, grpId = -1;
