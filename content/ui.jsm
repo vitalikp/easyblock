@@ -720,6 +720,9 @@ WinUI.selectToolbar = function(toolbars)
 	let toolbar, currSet, items, nextItem;
 	let i, index;
 
+	if (!toolbars)
+		return;
+
 	i = 0;
 	while (i < toolbars.length)
 	{
