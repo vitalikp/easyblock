@@ -177,6 +177,12 @@ Site.prototype =
 		csp = {};
 		Site.getCsp(doc, csp);
 
+		if (!csp.inlineScript)
+		{
+			this.execJs(doc);
+			return;
+		}
+
 		i = 0;
 		while (i < this.scripts.length)
 		{
@@ -275,9 +281,14 @@ Site.filterNodes = function(nodes, attrs)
 
 Site.getCsp = function(doc, res)
 {
-	let csp, src, val, i, j;
+	let csp, src, allowed, val, i, j;
 
-	if (!doc || !res || !doc.nodePrincipal)
+	if (!res)
+		return;
+
+	res.inlineScript = true;
+
+	if (!doc || !doc.nodePrincipal)
 		return;
 
 	csp = doc.nodePrincipal.cspJSON;
@@ -288,25 +299,37 @@ Site.getCsp = function(doc, res)
 	{
 		csp = JSON.parse(csp);
 		csp = csp["csp-policies"];
-		if (Array.isArray(csp))
+		if (!Array.isArray(csp))
+			return;
+
+		i = 0;
+		while (i < csp.length)
 		{
-			i = 0;
-			while (i < csp.length)
+			src = csp[i++]["script-src"];
+			if (Array.isArray(src))
 			{
-				src = csp[i++]["script-src"];
-				if (Array.isArray(src))
+				allowed = false;
+
+				j = 0;
+				while (j < src.length)
 				{
-					j = 0;
-					while (j < src.length)
+					val = src[j++];
+
+					if (val == "'unsafe-inline'")
 					{
-						val = src[j++];
-						if (val.startsWith("'nonce-"))
-						{
-							res.nonce = val.slice(7,-1);
-							return;
-						}
+						allowed = true;
+						continue;
+					}
+
+					if (val.startsWith("'nonce-"))
+					{
+						allowed = true;
+						res.nonce = val.slice(7,-1);
 					}
 				}
+
+				if (!allowed)
+					res.inlineScript = false;
 			}
 		}
 	}
