@@ -135,7 +135,7 @@ Site.prototype =
 		}
 
 		csp = {};
-		Site.getCspNonce(doc, csp);
+		Site.getCsp(doc, csp);
 
 		i = 0;
 		while (i < this.scripts.length)
@@ -233,7 +233,7 @@ Site.filterNodes = function(nodes, attrs)
 	}
 };
 
-Site.getCspNonce = function(doc, res)
+Site.getCsp = function(doc, res)
 {
 	let csp, src, val, i, j;
 
