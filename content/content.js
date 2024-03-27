@@ -122,7 +122,7 @@ Site.prototype =
 	apply(doc)
 	{
 		let i;
-		let style, script, nonce;
+		let style, script, csp;
 
 		if (!doc)
 			return;
@@ -136,15 +136,16 @@ Site.prototype =
 			doc.head.appendChild(style);
 		}
 
-		nonce = Site.getCspNonce(doc);
+		csp = {};
+		Site.getCspNonce(doc, csp);
 
 		i = 0;
 		while (i < this.scripts.length)
 		{
 			script = doc.createElement("script");
 			script.type = "text/javascript";
-			if (nonce)
-				script.setAttribute("nonce", nonce);
+			if (csp.nonce)
+				script.setAttribute("nonce", csp.nonce);
 			script.innerHTML = this.scripts[i++];
 			doc.head.appendChild(script);
 		}
@@ -234,20 +235,20 @@ Site.filterNodes = function(nodes, attrs)
 	}
 };
 
-Site.getCspNonce = function(doc)
+Site.getCspNonce = function(doc, res)
 {
 	let csp, src, val, i, j;
 
-	if (!doc || !doc.nodePrincipal)
-		return null;
+	if (!doc || !res || !doc.nodePrincipal)
+		return;
 
 	csp = doc.nodePrincipal.cspJSON;
 	if (!csp)
-		return null;
+		return;
 
 	try
 	{
-		csp = JSON.parse(csp.toString());
+		csp = JSON.parse(csp);
 		csp = csp["csp-policies"];
 		if (Array.isArray(csp))
 		{
@@ -262,7 +263,10 @@ Site.getCspNonce = function(doc)
 					{
 						val = src[j++];
 						if (val.startsWith("'nonce-"))
-							return val.slice(7,-1);
+						{
+							res.nonce = val.slice(7,-1);
+							return;
+						}
 					}
 				}
 			}
@@ -271,8 +275,6 @@ Site.getCspNonce = function(doc)
 	catch(e)
 	{
 	}
-
-	return null;
 }
 
 function ContentBus(mm, handler)
