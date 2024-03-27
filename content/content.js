@@ -119,6 +119,44 @@ Site.prototype =
 		}
 	},
 
+	execJs(doc)
+	{
+		let win, principal, sandbox, opts, script, i;
+
+		if (!doc)
+			return;
+
+		win = doc.defaultView;
+		if (!win)
+			return;
+
+		principal = doc.nodePrincipal;
+		if (!principal)
+			return;
+
+		opts =
+		{
+			sandboxName: "EB",
+			sandboxPrototype: win,
+			sameZoneAs: win,
+			isWebExtensionContentScript: true,
+			wantXrays: false,
+			wantComponents: false,
+			wantExportHelpers: false
+		};
+		sandbox = Cu.Sandbox(principal, opts);
+
+		i = 0;
+		while (i < this.scripts.length)
+		{
+			script = this.scripts[i++];
+			if (!script)
+				continue;
+
+			Cu.evalInSandbox(script, sandbox, "default", this.hostname, 1);
+		}
+	},
+
 	apply(doc)
 	{
 		let i;
