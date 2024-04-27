@@ -3,6 +3,7 @@
 toolbarbutton.easyblock > image
 {
 	list-style-image: url("chrome://easyblock/content/ui.svg#easyblock");
+	border-radius: 3px !important;
 }
 
 toolbarbutton.easyblock[ebstate="disabled"] > image
