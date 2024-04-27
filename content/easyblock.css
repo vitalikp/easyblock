@@ -71,10 +71,26 @@ toolbarbutton.easyblock menu
 	background-position: right center;
 }
 
+toolbarbutton.easyblock menuitem
+{
+	-moz-binding: none !important;
+}
+
+toolbarbutton.easyblock menuitem:hover
+{
+	color: #fff;
+	background: #4787e8;
+}
+
 toolbarbutton.easyblock menuitem > label
 {
 	background-position: left center;
 	background-repeat: no-repeat;
+}
+
+toolbarbutton.easyblock menuitem[disabled="true"] > label
+{
+	color: #888;
 }
 
 toolbarbutton.easyblock menuitem[toggled="true"] > label
