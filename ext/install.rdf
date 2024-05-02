@@ -4,7 +4,7 @@
 		<em:id>easyblock@vitalikp</em:id>
 		<em:type>2</em:type>
 		<em:name>EasyBlock</em:name>
-		<em:version>0.7.8</em:version>
+		<em:version>0.7.9-dev</em:version>
 		<em:creator>vitalikp</em:creator>
 
 		<em:description>Automatically block site from blacklist.</em:description>
