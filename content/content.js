@@ -285,6 +285,16 @@ function ContentBus(mm, handler)
 ContentBus.prototype = Object.create(EventBus.prototype);
 Object.assign(ContentBus.prototype,
 {
+	onSite(data)
+	{
+		if (!data)
+			return;
+
+		_cache.set(data.hostname, data);
+
+		this.handler.onFind(data);
+	},
+
 	reload()
 	{
 		this.handler.reload();
@@ -319,7 +329,7 @@ Object.assign(ContentBus.prototype,
 		if (data.hostname != hostname)
 			return;
 
-		return data;
+		this.onSite(data);
 	},
 
 	onEvent(event)
@@ -412,19 +422,12 @@ SiteHandler.prototype =
 		data = _cache.get(hostname);
 		if (!data)
 		{
-			data = this.bus.dom(hostname);
-			if (!data)
-				return;
-
-			_cache.set(hostname, data);
-		}
-		else
-		{
-			if (!this.bus.get("enabled", { grpId: data.grpId }))
-				return;
+			this.bus.dom(hostname);
+			return;
 		}
 
-		this.onFind(data);
+		if (this.bus.get("enabled", { grpId: data.grpId }))
+			this.onFind(data);
 	},
 
 	onCreate(doc)
