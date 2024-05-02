@@ -10,7 +10,7 @@ Cu.import("resource://gre/modules/osfile.jsm");
 
 
 const cs = Cc["@mozilla.org/consoleservice;1"].getService(Ci.nsIConsoleService);
-const ios = Cc["@mozilla.org/network/io-service;1"].getService(Ci.nsIIOService2);
+const ios = Cc["@mozilla.org/network/io-service;1"].getService(Ci.nsIIOService);
 const scriptError = Cc["@mozilla.org/scripterror;1"];
 
 const ADDON_NAME = "easyblock";
