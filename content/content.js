@@ -383,6 +383,14 @@ Object.assign(ContentBus.prototype,
 		this.sendEvent(EventType.FRAME, { tabId });
 	},
 
+	onToggle(data)
+	{
+		if (!data)
+			return;
+
+		this.handler.toggle(data);
+	},
+
 	reload()
 	{
 		this.handler.reload();
@@ -408,7 +416,7 @@ Object.assign(ContentBus.prototype,
 				break;
 
 			case EventType.TOGGLE:
-				this.handler.toggle(event.data);
+				this.onToggle(event.data);
 				break;
 
 			case EventType.RELOAD:
