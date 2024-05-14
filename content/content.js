@@ -367,7 +367,7 @@ Object.assign(ContentBus.prototype,
 		this.handler.toggle(data);
 	},
 
-	reload()
+	onReload()
 	{
 		this.handler.reload();
 	},
@@ -413,7 +413,7 @@ Object.assign(ContentBus.prototype,
 				break;
 
 			case EventType.RELOAD:
-				this.reload();
+				this.onReload();
 				break;
 		}
 	},
