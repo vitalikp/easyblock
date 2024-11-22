@@ -15,7 +15,6 @@ Cu.import("chrome://easyblock/content/bldb.jsm");
 
 const os = Cc["@mozilla.org/observer-service;1"].getService(Ci.nsIObserverService);
 const ps = Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefService);
-const gmm = Cc["@mozilla.org/globalmessagemanager;1"].getService(Ci.nsIMessageBroadcaster);
 const wm = Cc["@mozilla.org/appshell/window-mediator;1"].getService(Ci.nsIWindowMediator);
 
 
