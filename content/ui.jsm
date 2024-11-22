@@ -288,6 +288,15 @@ Object.assign(UiBus.prototype,
 		this.sendEvent(EventType.RELOAD);
 	},
 
+	loadScript(name)
+	{
+		if (this.scripts.includes(name))
+			return;
+
+		this.mm.loadFrameScript("chrome://easyblock/content/" + name, true);
+		this.scripts.push(name);
+	},
+
 	onEvent(event)
 	{
 		switch (event.type)
