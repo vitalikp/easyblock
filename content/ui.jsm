@@ -382,6 +382,7 @@ function WinUI(win, addon)
 	this.tabs = new Map();
 
 	this.bus = new UiBus(win.messageManager, this);
+	this.bus.loadScript("frame.js");
 
 	doc = win.document;
 

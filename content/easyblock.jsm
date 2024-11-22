@@ -290,8 +290,6 @@ var EasyBlock =
 
 		this.prefs = new PrefHandler(this);
 
-		gmm.loadFrameScript(FRAME_SCRIPT, true);
-
 		ui.loadCss("easyblock");
 		log.info("easyblock " + addonData.version + " started!");
 	},
@@ -299,8 +297,6 @@ var EasyBlock =
 	shutdown()
 	{
 		let i;
-
-		gmm.removeDelayedFrameScript(FRAME_SCRIPT);
 
 		i = 0;
 		while (i < this.wins.length)
