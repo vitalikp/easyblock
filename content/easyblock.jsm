@@ -29,8 +29,6 @@ const PREF_CHANGE = "nsPref:changed";
 
 const TYPE_DOC = Ci.nsIContentPolicy.TYPE_DOCUMENT;
 
-const FRAME_SCRIPT = "chrome://easyblock/content/frame.js";
-
 
 function ObsHandler(addon)
 {
