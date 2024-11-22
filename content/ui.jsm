@@ -279,6 +279,8 @@ function UiBus(mm, winUI)
 
 	this.winUI = winUI;
 	this.regEvent("content");
+
+	this.scripts = [];
 }
 
 UiBus.prototype = Object.create(EventBus.prototype);
@@ -314,6 +316,19 @@ Object.assign(UiBus.prototype,
 
 	destroy()
 	{
+		let script, i;
+
+		i = 0;
+		while (i < this.scripts.length)
+		{
+			script = this.scripts[i++];
+			if (!script)
+				continue;
+
+			this.mm.removeDelayedFrameScript("chrome://easyblock/content/" + script);
+		}
+		this.scripts = [];
+
 		this.unregEvent("content");
 	}
 });
