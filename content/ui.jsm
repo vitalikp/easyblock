@@ -342,9 +342,11 @@ Object.assign(UiBus.prototype,
 	}
 });
 
-function TabUI(mm, id)
+function TabUI(winUI, mm, id)
 {
 	EventBus.call(this, "ui", mm);
+
+	this.winUI = winUI;
 
 	this.id = id;
 }
@@ -545,7 +547,7 @@ WinUI.prototype =
 		if (tabUI)
 			return;
 
-		tabUI = new TabUI(mm, data.tabId);
+		tabUI = new TabUI(this, mm, data.tabId);
 
 		this.tabs.set(tabUI.id, tabUI);
 		this.tabs.set(mm, tabUI);
