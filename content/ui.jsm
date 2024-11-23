@@ -607,21 +607,6 @@ WinUI.prototype =
 		tabUI.init({ disabled: this.disabled });
 	},
 
-	onDom(data, target)
-	{
-		let tabUI, mm;
-
-		if (!data || !target)
-			return;
-
-		mm = target.messageManager;
-		tabUI = this.tabs.get(mm);
-		if (!tabUI)
-			return;
-
-		tabUI.onDom(data, target);
-	},
-
 	addMenuItem(id, name)
 	{
 		let elem;
