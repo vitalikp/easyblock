@@ -440,6 +440,11 @@ WinUI.prototype =
 		this._disabled = value;
 	},
 
+	getGroup(grpId)
+	{
+		return this.addon.getGroup(grpId);
+	},
+
 	openWin(name, url)
 	{
 		if (!this.win || !url)
@@ -559,7 +564,7 @@ WinUI.prototype =
 		{
 			let group;
 
-			group = this.addon.getGroup(data.grpId);
+			group = this.getGroup(data.grpId);
 			if (!group || !group.enabled)
 				return;
 
