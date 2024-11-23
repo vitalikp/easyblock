@@ -317,9 +317,6 @@ Object.assign(UiBus.prototype,
 			case EventType.FRAME:
 				this.winUI.onFrame(event.data, event.target);
 				break;
-
-			case EventType.DOM:
-				this.winUI.onDom(event.data, event.target);
 		}
 	},
 
@@ -412,6 +409,12 @@ Object.assign(TabUI.prototype,
 
 	onEvent(event)
 	{
+		switch (event.type)
+		{
+			case EventType.DOM:
+				this.onDom(event.data, event.target);
+				break;
+		}
 	},
 
 	destroy()
