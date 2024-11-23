@@ -407,6 +407,10 @@ Object.assign(TabUI.prototype,
 		};
 
 		this.site(eventData);
+	},
+
+	onEvent(event)
+	{
 	}
 });
 
