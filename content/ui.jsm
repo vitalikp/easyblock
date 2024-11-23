@@ -368,6 +368,45 @@ Object.assign(TabUI.prototype,
 			return;
 
 		this.sendEvent(EventType.SITE, data);
+	},
+
+	onDom(data, target)
+	{
+		let site, eventData, grpId;
+
+		if (!data || !target)
+			return;
+
+		if (data.grpId > 0)
+		{
+			let group;
+
+			group = this.winUI.getGroup(data.grpId);
+			if (!group || !group.enabled)
+				return;
+
+			this.site({ hostname: data.hostname });
+			return;
+		}
+
+		site = this.winUI.getSite(data.hostname);
+		if (!site || !site.hasDom)
+			return;
+
+		grpId = -1;
+		if (site.group)
+			grpId = site.group.id;
+
+		eventData =
+		{
+			hostname: data.hostname,
+			grpId: grpId,
+			content: site.content,
+			styles: site.styles,
+			scripts: site.scripts
+		};
+
+		this.site(eventData);
 	}
 });
 
@@ -557,7 +596,7 @@ WinUI.prototype =
 
 	onDom(data, target)
 	{
-		let tabUI, mm, site, eventData, grpId;
+		let tabUI, mm;
 
 		if (!data || !target)
 			return;
@@ -567,36 +606,7 @@ WinUI.prototype =
 		if (!tabUI)
 			return;
 
-		if (data.grpId > 0)
-		{
-			let group;
-
-			group = this.getGroup(data.grpId);
-			if (!group || !group.enabled)
-				return;
-
-			tabUI.site({ hostname: data.hostname });
-			return;
-		}
-
-		site = this.getSite(data.hostname);
-		if (!site || !site.hasDom)
-			return;
-
-		grpId = -1;
-		if (site.group)
-			grpId = site.group.id;
-
-		eventData =
-		{
-			hostname: data.hostname,
-			grpId: grpId,
-			content: site.content,
-			styles: site.styles,
-			scripts: site.scripts
-		};
-
-		tabUI.site(eventData);
+		tabUI.onDom(data, target);
 	},
 
 	addMenuItem(id, name)
