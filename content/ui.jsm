@@ -594,15 +594,14 @@ WinUI.prototype =
 		if (!data || !target)
 			return;
 
-		mm = target.messageManager;
-		tabUI = this.tabs.get(mm);
+		tabUI = this.tabs.get(data.tabId);
 		if (tabUI)
 			return;
+		mm = target.messageManager;
 
 		tabUI = new TabUI(this, mm, data.tabId);
 
-		this.tabs.set(tabUI.id, tabUI);
-		this.tabs.set(mm, tabUI);
+		this.tabs.set(data.tabId, tabUI);
 
 		tabUI.init({ disabled: this.disabled });
 	},
