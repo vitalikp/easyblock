@@ -407,6 +407,11 @@ Object.assign(ContentBus.prototype,
 		this.sendEvent(EventType.DOM, { hostname, grpId });
 	},
 
+	close(id)
+	{
+		this.sendEvent(EventType.CLOSE, { id });
+	},
+
 	onEvent(event)
 	{
 		switch (event.type)
