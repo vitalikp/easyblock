@@ -606,6 +606,21 @@ WinUI.prototype =
 		tabUI.init({ disabled: this.disabled });
 	},
 
+	onClose(data)
+	{
+		let tabUI;
+
+		if (!data)
+			return;
+
+		tabUI = this.tabs.get(data.id);
+		if (!tabUI)
+			return;
+
+		this.tabs.delete(tabUI.id);
+		tabUI.destroy();
+	},
+
 	addMenuItem(id, name)
 	{
 		let elem;
