@@ -601,6 +601,7 @@ SiteHandler.prototype =
 
 		if (this.bus)
 		{
+			this.bus.close(this.tabId);
 			this.bus.destroy();
 			this.bus = null;
 		}
