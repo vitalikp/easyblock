@@ -37,7 +37,7 @@ EventBus.prototype =
 
 	regEvent(name)
 	{
-		this.mm.addMessageListener(EVENT_TYPE + ":" + name, this);
+		this.mm.addMessageListener(EVENT_TYPE + ":" + name, this, true);
 	},
 
 	unregEvent(name)
