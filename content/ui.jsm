@@ -652,7 +652,7 @@ WinUI.prototype =
 
 	onReload(db)
 	{
-		this.bus.reload();
+		this.tabs.reload();
 
 		this.clearGroups();
 		this.addon.loadDBWin(this, db);
