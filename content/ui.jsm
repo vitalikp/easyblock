@@ -291,11 +291,6 @@ Object.assign(UiBus.prototype,
 		this.mm.broadcastAsyncMessage(type, data);
 	},
 
-	reload()
-	{
-		this.sendEvent(EventType.RELOAD);
-	},
-
 	loadScript(name)
 	{
 		if (this.scripts.includes(name))
