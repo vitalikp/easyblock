@@ -286,11 +286,6 @@ function UiBus(mm, winUI)
 UiBus.prototype = Object.create(EventBus.prototype);
 Object.assign(UiBus.prototype,
 {
-	_sendEvent(type, data)
-	{
-		this.mm.broadcastAsyncMessage(type, data);
-	},
-
 	loadScript(name)
 	{
 		if (this.scripts.includes(name))
