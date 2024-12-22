@@ -639,13 +639,13 @@ WinUI.prototype =
 
 	onState(state)
 	{
-		this.bus.toggle(state);
+		this.tabs.toggle(state);
 		this.disabled = state;
 	},
 
 	onToggle(group)
 	{
-		this.bus.toggle(group.enabled, group.id);
+		this.tabs.toggle(group.enabled, group.id);
 
 		this.groups.forEach((grpUI) => grpUI.update(group));
 	},
