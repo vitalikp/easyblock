@@ -30,11 +30,6 @@ function EventBus(name, mm = cpmm)
 
 EventBus.prototype =
 {
-	_sendEvent(type, data)
-	{
-		this.mm.sendAsyncMessage(type, data);
-	},
-
 	regEvent(name)
 	{
 		this.mm.addMessageListener(EVENT_TYPE + ":" + name, this, true);
@@ -47,7 +42,7 @@ EventBus.prototype =
 
 	sendEvent(type, data)
 	{
-		this._sendEvent(this.owner, { type: type, data: data });
+		this.mm.sendAsyncMessage(this.owner, { type, data });
 	},
 
 	onEvent(event)
