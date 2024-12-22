@@ -427,6 +427,84 @@ Object.assign(TabUI.prototype,
 	}
 });
 
+function TabMap()
+{
+	this.tabs = new Map();
+}
+
+TabMap.prototype =
+{
+	get(id)
+	{
+		if (!id)
+			return null;
+
+		return this.tabs.get(id);
+	},
+
+	add(tabUI)
+	{
+		if (!tabUI)
+			return;
+
+		this.tabs.set(tabUI.id, tabUI);
+	},
+
+	sendEvent(type, data)
+	{
+		let tabUI, iter;
+
+		iter = this.tabs.values();
+
+		while (!(tabUI = iter.next()).done)
+		{
+			tabUI = tabUI.value;
+			if (!tabUI)
+				continue;
+
+			tabUI.sendEvent(type, data);
+		}
+	},
+
+	toggle(value, grpId)
+	{
+		this.sendEvent(EventType.TOGGLE, { grpId, value });
+	},
+
+	reload(db)
+	{
+		this.sendEvent(EventType.RELOAD);
+	},
+
+	close(id)
+	{
+		let tabUI;
+
+		tabUI = this.tabs.get(id);
+		if (!tabUI)
+			return;
+
+		this.tabs.delete(tabUI.id);
+		tabUI.destroy();
+	},
+
+	destroy()
+	{
+		let iter, tabUI;
+
+		iter = this.tabs.values();
+		while (!(tabUI=iter.next()).done)
+		{
+			tabUI = tabUI.value;
+			if (!tabUI)
+				continue;
+
+			tabUI.destroy();
+		}
+		this.tabs.clear();
+	}
+};
+
 function WinUI(win, addon)
 {
 	let doc, popupMenu, grpMenu;
