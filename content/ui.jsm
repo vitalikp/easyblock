@@ -515,7 +515,7 @@ function WinUI(win, addon)
 	this.win = win;
 	this.addon = addon;
 
-	this.tabs = new Map();
+	this.tabs = new TabMap();
 
 	this.bus = new UiBus(win.messageManager, this);
 	this.bus.loadScript("frame.js");
@@ -683,24 +683,17 @@ WinUI.prototype =
 
 		tabUI = new TabUI(this, mm, data.tabId);
 
-		this.tabs.set(data.tabId, tabUI);
+		this.tabs.add(tabUI);
 
 		tabUI.init({ disabled: this.disabled });
 	},
 
 	onClose(data)
 	{
-		let tabUI;
-
 		if (!data)
 			return;
 
-		tabUI = this.tabs.get(data.id);
-		if (!tabUI)
-			return;
-
-		this.tabs.delete(tabUI.id);
-		tabUI.destroy();
+		this.tabs.close(data.id);
 	},
 
 	addMenuItem(id, name)
@@ -799,24 +792,13 @@ WinUI.prototype =
 
 	destroy()
 	{
-		let iter, tabUI;
-
 		if (this.bus)
 		{
 			this.bus.destroy();
 			this.bus = null;
 		}
 
-		iter = this.tabs.values();
-		while (!(tabUI=iter.next()).done)
-		{
-			tabUI = tabUI.value;
-			if (!tabUI)
-				continue;
-
-			tabUI.destroy();
-		}
-		this.tabs.clear();
+		this.tabs.destroy();
 
 		if (this.btn)
 		{
