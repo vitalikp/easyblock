@@ -291,11 +291,6 @@ Object.assign(UiBus.prototype,
 		this.mm.broadcastAsyncMessage(type, data);
 	},
 
-	toggle(value, grpId)
-	{
-		this.sendEvent(EventType.TOGGLE, { grpId: grpId, value: value });
-	},
-
 	reload()
 	{
 		this.sendEvent(EventType.RELOAD);
