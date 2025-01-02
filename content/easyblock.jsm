@@ -130,7 +130,6 @@ var EasyBlock =
 	db: {},
 	_disabled: false,
 	prefs: {},
-	bus: null,
 	wins: [],
 
 	get disabled()
@@ -160,9 +159,6 @@ var EasyBlock =
 		var windows, defprefs;
 
 		gmm.loadFrameScript(FRAME_SCRIPT, true);
-
-		if (!this.bus)
-			this.bus = new ProcessBus(gmm, this);
 
 		EasyBlock.observer.reg(os, OBS_REQ);
 		EasyBlock.observer.reg(os, OBS_RESP);
@@ -210,12 +206,6 @@ var EasyBlock =
 		this.db.close();
 
 		ui.unloadCss("easyblock");
-
-		if (this.bus)
-		{
-			this.bus.destroy();
-			this.bus = null;
-		}
 	},
 
 	loadWindow(window)
