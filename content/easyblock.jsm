@@ -31,7 +31,7 @@ const TYPE_DOC = Ci.nsIContentPolicy.TYPE_DOCUMENT;
 const FRAME_SCRIPT = "chrome://easyblock/content/frame.js";
 
 
-function ProcessBus(mm, addon)
+function ProcessBus(mm, winUI, addon)
 {
 	EventBus.call(this, "process", mm);
 	this.addon = addon;
@@ -220,7 +220,7 @@ var EasyBlock =
 
 		winUI = new WinUI(window, this);
 		winUI.disabled = this.disabled;
-		winUI.bus = new ProcessBus(window.messageManager, this);
+		winUI.bus = new ProcessBus(window.messageManager, winUI, this);
 		window.addEventListener("unload", winUI);
 		window.addEventListener("aftercustomization", winUI);
 
