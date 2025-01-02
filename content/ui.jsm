@@ -262,7 +262,7 @@ GroupUI.prototype =
 
 function UiBus(mm, winUI)
 {
-	EventBus.call(this, "process", mm);
+	EventBus.call(this, "ui", mm);
 
 	this.winUI = winUI;
 	this.regEvent("content");

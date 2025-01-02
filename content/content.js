@@ -342,7 +342,7 @@ function ContentBus(mm, handler)
 
 	this.handler = handler;
 
-	this.regEvent("process");
+	this.regEvent("ui");
 }
 
 ContentBus.prototype = Object.create(EventBus.prototype);
@@ -411,7 +411,7 @@ Object.assign(ContentBus.prototype,
 
 	destroy()
 	{
-		this.unregEvent("process");
+		this.unregEvent("ui");
 	}
 });
 
