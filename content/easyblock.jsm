@@ -93,7 +93,7 @@ Object.assign(ProcessBus.prototype,
 				return this.winUI.onGet(event.data);
 
 			case EventType.DOM:
-				return this.findDom(event.data);
+				return this.winUI.onDom(event.data);
 		}
 	},
 
