@@ -58,29 +58,6 @@ Object.assign(ProcessBus.prototype,
 		this.sendEvent(EventType.RELOAD);
 	},
 
-	get(data)
-	{
-		if (!data)
-			return;
-
-		switch (data.name)
-		{
-			case 'enabled':
-				{
-					let group;
-
-					group = this.addon.getGroup(data.grpId);
-					if (!group)
-						return null;
-
-					return group.enabled;
-				}
-
-			case 'disabled':
-				return this.addon.disabled;
-		}
-	},
-
 	findDom(data)
 	{
 		let site, eventData, grpId;
