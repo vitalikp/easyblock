@@ -58,33 +58,6 @@ Object.assign(ProcessBus.prototype,
 		this.sendEvent(EventType.RELOAD);
 	},
 
-	findDom(data)
-	{
-		let site, eventData, grpId;
-
-		if (!data)
-			return;
-
-		site = this.addon.findSite(data.hostname);
-		if (!site || !site.hasDom)
-			return;
-
-		grpId = -1;
-		if (site.group)
-			grpId = site.group.id;
-
-		eventData =
-		{
-			hostname: data.hostname,
-			grpId: grpId,
-			content: site.content,
-			styles: site.styles,
-			scripts: site.scripts
-		};
-
-		return eventData;
-	},
-
 	onEvent(event)
 	{
 		switch (event.type)
