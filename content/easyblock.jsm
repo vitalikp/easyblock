@@ -34,8 +34,9 @@ const FRAME_SCRIPT = "chrome://easyblock/content/frame.js";
 function ProcessBus(mm, winUI, addon)
 {
 	EventBus.call(this, "process", mm);
-	this.addon = addon;
 
+	this.winUI = winUI;
+	this.addon = addon;
 	this.regEvent("content");
 }
 
