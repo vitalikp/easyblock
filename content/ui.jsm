@@ -337,6 +337,7 @@ function WinUI(win, addon)
 	this.win = win;
 	this.addon = addon;
 	this.bus = new UiBus(win.messageManager, this);
+	this.bus.loadScript("frame.js");
 
 	doc = win.document;
 

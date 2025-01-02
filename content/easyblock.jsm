@@ -63,8 +63,6 @@ var EasyBlock =
 	{
 		var windows, defprefs;
 
-		gmm.loadFrameScript(FRAME_SCRIPT, true);
-
 		EasyBlock.observer.reg(os, OBS_REQ);
 		EasyBlock.observer.reg(os, OBS_RESP);
 
@@ -96,8 +94,6 @@ var EasyBlock =
 	shutdown()
 	{
 		let i;
-
-		gmm.removeDelayedFrameScript(FRAME_SCRIPT);
 
 		i = 0;
 		while (i < this.wins.length)
