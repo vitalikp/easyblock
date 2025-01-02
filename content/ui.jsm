@@ -267,6 +267,7 @@ function WinUI(win, addon)
 
 	this.win = win;
 	this.addon = addon;
+	this.bus = null;
 
 	doc = win.document;
 
@@ -469,6 +470,12 @@ WinUI.prototype =
 
 	destroy()
 	{
+		if (this.bus)
+		{
+			this.bus.destroy();
+			this.bus = null;
+		}
+
 		if (this.btn)
 		{
 			if (this.btn.parentNode)

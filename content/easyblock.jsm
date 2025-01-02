@@ -232,6 +232,7 @@ var EasyBlock =
 
 		winUI = new WinUI(window, this);
 		winUI.disabled = this.disabled;
+		winUI.bus = new ProcessBus(window.messageManager, this);
 		window.addEventListener("unload", winUI);
 		window.addEventListener("aftercustomization", winUI);
 
