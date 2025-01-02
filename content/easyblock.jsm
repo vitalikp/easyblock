@@ -11,7 +11,6 @@ const EXPORTED_SYMBOLS = ["EasyBlock"];
 Cu.import("chrome://easyblock/content/io.jsm");
 Cu.import("chrome://easyblock/content/ui.jsm");
 Cu.import("chrome://easyblock/content/bldb.jsm");
-Cu.import("chrome://easyblock/content/eventbus.jsm");
 
 
 const os = Cc["@mozilla.org/observer-service;1"].getService(Ci.nsIObserverService);
@@ -30,50 +29,6 @@ const TYPE_DOC = Ci.nsIContentPolicy.TYPE_DOCUMENT;
 
 const FRAME_SCRIPT = "chrome://easyblock/content/frame.js";
 
-
-function UiBus(mm, winUI)
-{
-	EventBus.call(this, "process", mm);
-
-	this.winUI = winUI;
-	this.regEvent("content");
-}
-
-UiBus.prototype = Object.create(EventBus.prototype);
-Object.assign(UiBus.prototype,
-{
-	_sendEvent(type, data)
-	{
-		this.mm.broadcastAsyncMessage(type, data);
-	},
-
-	toggle(value, grpId)
-	{
-		this.sendEvent(EventType.TOGGLE, { grpId, value });
-	},
-
-	reload()
-	{
-		this.sendEvent(EventType.RELOAD);
-	},
-
-	onEvent(event)
-	{
-		switch (event.type)
-		{
-			case EventType.GET:
-				return this.winUI.onGet(event.data);
-
-			case EventType.DOM:
-				return this.winUI.onDom(event.data);
-		}
-	},
-
-	destroy()
-	{
-		this.unregEvent("content");
-	}
-});
 
 var EasyBlock =
 {
@@ -170,7 +125,6 @@ var EasyBlock =
 
 		winUI = new WinUI(window, this);
 		winUI.disabled = this.disabled;
-		winUI.bus = new UiBus(window.messageManager, winUI);
 		window.addEventListener("unload", winUI);
 		window.addEventListener("aftercustomization", winUI);
 

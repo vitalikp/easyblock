@@ -9,6 +9,7 @@ var EXPORTED_SYMBOLS = ["ui", "uitree", "WinUI"];
 
 // import
 Cu.import("chrome://easyblock/content/io.jsm");
+Cu.import("chrome://easyblock/content/eventbus.jsm");
 
 const sss = Cc["@mozilla.org/content/style-sheet-service;1"].getService(Ci.nsIStyleSheetService);
 const wm = Cc["@mozilla.org/appshell/window-mediator;1"].getService(Ci.nsIWindowMediator);
@@ -259,6 +260,50 @@ GroupUI.prototype =
 	}
 };
 
+function UiBus(mm, winUI)
+{
+	EventBus.call(this, "process", mm);
+
+	this.winUI = winUI;
+	this.regEvent("content");
+}
+
+UiBus.prototype = Object.create(EventBus.prototype);
+Object.assign(UiBus.prototype,
+{
+	_sendEvent(type, data)
+	{
+		this.mm.broadcastAsyncMessage(type, data);
+	},
+
+	toggle(value, grpId)
+	{
+		this.sendEvent(EventType.TOGGLE, { grpId, value });
+	},
+
+	reload()
+	{
+		this.sendEvent(EventType.RELOAD);
+	},
+
+	onEvent(event)
+	{
+		switch (event.type)
+		{
+			case EventType.GET:
+				return this.winUI.onGet(event.data);
+
+			case EventType.DOM:
+				return this.winUI.onDom(event.data);
+		}
+	},
+
+	destroy()
+	{
+		this.unregEvent("content");
+	}
+});
+
 function WinUI(win, addon)
 {
 	let doc, popupMenu, grpMenu, item, reloadItem;
@@ -267,7 +312,7 @@ function WinUI(win, addon)
 
 	this.win = win;
 	this.addon = addon;
-	this.bus = null;
+	this.bus = new UiBus(win.messageManager, this);
 
 	doc = win.document;
 
