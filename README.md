@@ -39,7 +39,7 @@ a.example.org
 !example.net
   main.css
   /img/
-  type:image/jpeg
+  mtype:image/jpeg
 
 # filter document content with DOM rules
 # remove element with id “test1”
