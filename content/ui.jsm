@@ -363,16 +363,21 @@ WinUI.prototype =
 
 	onState(state)
 	{
+		this.bus.toggle(state);
 		this.disabled = state;
 	},
 
 	onToggle(group)
 	{
+		this.bus.toggle(group.enabled, group.id);
+
 		this.groups.forEach((grpUI) => grpUI.update(group));
 	},
 
 	onReload(db)
 	{
+		this.bus.reload();
+
 		this.addon.loadDBWin(this, db);
 
 		if (this.win == wm.getMostRecentWindow("navigator:browser"))

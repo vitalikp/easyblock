@@ -147,8 +147,6 @@ var EasyBlock =
 
 		this.prefs.setBoolPref('disabled', value);
 
-		this.bus.toggle(value);
-
 		this.wins.forEach((winUI) => winUI.onState(value));
 
 		if (!value)
@@ -320,10 +318,7 @@ var EasyBlock =
 				return;
 
 			if (group.toggle(value))
-			{
-				this.bus.toggle(value, grpId);
 				this.wins.forEach((winUI) => winUI.onToggle(group));
-			}
 
 			return;
 		}
@@ -350,7 +345,6 @@ var EasyBlock =
 	reload()
 	{
 		this.db.clear();
-		this.bus.reload();
 		this.db.load((db) =>
 		{
 			this.wins.forEach((winUI) => winUI.onReload(db));
