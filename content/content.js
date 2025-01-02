@@ -1,5 +1,6 @@
 "use strict";
 
+const Ci = Components.interfaces;
 const Cu = Components.utils;
 
 
@@ -582,3 +583,17 @@ SiteHandler.prototype =
 		}
 	}
 };
+
+SiteHandler.getWinId = function(win)
+{
+	let utils;
+
+	if (!win)
+		return -1;
+
+	utils = win.getInterface(Ci.nsIDOMWindowUtils);
+	if (!utils)
+		return -1;
+
+	return utils.outerWindowID;
+}
