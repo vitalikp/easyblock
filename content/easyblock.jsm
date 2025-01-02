@@ -113,7 +113,7 @@ Object.assign(ProcessBus.prototype,
 		switch (event.type)
 		{
 			case EventType.GET:
-				return this.get(event.data);
+				return this.winUI.onGet(event.data);
 
 			case EventType.DOM:
 				return this.findDom(event.data);

@@ -392,6 +392,29 @@ WinUI.prototype =
 		this.addon.toggle(value, grpId);
 	},
 
+	onGet(data)
+	{
+		if (!data)
+			return;
+
+		switch (data.name)
+		{
+			case 'enabled':
+				{
+					let group;
+
+					group = this.addon.getGroup(data.grpId);
+					if (!group)
+						return null;
+
+					return group.enabled;
+				}
+
+			case 'disabled':
+				return this.addon.disabled;
+		}
+	},
+
 	initToolbar()
 	{
 		if (!this.toolbox)
