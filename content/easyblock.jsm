@@ -36,7 +36,6 @@ function ProcessBus(mm, winUI, addon)
 	EventBus.call(this, "process", mm);
 
 	this.winUI = winUI;
-	this.addon = addon;
 	this.regEvent("content");
 }
 
