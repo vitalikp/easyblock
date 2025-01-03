@@ -359,6 +359,14 @@ Object.assign(ContentBus.prototype,
 		this.handler.onFind(data);
 	},
 
+	onToggle(data)
+	{
+		if (!data)
+			return;
+
+		this.handler.toggle(data);
+	},
+
 	reload()
 	{
 		this.handler.reload();
@@ -401,7 +409,7 @@ Object.assign(ContentBus.prototype,
 		switch (event.type)
 		{
 			case EventType.TOGGLE:
-				this.handler.toggle(event.data);
+				this.onToggle(event.data);
 				break;
 
 			case EventType.RELOAD:
