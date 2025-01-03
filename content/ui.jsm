@@ -381,7 +381,7 @@ function WinUI(win, addon)
 		if (!event && !event.target)
 			return;
 
-		this.win.open('chrome://easyblock/content/filters.xul', 'EasyBlockFilters', 'chrome,titlebar,centerscreen,resizable').focus();
+		this.openWin("Filters", "filters.xul");
 	});
 
 	this.grpMenu = ui.newMenu("Groups", this.menu);
@@ -443,6 +443,14 @@ WinUI.prototype =
 		else
 			node.setAttribute("ebstate", "normal");
 		notificationBox.appendChild(node);
+	},
+
+	openWin(name, url)
+	{
+		if (!this.win || !url)
+			return;
+
+		this.win.open("chrome://easyblock/content/" + url, "EasyBlock" + name, 'chrome,titlebar,centerscreen,resizable').focus();
 	},
 
 	onState(state)
