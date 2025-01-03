@@ -419,7 +419,7 @@ Object.assign(ContentBus.prototype,
 function SiteHandler(global)
 {
 	this.tabId = SiteHandler.getWinId(global.content);
-	this._disabled = false;
+	this.disabled = false;
 
 	this.sites = new Map();
 
@@ -428,7 +428,7 @@ function SiteHandler(global)
 
 	this.bus = new ContentBus(global, this);
 
-	this._disabled = this.bus.get('disabled');
+	this.disabled = this.bus.get('disabled');
 }
 
 SiteHandler.prototype =
@@ -453,7 +453,7 @@ SiteHandler.prototype =
 		if (data.grpId > 0)
 			return;
 
-		this._disabled = data.value;
+		this.disabled = data.value;
 	},
 
 	reload()
@@ -472,7 +472,7 @@ SiteHandler.prototype =
 			return;
 
 		site = new Site(data.hostname, data.grpId);
-		site.disabled = this._disabled;
+		site.disabled = this.disabled;
 		site.styles = data.styles||[];
 		site.scripts = data.scripts||[];
 		site.rules = data.content||[];
@@ -516,7 +516,7 @@ SiteHandler.prototype =
 	{
 		let loc, site;
 
-		if (this._disabled || !this.bus)
+		if (this.disabled || !this.bus)
 			return;
 
 		if (!doc || doc.nodeType != doc.DOCUMENT_NODE)
