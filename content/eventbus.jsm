@@ -16,7 +16,8 @@ const EventType =
 	RELOAD: 2,
 	FRAME: 3,
 	GET: 4,
-	DOM: 5
+	DOM: 5,
+	CLOSE: 6
 };
 
 
