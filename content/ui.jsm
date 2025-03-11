@@ -396,6 +396,9 @@ function WinUI(win, addon)
 
 	this.win = win;
 	this.addon = addon;
+
+	this.tabs = new Map();
+
 	this.bus = new UiBus(win.messageManager, this);
 	this.bus.loadScript("frame.js");
 
@@ -673,11 +676,24 @@ WinUI.prototype =
 
 	destroy()
 	{
+		let iter, tabUI;
+
 		if (this.bus)
 		{
 			this.bus.destroy();
 			this.bus = null;
 		}
+
+		iter = this.tabs.values();
+		while (!(tabUI=iter.next()).done)
+		{
+			tabUI = tabUI.value;
+			if (!tabUI)
+				continue;
+
+			tabUI.destroy();
+		}
+		this.tabs.clear();
 
 		if (this.btn)
 		{
