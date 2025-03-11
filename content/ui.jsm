@@ -426,6 +426,11 @@ WinUI.prototype =
 		return this.addon.getGroup(grpId);
 	},
 
+	getSite(hostname)
+	{
+		return this.addon.findSite(hostname);
+	},
+
 	notify(msg)
 	{
 		let doc, node;
@@ -518,7 +523,7 @@ WinUI.prototype =
 		if (!data)
 			return;
 
-		site = this.addon.findSite(data.hostname);
+		site = this.getSite(data.hostname);
 		if (!site || !site.hasDom)
 			return;
 
