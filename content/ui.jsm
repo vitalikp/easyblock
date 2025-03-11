@@ -322,6 +322,10 @@ Object.assign(UiBus.prototype,
 
 			case EventType.DOM:
 				return this.winUI.onDom(event.data);
+
+			case EventType.CLOSE:
+				this.winUI.onClose(event.data);
+				break;
 		}
 	},
 
