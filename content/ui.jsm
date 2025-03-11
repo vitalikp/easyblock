@@ -340,6 +340,53 @@ Object.assign(UiBus.prototype,
 	}
 });
 
+function TabUI(winUI, mm, id)
+{
+	EventBus.call(this, "ui", mm);
+
+	this.winUI = winUI;
+	this.id = id;
+}
+
+TabUI.prototype = Object.create(EventBus.prototype);
+Object.assign(TabUI.prototype,
+{
+	onDom(data, target)
+	{
+		let site, eventData, grpId;
+
+		if (!data || !target)
+			return;
+
+		site = this.winUI.getSite(data.hostname);
+		if (!site || !site.hasDom)
+			return;
+
+		grpId = -1;
+		if (site.group)
+			grpId = site.group.id;
+
+		eventData =
+		{
+			hostname: data.hostname,
+			grpId: grpId,
+			content: site.content,
+			styles: site.styles,
+			scripts: site.scripts
+		};
+
+		return eventData;
+	},
+
+	onEvent(event)
+	{
+	},
+
+	destroy()
+	{
+	}
+});
+
 function WinUI(win, addon)
 {
 	let doc, popupMenu, grpMenu, item, reloadItem;
