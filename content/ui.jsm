@@ -622,6 +622,21 @@ WinUI.prototype =
 		return eventData;
 	},
 
+	onClose(data)
+	{
+		let tabUI;
+
+		if (!data)
+			return;
+
+		tabUI = this.tabs.get(data.id);
+		if (!tabUI)
+			return;
+
+		this.tabs.delete(tabUI.id);
+		tabUI.destroy();
+	},
+
 	initToolbar()
 	{
 		if (!this.toolbox)
