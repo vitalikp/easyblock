@@ -317,12 +317,6 @@ Object.assign(UiBus.prototype,
 				this.winUI.onFrame(event.data, event.target);
 				break;
 
-			case EventType.GET:
-				return this.winUI.onGet(event.data);
-
-			case EventType.DOM:
-				return this.winUI.onDom(event.data);
-
 			case EventType.CLOSE:
 				this.winUI.onClose(event.data);
 				break;
@@ -390,6 +384,14 @@ Object.assign(TabUI.prototype,
 
 	onEvent(event)
 	{
+		switch (event.type)
+		{
+			case EventType.GET:
+				return this.winUI.onGet(event.data);
+
+			case EventType.DOM:
+				return this.onDom(event.data, event.target);
+		}
 	},
 
 	destroy()
