@@ -353,6 +353,8 @@ function TabUI(winUI, mm, id)
 	EventBus.call(this, "ui", mm);
 
 	this.winUI = winUI;
+	this.regEvent("content");
+
 	this.id = id;
 }
 
@@ -392,6 +394,7 @@ Object.assign(TabUI.prototype,
 
 	destroy()
 	{
+		this.unregEvent("content");
 	}
 });
 
