@@ -421,6 +421,11 @@ WinUI.prototype =
 		this._disabled = value;
 	},
 
+	getGroup(grpId)
+	{
+		return this.addon.getGroup(grpId);
+	},
+
 	notify(msg)
 	{
 		let doc, node;
@@ -494,7 +499,7 @@ WinUI.prototype =
 				{
 					let group;
 
-					group = this.addon.getGroup(data.grpId);
+					group = this.getGroup(data.grpId);
 					if (!group)
 						return null;
 
