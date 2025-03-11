@@ -604,33 +604,6 @@ WinUI.prototype =
 		}
 	},
 
-	onDom(data)
-	{
-		let site, eventData, grpId;
-
-		if (!data)
-			return;
-
-		site = this.getSite(data.hostname);
-		if (!site || !site.hasDom)
-			return;
-
-		grpId = -1;
-		if (site.group)
-			grpId = site.group.id;
-
-		eventData =
-		{
-			hostname: data.hostname,
-			grpId: grpId,
-			content: site.content,
-			styles: site.styles,
-			scripts: site.scripts
-		};
-
-		return eventData;
-	},
-
 	onClose(data)
 	{
 		let tabUI;
