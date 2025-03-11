@@ -412,6 +412,11 @@ Object.assign(ContentBus.prototype,
 		this.onSite(data);
 	},
 
+	close(id)
+	{
+		this.sendEvent(EventType.CLOSE, { id });
+	},
+
 	onEvent(event)
 	{
 		switch (event.type)
