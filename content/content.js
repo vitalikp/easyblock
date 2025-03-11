@@ -443,6 +443,7 @@ function SiteHandler(global)
 		_cache = new Map();
 
 	this.bus = new ContentBus(global, this);
+	this.bus.frame(this.tabId);
 
 	this.disabled = this.bus.get('disabled');
 }
