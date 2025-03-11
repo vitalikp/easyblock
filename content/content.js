@@ -359,6 +359,14 @@ Object.assign(ContentBus.prototype,
 		this.handler.onFind(data);
 	},
 
+	frame(tabId)
+	{
+		if (!tabId)
+			return;
+
+		this.sendEvent(EventType.FRAME, { tabId });
+	},
+
 	onToggle(data)
 	{
 		if (!data)
