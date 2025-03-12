@@ -395,7 +395,7 @@ Object.assign(TabUI.prototype,
 			scripts: site.scripts
 		};
 
-		return eventData;
+		this.site(eventData);
 	},
 
 	onEvent(event)
@@ -406,7 +406,8 @@ Object.assign(TabUI.prototype,
 				return this.winUI.onGet(event.data);
 
 			case EventType.DOM:
-				return this.onDom(event.data, event.target);
+				this.onDom(event.data, event.target);
+				break;
 		}
 	},
 
