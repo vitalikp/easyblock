@@ -410,18 +410,7 @@ Object.assign(ContentBus.prototype,
 
 	dom(hostname)
 	{
-		let data;
-
-		data = this.sendSyncEvent(EventType.DOM, { hostname: hostname });
-		if (!data || !data[0])
-			return;
-
-		data = data[0];
-
-		if (data.hostname != hostname)
-			return;
-
-		this.onSite(data);
+		this.sendEvent(EventType.DOM, { hostname });
 	},
 
 	close(id)
