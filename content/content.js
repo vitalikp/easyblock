@@ -520,11 +520,6 @@ SiteHandler.prototype =
 		this.sites.set(data.hostname, site);
 	},
 
-	findDom(hostname)
-	{
-		this.bus.dom(hostname);
-	},
-
 	onCreate(doc)
 	{
 		let loc, site;
@@ -539,7 +534,7 @@ SiteHandler.prototype =
 		site = this.sites.get(loc.hostname);
 
 		if (!site)
-			this.findDom(loc.hostname);
+			this.bus.dom(loc.hostname);
 	},
 
 	filterDom(doc)
