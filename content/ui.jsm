@@ -363,6 +363,14 @@ Object.assign(TabUI.prototype,
 		this.sendEvent(EventType.INIT, data);
 	},
 
+	site(data)
+	{
+		if (!data)
+			return;
+
+		this.sendEvent(EventType.SITE, data);
+	},
+
 	onDom(data, target)
 	{
 		let site, eventData, grpId;
