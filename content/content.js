@@ -366,7 +366,10 @@ Object.assign(ContentBus.prototype,
 		if (!data)
 			return;
 
-		_cache.set(data.hostname, data);
+		if (data.grpId > 0)
+			_cache.set(data.hostname, data);
+		else
+			data = _cache.get(data.hostname);
 
 		this.handler.onFind(data);
 	},
@@ -414,11 +417,7 @@ Object.assign(ContentBus.prototype,
 
 		data = _cache.get(hostname);
 		if (data)
-		{
 			grpId = data.grpId;
-			if (this.get("enabled", { grpId }))
-				this.handler.onFind(data);
-		}
 
 		this.sendEvent(EventType.DOM, { hostname, grpId });
 	},

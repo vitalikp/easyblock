@@ -379,7 +379,16 @@ Object.assign(TabUI.prototype,
 			return;
 
 		if (data.grpId > 0)
+		{
+			let group;
+
+			group = this.winUI.getGroup(data.grpId);
+			if (!group || !group.enabled)
+				return;
+
+			this.site({ hostname: data.hostname });
 			return;
+		}
 
 		site = this.winUI.getSite(data.hostname);
 		if (!site || !site.hasDom)
