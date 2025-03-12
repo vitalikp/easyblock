@@ -414,9 +414,6 @@ Object.assign(TabUI.prototype,
 	{
 		switch (event.type)
 		{
-			case EventType.GET:
-				return this.winUI.onGet(event.data);
-
 			case EventType.DOM:
 				this.onDom(event.data, event.target);
 				break;
