@@ -378,6 +378,9 @@ Object.assign(TabUI.prototype,
 		if (!data || !target)
 			return;
 
+		if (data.grpId > 0)
+			return;
+
 		site = this.winUI.getSite(data.hostname);
 		if (!site || !site.hasDom)
 			return;
