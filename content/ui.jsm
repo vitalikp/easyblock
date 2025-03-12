@@ -579,6 +579,8 @@ WinUI.prototype =
 		tabUI = new TabUI(this, mm, data.tabId);
 
 		this.tabs.set(data.tabId, tabUI);
+
+		tabUI.init({ disabled: this.disabled });
 	},
 
 	toggle(value, grpId)
