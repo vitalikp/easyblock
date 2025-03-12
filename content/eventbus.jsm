@@ -5,7 +5,7 @@ const Cc = Components.classes;
 
 var EXPORTED_SYMBOLS = ["EventType", "EventBus"];
 
-const cpmm = Cc["@mozilla.org/childprocessmessagemanager;1"].getService(Ci.nsISyncMessageSender);
+const cpmm = Cc["@mozilla.org/childprocessmessagemanager;1"].getService(Ci.nsIMessageSender);
 
 
 const EVENT_TYPE = "EasyBlock";
@@ -48,11 +48,6 @@ EventBus.prototype =
 	sendEvent(type, data)
 	{
 		this._sendEvent(this.owner, { type, data });
-	},
-
-	sendSyncEvent(type, data)
-	{
-		return this.mm.sendSyncMessage(this.owner, { type, data });
 	},
 
 	onEvent(event)
