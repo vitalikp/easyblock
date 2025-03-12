@@ -609,29 +609,6 @@ WinUI.prototype =
 		this.addon.toggle(grpId);
 	},
 
-	onGet(data)
-	{
-		if (!data)
-			return;
-
-		switch (data.name)
-		{
-			case 'enabled':
-				{
-					let group;
-
-					group = this.getGroup(data.grpId);
-					if (!group)
-						return null;
-
-					return group.enabled;
-				}
-
-			case 'disabled':
-				return this.addon.disabled;
-		}
-	},
-
 	onClose(data)
 	{
 		let tabUI;
