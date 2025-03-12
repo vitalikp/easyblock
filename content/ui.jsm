@@ -355,6 +355,14 @@ function TabUI(winUI, mm, id)
 TabUI.prototype = Object.create(EventBus.prototype);
 Object.assign(TabUI.prototype,
 {
+	init(data)
+	{
+		if (!data)
+			return;
+
+		this.sendEvent(EventType.INIT, data);
+	},
+
 	onDom(data, target)
 	{
 		let site, eventData, grpId;
