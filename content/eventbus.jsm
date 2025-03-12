@@ -18,7 +18,8 @@ const EventType =
 	INIT: 4,
 	GET: 5,
 	DOM: 6,
-	CLOSE: 7
+	SITE: 7,
+	CLOSE: 8
 };
 
 
