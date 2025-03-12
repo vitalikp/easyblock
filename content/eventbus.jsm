@@ -69,6 +69,6 @@ EventBus.prototype =
 			data: msg.data.data
 		};
 
-		return this.onEvent(data);
+		this.onEvent(data);
 	}
 }
