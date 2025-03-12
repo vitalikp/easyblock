@@ -425,6 +425,10 @@ Object.assign(ContentBus.prototype,
 	{
 		switch (event.type)
 		{
+			case EventType.INIT:
+				this.onInit(event.data, event.target);
+				break;
+
 			case EventType.TOGGLE:
 				this.onToggle(event.data);
 				break;
