@@ -601,7 +601,7 @@ WinUI.prototype =
 		tabUI.init({ disabled: this.disabled });
 	},
 
-	toggle(value)
+	toggle()
 	{
 		if (!this.addon)
 			return;
