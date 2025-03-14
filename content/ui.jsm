@@ -195,13 +195,7 @@ function MenuToggle(obj, name, menu)
 	this.handler = obj;
 
 	elem = ui.newMenuItem(name, menu);
-	elem.addEventListener("command", (event) =>
-	{
-		if (!event || !event.target || !obj)
-			return;
-
-		this.handler.toggle();
-	}, false);
+	elem.addEventListener("command", this);
 
 	this.elem = elem;
 }
@@ -224,6 +218,19 @@ MenuToggle.prototype =
 			this.elem.removeAttribute("toggled");
 
 		this._toggled = value;
+	},
+
+	handleEvent(event)
+	{
+		if (!event || !this.handler)
+			return;
+
+		switch (event.type)
+		{
+			case "command":
+				this.handler.toggle();
+				break;
+		}
 	},
 
 	destroy()
