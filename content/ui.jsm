@@ -249,7 +249,7 @@ function GroupUI(group, menu, addon)
 
 GroupUI.prototype =
 {
-	toggle(value)
+	toggle()
 	{
 		this.addon.toggle(this.id);
 	},
