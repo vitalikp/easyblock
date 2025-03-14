@@ -191,17 +191,19 @@ function MenuToggle(obj, name, menu)
 
 	doc = menu.ownerDocument;
 
+	this._toggled = false;
+	this.handler = obj;
+
 	elem = ui.newMenuItem(name, menu);
 	elem.addEventListener("command", (event) =>
 	{
 		if (!event || !event.target || !obj)
 			return;
 
-		obj.toggle();
+		this.handler.toggle();
 	}, false);
 
 	this.elem = elem;
-	this._toggled = false;
 }
 
 MenuToggle.prototype =
