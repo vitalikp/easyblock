@@ -601,12 +601,12 @@ WinUI.prototype =
 		tabUI.init({ disabled: this.disabled });
 	},
 
-	toggle(value, grpId)
+	toggle(value)
 	{
 		if (!this.addon)
 			return;
 
-		this.addon.toggle(grpId);
+		this.addon.toggle();
 	},
 
 	onClose(data)
