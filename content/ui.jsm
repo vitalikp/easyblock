@@ -197,7 +197,7 @@ function MenuToggle(obj, name, menu)
 		if (!event || !event.target || !obj)
 			return;
 
-		obj.toggle(!this.toggled);
+		obj.toggle();
 	}, false);
 
 	this.elem = elem;
